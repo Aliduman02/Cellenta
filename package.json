@@ -16,6 +16,7 @@
     "dotenv": "^17.2.0",
     "kafkajs": "^2.2.4",
     "kafkajs-snappy": "^1.1.0",
-    "nodemailer": "^7.0.5"
+    "nodemailer": "^7.0.5",
+    "oracledb": "^6.8.0"
   }
 }
