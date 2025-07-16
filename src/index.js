@@ -1,7 +1,6 @@
-require("dotenv").config();
-const { startConsumer } = require("./kafka/consumer");
+import dotenv from "dotenv";
+dotenv.config();
 
-console.log("Kafka Broker:", process.env.KAFKA_BROKER);
-console.log("Kafka Topic:", process.env.KAFKA_TOPIC);
+import { startConsumer } from "./kafka/consumer.js";
 
-startConsumer();
+startConsumer().catch(console.error);
