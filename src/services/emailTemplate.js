@@ -23,7 +23,7 @@ const generateEmailTemplate = ({
         padding: 0;
         margin: 0;
       }
-      .container {é
+      .container {
         background: #fff;
         margin: 30px auto;
         max-width: 900px;

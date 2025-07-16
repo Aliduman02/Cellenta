@@ -1,17 +1,21 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import pkg from "kafkajs";
+const { Kafka, CompressionTypes, CompressionCodecs } = pkg;
+
 import snappy from "kafkajs-snappy";
+CompressionCodecs[CompressionTypes.Snappy] = snappy; // ✅ şimdi doğru yerde
+
 import { sendEmail } from "../services/mailSender.js";
 import generateEmailTemplate from "../services/emailTemplate.js";
 
-CompressionCodecs[CompressionTypes.Snappy] = snappy;
 const kafka = new Kafka({
   clientId: "notification-service",
   brokers: [process.env.KAFKA_BROKER],
 });
-const { Kafka, CompressionTypes, CompressionCodecs } = pkg;
 const consumer = kafka.consumer({ groupId: "notification-group" });
+CompressionCodecs[CompressionTypes.Snappy] = snappy;
 
 export async function startConsumer() {
   await consumer.connect();
@@ -25,8 +29,7 @@ export async function startConsumer() {
       if (!message.value) {
         console.warn("⚠️ Mesajın içeriği boş!");
         return;
-      }
-      if (typeof message.value !== "object") {
+      } else if (typeof message.value !== "object") {
         console.warn("Beklenmeyen mesaj tipi:", typeof message.value);
       }
       const data = message.value?.toString();
@@ -43,7 +46,7 @@ export async function startConsumer() {
           body: html || "İçerik yok",
         });
       } catch (error) {
-        console.error("❌ JSON parse hatası:", err.message);
+        console.error("❌ JSON parse hatası:", error);
       }
     },
   });
