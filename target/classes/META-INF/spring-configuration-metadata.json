@@ -1,0 +1,64 @@
+{
+  "groups": [
+    {
+      "name": "chf.external-apis",
+      "type": "com.i2i.intern.cellenta.chf.config.ApiConfig",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.ApiConfig"
+    },
+    {
+      "name": "chf.external-apis.voltdb",
+      "type": "com.i2i.intern.cellenta.chf.config.ApiConfig$VoltDbConfig",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.ApiConfig",
+      "sourceMethod": "getVoltdb()"
+    },
+    {
+      "name": "chf.kafka",
+      "type": "com.i2i.intern.cellenta.chf.config.KafkaConfig",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.KafkaConfig"
+    },
+    {
+      "name": "chf.kafka.topics",
+      "type": "com.i2i.intern.cellenta.chf.config.KafkaConfig$Topics",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.KafkaConfig",
+      "sourceMethod": "getTopics()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "chf.external-apis.voltdb.balance-endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.ApiConfig$VoltDbConfig"
+    },
+    {
+      "name": "chf.external-apis.voltdb.base-url",
+      "type": "java.lang.String",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.ApiConfig$VoltDbConfig"
+    },
+    {
+      "name": "chf.external-apis.voltdb.timeout",
+      "type": "java.lang.Integer",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.ApiConfig$VoltDbConfig"
+    },
+    {
+      "name": "chf.external-apis.voltdb.update-endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.ApiConfig$VoltDbConfig"
+    },
+    {
+      "name": "chf.kafka.topics.abmf",
+      "type": "java.lang.String",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.KafkaConfig$Topics"
+    },
+    {
+      "name": "chf.kafka.topics.cgf",
+      "type": "java.lang.String",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.KafkaConfig$Topics"
+    },
+    {
+      "name": "chf.kafka.topics.notification",
+      "type": "java.lang.String",
+      "sourceType": "com.i2i.intern.cellenta.chf.config.KafkaConfig$Topics"
+    }
+  ],
+  "hints": []
+}

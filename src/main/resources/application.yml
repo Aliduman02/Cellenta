@@ -1,0 +1,66 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cellenta-chf
+  kafka:
+    bootstrap-servers: 34.38.128.100:9092,34.38.128.100:9093,34.38.128.100:9094,34.38.128.100:9095
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: all
+      retries: 3
+      batch-size: 16384
+      linger-ms: 1
+      buffer-memory: 33554432
+    consumer:
+      group-id: chf-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "*"
+
+# CHF Specific Configuration
+chf:
+  server:
+    host: 35.241.210.255
+  external-apis:
+    voltdb:
+      base-url: http://34.10.105.56:8081
+      balance-endpoint: /api/v1/balance/with-package-info
+      update-endpoint: /api/v1/balance/update-by-msisdn
+      timeout: 30000
+      retry-count: 2
+      retry-delay: 30000
+  kafka:
+    topics:
+      abmf: chf-to-abmf
+      cgf: chf-to-cgf
+      notification: chf-to-notification
+  usage:
+    thresholds:
+      warning: 80
+      critical: 100
+
+logging:
+  level:
+    com.i2i.intern.cellenta.chf: DEBUG
+    org.springframework.kafka: INFO
+    org.apache.kafka: WARN
+    org.springframework.web.reactive.function.client: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/chf-application.log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
