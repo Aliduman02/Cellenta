@@ -23,3 +23,4 @@ com/i2i/intern/cellenta/chf/service/ChfService.class
 com/i2i/intern/cellenta/chf/model/NotificationMessage.class
 com/i2i/intern/cellenta/chf/model/ChfResponse.class
 com/i2i/intern/cellenta/chf/config/ApiConfig.class
+com/i2i/intern/cellenta/chf/model/VoltDbBalanceResponse$DateObject.class

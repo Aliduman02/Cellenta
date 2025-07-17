@@ -50,10 +50,10 @@ public class VoltDbBalanceResponse {
         private Integer remainingData;
         
         @JsonProperty("START_DATE")
-        private DateObject startDate;  // ✅ Object olarak değiştirildi
+        private String startDate;
         
         @JsonProperty("END_DATE")
-        private DateObject endDate;    // ✅ Object olarak değiştirildi
+        private String endDate;
         
         @JsonProperty("PACKAGE_NAME")
         private String packageName;
@@ -89,11 +89,11 @@ public class VoltDbBalanceResponse {
         public Integer getRemainingData() { return remainingData; }
         public void setRemainingData(Integer remainingData) { this.remainingData = remainingData; }
         
-        public DateObject getStartDate() { return startDate; }
-        public void setStartDate(DateObject startDate) { this.startDate = startDate; }
+        public String getStartDate() { return startDate; }
+        public void setStartDate(String startDate) { this.startDate = startDate; }
         
-        public DateObject getEndDate() { return endDate; }
-        public void setEndDate(DateObject endDate) { this.endDate = endDate; }
+        public String getEndDate() { return endDate; }
+        public void setEndDate(String endDate) { this.endDate = endDate; }
         
         public String getPackageName() { return packageName; }
         public void setPackageName(String packageName) { this.packageName = packageName; }
@@ -113,15 +113,6 @@ public class VoltDbBalanceResponse {
         public Integer getPeriod() { return period; }
         public void setPeriod(Integer period) { this.period = period; }
         
-        // Helper methods to get date strings
-        public String getStartDateString() {
-            return startDate != null ? startDate.toDateString() : null;
-        }
-        
-        public String getEndDateString() {
-            return endDate != null ? endDate.toDateString() : null;
-        }
-        
         @Override
         public String toString() {
             return "BalanceResult{" +
@@ -129,54 +120,14 @@ public class VoltDbBalanceResponse {
                     ", remainingMinutes=" + remainingMinutes +
                     ", remainingSms=" + remainingSms +
                     ", remainingData=" + remainingData +
-                    ", startDate=" + startDate +
-                    ", endDate=" + endDate +
+                    ", startDate='" + startDate + '\'' +
+                    ", endDate='" + endDate + '\'' +
                     ", packageName='" + packageName + '\'' +
                     ", price=" + price +
                     ", amountMinutes=" + amountMinutes +
                     ", amountSms=" + amountSms +
                     ", amountData=" + amountData +
                     ", period=" + period +
-                    '}';
-        }
-    }
-    
-    // Inner class for date objects
-    public static class DateObject {
-        @JsonProperty("usec")
-        private Long usec;
-        
-        @JsonProperty("time")
-        private Long time;
-        
-        // Constructors
-        public DateObject() {}
-        
-        public DateObject(Long usec, Long time) {
-            this.usec = usec;
-            this.time = time;
-        }
-        
-        // Getters and Setters
-        public Long getUsec() { return usec; }
-        public void setUsec(Long usec) { this.usec = usec; }
-        
-        public Long getTime() { return time; }
-        public void setTime(Long time) { this.time = time; }
-        
-        // Convert to readable date string
-        public String toDateString() {
-            if (time == null) return null;
-            // Convert microseconds to milliseconds
-            long milliseconds = time / 1000;
-            return new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date(milliseconds));
-        }
-        
-        @Override
-        public String toString() {
-            return "DateObject{" +
-                    "usec=" + usec +
-                    ", time=" + time +
                     '}';
         }
     }

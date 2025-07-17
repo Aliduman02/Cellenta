@@ -43,27 +43,20 @@ public class ChfService {
                         balanceResponse.getResults() == null || 
                         balanceResponse.getResults().isEmpty()) {
                         
-                        logger.warn("Balance information not found for MSISDN: {}", usageRequest.getMsisdn());
                         return Mono.just(createFailedResponse(usageRequest.getMsisdn(), 
                                                             "Balance information not found"));
                     }
                     
                     VoltDbBalanceResponse.BalanceResult balance = balanceResponse.getResults().get(0);
-                    logger.debug("Balance retrieved for MSISDN: {} - Minutes: {}, SMS: {}, Data: {}", 
-                                usageRequest.getMsisdn(), balance.getRemainingMinutes(), 
-                                balance.getRemainingSms(), balance.getRemainingData());
                     
                     // Paket süresi kontrolü
                     if (isPackageExpired(balance.getEndDate())) {
-                        logger.warn("Package expired for MSISDN: {}", usageRequest.getMsisdn());
                         return Mono.just(createFailedResponse(usageRequest.getMsisdn(), 
                                                             "Package expired"));
                     }
                     
                     // Bakiye yeterliliği kontrolü
                     if (!isSufficientBalance(balance, usageRequest)) {
-                        logger.warn("Insufficient balance for MSISDN: {}, Type: {}, Amount: {}", 
-                                   usageRequest.getMsisdn(), usageRequest.getUsageType(), usageRequest.getAmount());
                         return Mono.just(createFailedResponse(usageRequest.getMsisdn(), 
                                                             "Insufficient balance"));
                     }
@@ -75,16 +68,12 @@ public class ChfService {
                     return voltDbClient.updateBalance(updateRequest)
                             .flatMap(updateResponse -> {
                                 if ("SUCCESS".equals(updateResponse.getStatus())) {
-                                    logger.info("Balance updated successfully for MSISDN: {}", usageRequest.getMsisdn());
-                                    
                                     // Kafka mesajlarını gönder
                                     sendKafkaMessages(balance, usageRequest, updateRequest);
                                     
                                     return Mono.just(createSuccessResponse(usageRequest.getMsisdn(), 
                                                                          "Usage request approved"));
                                 } else {
-                                    logger.error("Failed to update balance for MSISDN: {}, Response: {}", 
-                                               usageRequest.getMsisdn(), updateResponse.getMessage());
                                     return Mono.just(createFailedResponse(usageRequest.getMsisdn(), 
                                                                         "Failed to update balance"));
                                 }
@@ -94,30 +83,22 @@ public class ChfService {
                     logger.error("Error processing usage request for MSISDN: {}, Error: {}", 
                                usageRequest.getMsisdn(), error.getMessage());
                     return Mono.just(createFailedResponse(usageRequest.getMsisdn(), 
-                                                        "Internal processing error: " + error.getMessage()));
+                                                        "Internal processing error"));
                 });
     }
     
     /**
-     * Paket süresi dolmuş mu kontrolü - DateObject için güncellenmiş
+     * Paket süresi dolmuş mu kontrolü
      */
-    private boolean isPackageExpired(VoltDbBalanceResponse.DateObject endDate) {
-        if (endDate == null || endDate.getTime() == null) {
-            logger.warn("End date is null or invalid");
-            return true; // Güvenlik için expired kabul et
-        }
-        
+    private boolean isPackageExpired(String endDate) {
         try {
-            // Microseconds'u milliseconds'e çevir
-            long endTimeMillis = endDate.getTime() / 1000;
-            long currentTimeMillis = System.currentTimeMillis();
-            
-            boolean expired = currentTimeMillis > endTimeMillis;
-            logger.debug("Package expiry check - End time: {}, Current time: {}, Expired: {}", 
-                        endTimeMillis, currentTimeMillis, expired);
+            LocalDateTime packageEndDate = LocalDateTime.parse(endDate.replace(".0", ""), 
+                                                               DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            boolean expired = LocalDateTime.now().isAfter(packageEndDate);
+            logger.debug("Package expiry check - End date: {}, Expired: {}", endDate, expired);
             return expired;
         } catch (Exception e) {
-            logger.error("Error checking package expiry: {}", e.getMessage());
+            logger.error("Error parsing end date: {}", endDate, e);
             return true; // Güvenlik için expired kabul et
         }
     }
@@ -134,7 +115,6 @@ public class ChfService {
             case DATA:
                 return balance.getRemainingData() >= usageRequest.getAmount();
             default:
-                logger.warn("Unknown usage type: {}", usageRequest.getUsageType());
                 return false;
         }
     }
@@ -159,15 +139,12 @@ public class ChfService {
             case DATA:
                 newData = balance.getRemainingData() - usageRequest.getAmount();
                 break;
-            default:
-                logger.error("Unknown usage type: {}", usageRequest.getUsageType());
-                break;
         }
         
         logger.debug("Calculated new balance for MSISDN: {} - Minutes: {}, SMS: {}, Data: {}", 
                     usageRequest.getMsisdn(), newMinutes, newSms, newData);
         
-        return new VoltDbUpdateRequest(Long.parseLong(usageRequest.getMsisdn()), newMinutes, newSms, newData);
+        return new VoltDbUpdateRequest(balance.getMsisdn(), newMinutes, newSms, newData);
     }
     
     /**
@@ -202,8 +179,6 @@ public class ChfService {
         
         // Kafka'ya gönder
         kafkaProducer.sendAllMessages(abmfMessage, cgfMessage, notificationMessage);
-        
-        logger.info("Kafka messages sent for MSISDN: {}", usageRequest.getMsisdn());
     }
     
     /**
@@ -230,32 +205,15 @@ public class ChfService {
                 totalAmount = balance.getAmountData();
                 remainingAmount = updateRequest.getRemainingData();
                 break;
-            default:
-                logger.warn("Unknown usage type for notification: {}", usageRequest.getUsageType());
-                return null;
-        }
-        
-        // Null check
-        if (totalAmount == null || totalAmount == 0) {
-            logger.warn("Total amount is null or zero for MSISDN: {}, Type: {}", 
-                       usageRequest.getMsisdn(), usageRequest.getUsageType());
-            return null;
         }
         
         // Kullanım yüzdesini hesapla
         double usagePercentage = ((double) (totalAmount - remainingAmount) / totalAmount) * 100;
         
-        logger.debug("Usage percentage for MSISDN: {}, Type: {}, Percentage: {}%", 
-                    usageRequest.getMsisdn(), usageRequest.getUsageType(), usagePercentage);
-        
         // %80 veya %100 kontrolü
         if (usagePercentage >= 100) {
-            logger.info("100% usage reached for MSISDN: {}, Type: {}", 
-                       usageRequest.getMsisdn(), usageRequest.getUsageType());
             return createNotificationMessage(balance, updateRequest, usageRequest, 100, "LIMIT_EXCEEDED");
         } else if (usagePercentage >= 80) {
-            logger.info("80% usage reached for MSISDN: {}, Type: {}", 
-                       usageRequest.getMsisdn(), usageRequest.getUsageType());
             return createNotificationMessage(balance, updateRequest, usageRequest, 80, "WARNING");
         }
         
@@ -263,7 +221,7 @@ public class ChfService {
     }
     
     /**
-     * Notification mesajı oluştur - DateObject helper metodları ile güncellenmiş
+     * Notification mesajı oluştur
      */
     private NotificationMessage createNotificationMessage(VoltDbBalanceResponse.BalanceResult balance, 
                                                         VoltDbUpdateRequest updateRequest, 
@@ -280,8 +238,8 @@ public class ChfService {
                 getRemainingByType(updateRequest, usageRequest.getUsageType()),
                 message,
                 balance.getPackageName(),
-                balance.getStartDateString(),  // Helper method kullanılıyor
-                balance.getEndDateString(),    // Helper method kullanılıyor
+                balance.getStartDate(),
+                balance.getEndDate(),
                 balance.getAmountMinutes(),
                 balance.getAmountSms(),
                 balance.getAmountData(),
@@ -304,7 +262,6 @@ public class ChfService {
             case DATA:
                 return updateRequest.getRemainingData();
             default:
-                logger.warn("Unknown usage type for remaining calculation: {}", usageType);
                 return 0;
         }
     }
