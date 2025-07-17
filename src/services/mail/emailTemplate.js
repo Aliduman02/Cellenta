@@ -1,14 +1,58 @@
-const generateEmailTemplate = ({
-  customer,
-  packageInfo,
-  usageAlert,
-  timestamp,
-}) => {
-  const isLimitExceeded = usageAlert.notificationType === "LIMIT_EXCEEDED";
+const generateEmailTemplate = (parsed) => {
+  const isLimitExceeded = parsed.notification_message === "LIMIT_EXCEEDED";
+
+  const usagetype = (type, parsed) => {
+    if (!type) return "";
+    const lower = type.toLowerCase();
+    if (lower === "data") return "GB";
+    if (lower === "minutes") return "dakika";
+    if (lower === "sms") return "SMS";
+    console.log("type:", type);
+    return type;
+  };
+
+  const total = (type, parsed) => {
+    if (!type || !parsed) return "";
+
+    const lower = type.toLowerCase();
+    const map = {
+      data: "total_data",
+      sms: "total_sms",
+      minutes: "total_minutes",
+    };
+    const key = map[lower];
+    let value = parsed?.[key];
+    if (lower === "data" && value) {
+      const gb = (Number(value) / 1000).toFixed(1);
+      return gb;
+    }
+    return value || "";
+  };
+
+  const remaining = (type, parsed) => {
+    if (!type || !parsed) return "";
+    const lower = type.toLowerCase();
+    const map = {
+      data: "remaining_data",
+      sms: "remaining_sms",
+      minutes: "remaining_minutes",
+    };
+    const key = map[lower];
+    let value = parsed?.[key];
+    if (lower === "data" && value) {
+      const rem_gb = (Number(value) / 1000).toFixed(1);
+      return rem_gb;
+    }
+    return value || "";
+  };
 
   const alertHTML = isLimitExceeded
-    ? `<div class="alert exceeded">${usageAlert.usageType} Paketinizi tamamen tükettiniz.<br\> Kullanıma devam etmek istiyorsanız ek ${usageAlert.usageType} paketi almanız gerekmektedir. ❗</div>`
-    : `<div class="alert">Paketinizin %${usageAlert.usagePercentage} kullanım sınırına ulaştınız. ⚠️</div>`;
+    ? `<div class="alert exceeded">Paketinizin ${usagetype(
+        parsed.usage_type
+      )} haklarını tamamen tükettiniz.<br\> Kullanıma devam etmek istiyorsanız ek ${usagetype(
+        parsed.usage_type
+      )} paketi almanız gerekmektedir. ❗</div>`
+    : `<div class="alert">Paketinizin %${parsed.percentage} kullanım sınırına ulaştınız. ⚠️</div>`;
 
   return `
 <!DOCTYPE html>
@@ -86,41 +130,64 @@ const generateEmailTemplate = ({
       </div>
 
       <div class="content">
-        <div class="title">Merhaba ${customer.name} ${customer.surname},</div>
+        <div class="title">Merhaba ${parsed.name} ${parsed.surname},</div>
         <p>
           <strong>${
-            packageInfo.packageName
-          }</strong> kullanıcısı olarak,  <strong>${new Date(
-    timestamp
-  ).toLocaleString("tr-TR")}</strong> tarihinde
-          yaptığınız son <strong>${usageAlert.usageType}</strong> kullanımı
+            parsed.package_name
+          }</strong> kullanıcısı olarak, <strong>${new Date(
+    parsed.timestamp
+  ).toLocaleString("tr-TR", {
+    hour: "2-digit",
+    minute: "2-digit",
+  })}</strong> tarihinde
+          yaptığınız son <strong>${usagetype(
+            parsed.usage_type
+          )}</strong> kullanımı
           doğrultusunda <br />${alertHTML} <br /><br />Kullanım
           bilgileriniz aşağıda belirtilmiştir:
         </p>
 
         <ul>
-          <li><strong>Kullanım Türü:</strong> ${usageAlert.usageType}</li>
-          <li><strong>Paket Limiti:</strong> ${usageAlert.packageLimit} MB</li>
-          <li><strong>Kullanılan:</strong> ${usageAlert.usedAmount} MB</li>
-          <li><strong>Kalan:</strong> ${usageAlert.remainingAmount} MB</li>
+         <li><strong>Toplam:</strong> ${total(
+           parsed.usage_type,
+           parsed
+         )} ${usagetype(parsed.usage_type)}
+  </li>
+          <li><strong>Kalan:</strong> ${remaining(
+            parsed.usage_type,
+            parsed
+          )} ${usagetype(parsed.usage_type)}  </li>
           <li>
             <strong>Paket Başlangıç Tarihi:</strong> ${new Date(
-              packageInfo.startDate
+              parsed.package_start_date
             ).toLocaleDateString("tr-TR")}
           </li>
           <li>
-            <strong>Paket Bitiş Tarihi:</strong> ${new Date(
-              packageInfo.endDate
+            <strong>Paket Son Kullanım Tarihi:</strong> ${new Date(
+              parsed.package_end_date
             ).toLocaleDateString("tr-TR")}
           </li>
         </ul>
-
-        <div class="footer">
-          Bu e-posta ${new Date().toLocaleString("tr-TR")} tarihinde
-          oluşturulmuştur.<br/>
-          Sorularınız için
-          <a href="" target="_blank">bizimle iletişime geçebilirsiniz</a>.<br/>
-          © 2025 Cellenta – Tüm hakları saklıdır.
+ <div class="footer">
+       <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td style="text-align: center;">
+      Bu e-posta ${new Date().toLocaleString(
+        "tr-TR"
+      )} tarihinde oluşturulmuştur.
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center;">
+      Sorularınız için <a href="" style="color: #4B0082; text-decoration: none;">bizimle iletişime geçebilirsiniz</a>.
+    </td>
+  </tr>
+  <tr>
+    <td style="text-align: center;">
+      © 2025 Cellenta – Tüm hakları saklıdır.
+    </td>
+  </tr>
+</table>
         </div>
       </div>
     </div>

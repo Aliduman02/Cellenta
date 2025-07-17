@@ -33,24 +33,26 @@ export async function startConsumer() {
         console.warn("⚠️ message.value boş!");
         return;
       }
+      console.log(`===================================================`);
       console.log(`📩 Mesaj geldi [${topic}] Partition: ${partition}`);
       try {
         const parsed = JSON.parse(data);
-        const msisdn = parsed.customer.msisdn;
+        // console.log("parsed:", parsed);
+        const msisdn = parsed.msisdn;
         const customerResult = await callGetCustomer(msisdn);
-
-        if (customerResult.rows.length > 0) {
+        if (!(customerResult.rows.length === 0)) {
           const row = customerResult.rows[0];
-          parsed.customer.name = row.NAME;
-          parsed.customer.surname = row.SURNAME;
-          parsed.customer.email = row.EMAIL;
+          parsed.name = row.NAME;
+          parsed.surname = row.SURNAME;
+          parsed.email = row.EMAIL;
+          console.log("parsed:", parsed);
+          await sendEmail({
+            to: parsed.email,
+            parsed: parsed,
+          });
         } else {
-          console.log("Müşteri bulunamadı.");
+          console.log("⚠ Müşteri bulunamadı. msisdn:", parsed.msisdn);
         }
-        await sendEmail({
-          to: parsed.customer.email,
-          parsed: parsed,
-        });
       } catch (error) {
         console.error("❌ JSON parse hatası:", error);
       }

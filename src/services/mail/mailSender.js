@@ -7,7 +7,6 @@ import { callLogNotification } from "../db/log_notification.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 import generateEmailTemplate from "../mail/emailTemplate.js";
-import { log } from "console";
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
@@ -36,11 +35,9 @@ export async function sendEmail({ to, parsed }) {
       ],
     });
     console.log("Email gönderildi:", info.messageId);
-    const logtype =
-      parsed.usageAlert.usageType + " " + parsed.usageAlert.notificationType;
-    const logStatus = await callLogNotification(parsed.customer.email, logtype);
-    console.log(logtype);
-    console.log("Log Notification Status:", logStatus);
+    const logtype = parsed.usage_type + " " + parsed.notification_message;
+    const logStatus = await callLogNotification(parsed.email, logtype);
+    console.log("Email Log Notification Status:", logStatus);
   } catch (error) {
     console.error("Email gönderme hatası:", error);
   }

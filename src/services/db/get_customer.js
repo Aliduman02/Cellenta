@@ -21,13 +21,15 @@ export async function callGetCustomer(msisdn) {
     );
     const customerSet = customer.outBinds.o_customer;
     const statusCode = customer.outBinds.o_status_code;
+    console.log("status_code:", statusCode);
+
     const rows = await customerSet.getRows();
     if (!rows || rows.length === 0) {
-      console.warn("⚠ Müşteri bulunamadı.");
+      await customerSet.close();
+    } else {
+      await customerSet.close();
+      console.log("customer rows:", rows);
     }
-    await customerSet.close();
-    console.log("customer rows:", rows);
-    console.log("status_code:", statusCode);
     return {
       rows,
       statusCode,
