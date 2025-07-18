@@ -34,10 +34,13 @@ export async function sendEmail({ to, parsed }) {
         },
       ],
     });
-    console.log("Email gönderildi:", info.messageId);
     const logtype = parsed.usage_type + " " + parsed.notification_message;
     const logStatus = await callLogNotification(parsed.email, logtype);
-    console.log("Email Log Notification Status:", logStatus);
+    return {
+      success: true,
+      emailId: info.messageId,
+      logStatus,
+    };
   } catch (error) {
     console.error("Email gönderme hatası:", error);
   }

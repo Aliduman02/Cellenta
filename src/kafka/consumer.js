@@ -10,6 +10,8 @@ const kafka = new Kafka({
   clientId: "notification-service",
   brokers: [process.env.KAFKA_BROKER],
 });
+import { smsSender } from "../services/sms/smsSender.js";
+
 const consumer = kafka.consumer({ groupId: "notification-group" });
 CompressionCodecs[CompressionTypes.Snappy] = snappy;
 
@@ -37,7 +39,6 @@ export async function startConsumer() {
       console.log(`📩 Mesaj geldi [${topic}] Partition: ${partition}`);
       try {
         const parsed = JSON.parse(data);
-        // console.log("parsed:", parsed);
         const msisdn = parsed.msisdn;
         const customerResult = await callGetCustomer(msisdn);
         if (!(customerResult.rows.length === 0)) {
@@ -45,11 +46,16 @@ export async function startConsumer() {
           parsed.name = row.NAME;
           parsed.surname = row.SURNAME;
           parsed.email = row.EMAIL;
-          console.log("parsed:", parsed);
-          await sendEmail({
+          const emailSum = await sendEmail({
             to: parsed.email,
             parsed: parsed,
           });
+          console.log(emailSum);
+          const smsSum = await smsSender({
+            to: parsed.msisdn,
+            parsed: parsed,
+          });
+          console.log(smsSum);
         } else {
           console.log("⚠ Müşteri bulunamadı. msisdn:", parsed.msisdn);
         }
