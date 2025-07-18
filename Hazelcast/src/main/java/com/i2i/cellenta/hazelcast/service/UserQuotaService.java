@@ -22,7 +22,7 @@ public class UserQuotaService {
         }
 
         if (userQuotas.containsKey(msisdn)) {
-            throw new IllegalStateException("User '" + msisdn + "' already exists.");
+            throw new IllegalArgumentException("User '" + msisdn + "' already exists.");
         }
 
         userQuotas.put(msisdn, new UserQuota(minutes, sms, data));
@@ -40,6 +40,46 @@ public class UserQuotaService {
 
         return userQuotas.get(msisdn);
         // or to return a String of return userQuotas.get(msisdn).toString;
+
+    }
+
+    public static int getUserMinutes(String msisdn) {
+        IMap<String, UserQuota> userQuotas = hz.getMap(MAP_NAME);
+
+        if (msisdn == null) {
+            throw new IllegalArgumentException("MSISDN cannot be null.");
+        }
+        if (!userQuotas.containsKey(msisdn)) {
+            throw new IllegalArgumentException("MSISDN '" + msisdn + "' not found.");
+        }
+
+        return userQuotas.get(msisdn).getMinutes();
+    }
+
+    public static int getUserSms(String msisdn) {
+        IMap<String, UserQuota> userQuotas = hz.getMap(MAP_NAME);
+
+        if (msisdn == null) {
+            throw new IllegalArgumentException("MSISDN cannot be null.");
+        }
+        if (!userQuotas.containsKey(msisdn)) {
+            throw new IllegalArgumentException("MSISDN '" + msisdn + "' not found.");
+        }
+
+        return userQuotas.get(msisdn).getSms();
+    }
+
+    public static int getUserData(String msisdn) {
+        IMap<String, UserQuota> userQuotas = hz.getMap(MAP_NAME);
+
+        if (msisdn == null) {
+            throw new IllegalArgumentException("MSISDN cannot be null.");
+        }
+        if (!userQuotas.containsKey(msisdn)) {
+            throw new IllegalArgumentException("MSISDN '" + msisdn + "' not found.");
+        }
+
+        return userQuotas.get(msisdn).getData();
 
     }
 
@@ -64,6 +104,17 @@ public class UserQuotaService {
         return true;
     }
 
+    public static int size() {
+        IMap<String, String> registeredUsers = hz.getMap(MAP_NAME);
+
+        if (registeredUsers == null) {
+            throw new IllegalArgumentException("Hazelcast map 'userQuotas' is null.");
+        }
+
+        return registeredUsers.size();
+    }
+
+
     public static boolean removeUserQuota(String msisdn) {
         IMap<String, UserQuota> userQuotas = hz.getMap(MAP_NAME);
 
@@ -74,23 +125,37 @@ public class UserQuotaService {
         UserQuota removed = userQuotas.remove(msisdn);
 
         if (removed == null) {
-            throw new IllegalStateException("Removal failed for MSISDN '" + msisdn + "'.");
+            throw new IllegalArgumentException("Removal failed for MSISDN '" + msisdn + "'.");
         }
         System.out.println(msisdn + " was removed successfully ");
         return true;
     }
 
+    public static boolean removeAllUserQuota() {
+        IMap<String, UserQuota> userQuotas = hz.getMap(MAP_NAME);
+
+        if (userQuotas.isEmpty()) {
+            throw new IllegalArgumentException("The map is empty. Nothing to remove.");
+        }
+
+        userQuotas.clear();
+        System.out.println("All user quotas removed successfully.");
+        return true;
+    }
+
+
+
     public static List<Map.Entry<String, UserQuota>> getAllUserQuotas() {
         IMap<String, UserQuota> userQuotas = hz.getMap(MAP_NAME);
 
         if (userQuotas == null) {
-            throw new IllegalStateException("Hazelcast map 'userQuotas' is null.");
+            throw new IllegalArgumentException("Hazelcast map 'userQuotas' is null.");
         }
 
         Set<Map.Entry<String, UserQuota>> entries = userQuotas.entrySet();
 
         if (entries.isEmpty()) {
-            throw new IllegalStateException("No active balances found in 'userQuotas' map.");
+            throw new IllegalArgumentException("No active balances found in 'userQuotas' map.");
         }
 
         return new ArrayList<>(entries);

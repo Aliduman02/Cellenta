@@ -2,9 +2,10 @@ package com.i2i.cellenta.hazelcast.test;
 
 import com.i2i.cellenta.hazelcast.model.UserQuota;
 import com.i2i.cellenta.hazelcast.config.HazelcastConnector;
-import com.i2i.cellenta.hazelcast.service.UserBalanceService;
+import com.i2i.cellenta.hazelcast.service.MsisdnService;
+import com.i2i.cellenta.hazelcast.service.UserWalletService;
 import com.i2i.cellenta.hazelcast.service.UserQuotaService;
-import com.i2i.cellenta.hazelcast.service.UserRegistryService;
+import com.i2i.cellenta.hazelcast.util.MsisdnGenerator;
 
 public class MapsTesting {
     public static void main(String[] args) {
@@ -12,33 +13,44 @@ public class MapsTesting {
 
 
         String userId = "user1";
-        double balance = 100.0;
+        int balance = 100;
         int minutes = 300;
         int sms = 499;
         int data = 600;
 
         System.out.println("Registering user...");
-        UserRegistryService.registerUser(userId);
-        System.out.println("the registered User: " +UserRegistryService.getRegisteredUser( userId));
-        UserRegistryService.registerUser("MHJ");
-        UserRegistryService.registerUser("ALI");
-        UserRegistryService.unregisterUser("ALI");
+//        MsisdnService.unregisterAllMsisdns();
+        UserQuotaService.removeAllUserQuota();
+        UserWalletService.removeAllWallets();
 
-        System.out.println("returning all the map of: UserRegistryService");
-        System.out.println(UserRegistryService.getAllRegisteredUsers());
+//        MsisdnService.registerMsisdn(userId);
+//        MsisdnService.registerMsisdn("MHJ");
+        MsisdnService.registerMsisdn("ALI");
+        MsisdnService.unregisterMsisdn("ALI");
+
+        System.out.println("returning all the map of: MsisdnService");
+        System.out.println(MsisdnService.getAllRegisteredMsisdns());
+        String[] run = new String[10];
+        for (int i = 0; i < 10 ; i++) {
+            run[i] = MsisdnGenerator.generateRandomMsisdn();
+            MsisdnService.registerMsisdn(run[i]);
+            System.out.println(run[i]);
+        }
+        System.out.println(MsisdnService.getAllRegisteredMsisdns());
+        System.out.println(MsisdnService.size());
 
 
 
         // Set balance
         System.out.println("Setting user balance...");
-        UserBalanceService.createUserBalance(userId, balance);
-        System.out.println("the registered User Balance for "+ userId+ ": " +UserBalanceService.getUserBalance(userId));
-        UserBalanceService.createUserBalance("AMR", 343.0);
-        UserBalanceService.createUserBalance("APO", 545.3);
-        UserBalanceService.removeUserBalance("APO");
+        UserWalletService.createWallet(userId, balance);
+        System.out.println("the registered User Balance for "+ userId+ ": " +UserWalletService.getWalletAmount(userId));
+        UserWalletService.createWallet("AMR", 343);
+        UserWalletService.createWallet("APO", 545);
+        UserWalletService.removeWallet("APO");
 
-        System.out.println("returning all the map of: UserBalanceService");
-        System.out.println(UserBalanceService.getAllUserBalances());
+        System.out.println("returning all the map of: UserWalletService");
+        System.out.println(UserWalletService.getAllWallets());
 
 
         // Set quota
