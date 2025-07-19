@@ -40,17 +40,19 @@ export async function startConsumer() {
       try {
         const parsed = JSON.parse(data);
         const msisdn = parsed.msisdn;
+        console.log("parsed:", parsed);
+
         const customerResult = await callGetCustomer(msisdn);
         if (!(customerResult.rows.length === 0)) {
           const row = customerResult.rows[0];
-          parsed.name = row.NAME;
-          parsed.surname = row.SURNAME;
-          parsed.email = row.EMAIL;
-          const emailSum = await sendEmail({
-            to: parsed.email,
-            parsed: parsed,
-          });
-          console.log(emailSum);
+          // parsed.name = row.NAME;
+          // parsed.surname = row.SURNAME;
+          // parsed.email = row.EMAIL;
+          // const emailSum = await sendEmail({
+          //   to: parsed.email,
+          //   parsed: parsed,
+          // });
+          // console.log(emailSum);
           const smsSum = await smsSender({
             to: parsed.msisdn,
             parsed: parsed,

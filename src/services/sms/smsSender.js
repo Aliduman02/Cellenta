@@ -1,4 +1,5 @@
-export function smsSender({ to, parsed }) {
+import { smsLogger } from "./smsLogger.js";
+export async function smsSender({ to, parsed }) {
   const total = (type, parsed) => {
     if (!type || !parsed) return "";
 
@@ -25,6 +26,7 @@ export function smsSender({ to, parsed }) {
     console.log("type:", type);
     return type;
   };
+
   const message = `Sayın ${parsed.name}, ${new Date(
     parsed.timestamp
   ).toLocaleString("tr-TR", {
@@ -37,9 +39,11 @@ export function smsSender({ to, parsed }) {
     parsed.percentage
   }'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. `;
   console.log("🟡 SMS Mesaj'ı gönderildi...");
+  const logstatus = await smsLogger({ to, message });
   return {
     success: true,
     to,
     message: message,
+    logstatus,
   };
 }

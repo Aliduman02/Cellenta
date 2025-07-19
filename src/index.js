@@ -11,4 +11,5 @@ app.use("/api", smsRouter);
 app.listen(3000, () => {
   console.log("🚀 Mock SMS servisi 3000 portunda çalışıyor.");
 });
+
 startConsumer().catch(console.error);
