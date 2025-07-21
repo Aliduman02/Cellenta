@@ -1,12 +1,14 @@
 import fs from "fs/promises";
 import path from "path";
 
-export async function smsLogger({ to, message }) {
+export async function smsLogger({ to, message, tip, tur }) {
   const logPath = path.join("logs", "mock-sms-log.json");
   const logEntry = {
     msisdn: to,
     message: message,
     success: true,
+    usage_type: tip,
+    notification_message: tur,
     timestamp: new Date().toISOString(),
   };
   await fs.mkdir("logs", { recursive: true });

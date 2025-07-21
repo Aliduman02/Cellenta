@@ -8,3 +8,4 @@ node_modules/
 
 #kafka
 src/kafka/producer.js
+KafkaApp-1.0-SNAPSHOT.jar

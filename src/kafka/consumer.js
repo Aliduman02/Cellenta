@@ -19,50 +19,55 @@ export async function startConsumer() {
   await consumer.connect();
   await consumer.subscribe({
     topic: process.env.KAFKA_TOPIC,
-    fromBeginning: true,
+    fromBeginning: false,
   });
   console.log("✅ Kafka consumer dinleniyor...");
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
-      if (!message.value) {
-        console.warn("⚠️ Mesajın içeriği boş!");
-        return;
-      } else if (typeof message.value !== "object") {
-        console.warn("Beklenmeyen mesaj tipi:", typeof message.value);
-      }
-      const data = message.value?.toString();
-      if (!data) {
-        console.warn("⚠️ message.value boş!");
-        return;
-      }
-      console.log(`===================================================`);
-      console.log(`📩 Mesaj geldi [${topic}] Partition: ${partition}`);
       try {
-        const parsed = JSON.parse(data);
-        const msisdn = parsed.msisdn;
-        console.log("parsed:", parsed);
-
-        const customerResult = await callGetCustomer(msisdn);
-        if (!(customerResult.rows.length === 0)) {
-          const row = customerResult.rows[0];
-          // parsed.name = row.NAME;
-          // parsed.surname = row.SURNAME;
-          // parsed.email = row.EMAIL;
-          // const emailSum = await sendEmail({
-          //   to: parsed.email,
-          //   parsed: parsed,
-          // });
-          // console.log(emailSum);
-          const smsSum = await smsSender({
-            to: parsed.msisdn,
-            parsed: parsed,
-          });
-          console.log(smsSum);
-        } else {
-          console.log("⚠ Müşteri bulunamadı. msisdn:", parsed.msisdn);
+        if (!message.value) {
+          console.warn("⚠️ Mesajın içeriği boş!");
+          return;
+        } else if (typeof message.value !== "object") {
+          console.warn("Beklenmeyen mesaj tipi:", typeof message.value);
+        }
+        const data = message.value?.toString();
+        if (!data) {
+          console.warn("⚠️ message.value boş!");
+          return;
+        }
+        console.log(`===================================================`);
+        console.log(`📩 Mesaj geldi [${topic}] Partition: ${partition}`);
+        try {
+          const parsed = JSON.parse(data);
+          const msisdn = parsed.msisdn;
+          const customerResult = await callGetCustomer(msisdn);
+          if (!(customerResult.rows.length === 0)) {
+            const row = customerResult.rows[0];
+            parsed.name = row.NAME;
+            parsed.surname = row.SURNAME;
+            parsed.email = row.EMAIL;
+            console.log("email:", parsed.email);
+            console.log("parsed:", parsed);
+            const emailSum = await sendEmail({
+              to: parsed.email,
+              parsed: parsed,
+            });
+            console.log(emailSum);
+            const smsSum = await smsSender({
+              to: parsed.msisdn,
+              parsed: parsed,
+            });
+            console.log(smsSum);
+            console.log("offset:", message.offset);
+          } else {
+            console.log("⚠ Müşteri bulunamadı. msisdn:", parsed.msisdn);
+          }
+        } catch (error) {
+          console.error("❌ JSON parse hatası:", error.message);
         }
       } catch (error) {
-        console.error("❌ JSON parse hatası:", error);
+        console.log("en tepe block hatası:", error.message);
       }
     },
   });

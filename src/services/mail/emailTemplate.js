@@ -26,7 +26,7 @@ const generateEmailTemplate = (parsed) => {
       const gb = (Number(value) / 1000).toFixed(1);
       return gb;
     }
-    return value || "";
+    return value || "0";
   };
 
   const remaining = (type, parsed) => {
@@ -43,7 +43,7 @@ const generateEmailTemplate = (parsed) => {
       const rem_gb = (Number(value) / 1000).toFixed(1);
       return rem_gb;
     }
-    return value || "";
+    return value || "0";
   };
 
   const alertHTML = isLimitExceeded
@@ -72,7 +72,7 @@ const generateEmailTemplate = (parsed) => {
         margin: 30px auto;
         max-width: 900px;
         border-radius: 8px;
-       
+
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         border: 2px solid rgba(0, 0, 0, 0.1);
       }
@@ -106,7 +106,6 @@ const generateEmailTemplate = (parsed) => {
         border-radius: 4px;
         margin-top: 20px;
         font-size: 20px;
-
       }
       .alert.exceeded {
         background: #f8d7da;
@@ -117,77 +116,95 @@ const generateEmailTemplate = (parsed) => {
         text-align: center;
         color: #999;
         margin-top: 20px;
-        padding: 20px;
-        padding-top: 50px;
+        padding: 10px;
+        padding-top: 30px;
         border-top: 1px solid #b8b8b8;
+      }
+      .usage-card {
+        background-color: #f9f7fc;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      .usage-card h3 {
+        font-size: 18px;
+        margin-bottom: 16px;
+        color: #362c94;
       }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <img src="cid:cellenta-logo" alt="Cellenta "width="500" />
+        <img src="cid:cellenta-logo" alt="Cellenta " width="500" />
       </div>
 
       <div class="content">
         <div class="title">Merhaba ${parsed.name} ${parsed.surname},</div>
         <p>
-          <strong>${
-            parsed.package_name
-          }</strong> kullanıcısı olarak, <strong>${new Date(
-    parsed.timestamp
-  ).toLocaleString("tr-TR", {
-    hour: "2-digit",
-    minute: "2-digit",
-  })}</strong> tarihinde
-          yaptığınız son <strong>${usagetype(
-            parsed.usage_type
-          )}</strong> kullanımı
-          doğrultusunda <br />${alertHTML} <br /><br />Kullanım
-          bilgileriniz aşağıda belirtilmiştir:
+          <strong>${parsed.package_name}</strong> kullanıcısı olarak,
+          <strong
+            >${new Date(parsed.timestamp).toLocaleString("tr-TR", {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}</strong
+          >
+          tarihinde yaptığınız son
+          <strong>${usagetype(parsed.usage_type)}</strong> kullanımı
+          doğrultusunda
         </p>
+        <br />${alertHTML} <br /><br />
+        <div class="usage-card">
+          <h3>Kullanım bilgileriniz aşağıda belirtilmiştir:</h3>
+          <div id="progressbar">
+            <div></div>
+          </div>
+          <div class="usage-info">
+            <ul>
+              <li>
+                <strong>Kalan Kullanım Hakkınız:</strong> ${remaining(
+                  parsed.usage_type,
+                  parsed
+                )}  / ${total(parsed.usage_type, parsed)} ${usagetype(
+    parsed.usage_type
+  )}
+              </li>
+              <li>
+                <strong>Paket Başlangıç Tarihi:</strong> ${new Date(
+                  parsed.package_start_date
+                ).toLocaleDateString("tr-TR")}
+              </li>
+              <li>
+                <strong>Paket Son Kullanım Tarihi:</strong> ${new Date(
+                  parsed.package_end_date
+                ).toLocaleDateString("tr-TR")}
+              </li>
+            </ul>
+          </div>
+        </div>
 
-        <ul>
-         <li><strong>Toplam:</strong> ${total(
-           parsed.usage_type,
-           parsed
-         )} ${usagetype(parsed.usage_type)}
-  </li>
-          <li><strong>Kalan:</strong> ${remaining(
-            parsed.usage_type,
-            parsed
-          )} ${usagetype(parsed.usage_type)}  </li>
-          <li>
-            <strong>Paket Başlangıç Tarihi:</strong> ${new Date(
-              parsed.package_start_date
-            ).toLocaleDateString("tr-TR")}
-          </li>
-          <li>
-            <strong>Paket Son Kullanım Tarihi:</strong> ${new Date(
-              parsed.package_end_date
-            ).toLocaleDateString("tr-TR")}
-          </li>
-        </ul>
- <div class="footer">
-       <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr>
-    <td style="text-align: center;">
-      Bu e-posta ${new Date().toLocaleString(
-        "tr-TR"
-      )} tarihinde oluşturulmuştur.
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align: center;">
-      Sorularınız için <a href="" style="color: #4B0082; text-decoration: none;">bizimle iletişime geçebilirsiniz</a>.
-    </td>
-  </tr>
-  <tr>
-    <td style="text-align: center;">
-      © 2025 Cellenta – Tüm hakları saklıdır.
-    </td>
-  </tr>
-</table>
+        <div class="footer">
+          <table width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+              <td style="text-align: center">
+                Bu e-posta ${new Date().toLocaleString("tr-TR")} tarihinde
+                oluşturulmuştur.
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: center">
+                Sorularınız için
+                <a href="" style="color: #4b0082; text-decoration: none"
+                  >bizimle iletişime geçebilirsiniz</a
+                >.
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: center">
+                © 2025 Cellenta – Tüm hakları saklıdır.
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

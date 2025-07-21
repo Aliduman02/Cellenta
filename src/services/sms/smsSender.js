@@ -27,6 +27,8 @@ export async function smsSender({ to, parsed }) {
     return type;
   };
 
+  const tur = parsed.notification_message;
+  const tip = parsed.usage_type;
   const message = `Sayın ${parsed.name}, ${new Date(
     parsed.timestamp
   ).toLocaleString("tr-TR", {
@@ -39,7 +41,12 @@ export async function smsSender({ to, parsed }) {
     parsed.percentage
   }'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. `;
   console.log("🟡 SMS Mesaj'ı gönderildi...");
-  const logstatus = await smsLogger({ to, message });
+  const logstatus = await smsLogger({
+    to,
+    message,
+    tip,
+    tur,
+  });
   return {
     success: true,
     to,
