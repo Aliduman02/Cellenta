@@ -15,7 +15,6 @@ public class CommandProcessor {
     public void start() {
         Scanner scanner = new Scanner(System.in);
         // connect() çağrısı yok, direkt kullanabilirsin
-        msisdnManager.connect(); 
         System.out.println("Komutlar: updateMsisdn | start | stop | terminate");
 
         while (true) {
@@ -29,18 +28,27 @@ public class CommandProcessor {
                 case "start":
                     if (simThread != null && simThread.isAlive()) {
                         System.out.println("Simülasyon zaten çalışıyor.");
-                        break;
+                    } else {
+                        simThread = new Thread(new TrafficSimulator(msisdnManager, chfClient));
+                        simThread.start();
+                        System.out.println("Simülasyon başlatıldı.");
                     }
-                    simThread = new Thread(new TrafficSimulator(msisdnManager, chfClient));
-                    simThread.start();
                     break;
+                    
                 case "stop":
-                    if (simThread != null) simThread.interrupt();
+                    if (simThread != null && simThread.isAlive()) {
+                        simThread.interrupt();
+                        simThread = null;
+                        System.out.println("Simülasyon durduruldu.");
+                    } else {
+                        System.out.println("Zaten durdurulmuş.");
+                    }
                     break;
                 case "terminate":
                     System.out.println("Uygulama kapatılıyor...");
                     if (simThread != null) simThread.interrupt();
-                    return;
+                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Geçersiz komut.");
             }

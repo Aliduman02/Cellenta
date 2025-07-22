@@ -45,7 +45,7 @@ public class TrafficSimulator implements Runnable {
             }
 
             try {
-                Thread.sleep(2000);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
                 System.out.println("Simülasyon durduruldu.");
                 break;
