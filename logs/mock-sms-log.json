@@ -1,202 +1,74 @@
 [
   {
-    "msisdn": "5341238571",
-    "message": "Sayın Eray, 12:48 itibariyle Mega Konuşma kapsamindaki 500 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "msisdn": "5369882365",
+    "message": "Sayın veli, 08:35 itibariyle Standart Konuşma kapsamindaki 250 dakika hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-21T12:49:23.783Z"
-  },
-  {
-    "msisdn": "5335970101",
-    "message": "Sayın sena nur, 12:47 itibariyle Mini Öğrenci kapsamindaki 1.0 GB hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "data",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-21T12:49:26.231Z"
-  },
-  {
-    "msisdn": "5647812323",
-    "message": "Sayın esra, 12:49 itibariyle Genç Tarife kapsamindaki 200 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-21T12:49:28.769Z"
-  },
-  {
-    "msisdn": "5301947283",
-    "message": "Sayın Bilal, 12:48 itibariyle Genç Tarife kapsamindaki 100 SMS hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "sms",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-21T12:49:31.262Z"
+    "notification_message": "LIMIT_EXCEEDED",
+    "timestamp": "2025-07-22T08:35:20.726Z"
   },
   {
     "msisdn": "5551234567",
-    "message": "Sayın Ege, 10:30 itibariyle Mega 10GB kapsamindaki 100 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "message": "Sayın Ege, 10:30 itibariyle ERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY kapsamindaki 100 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-21T12:53:18.868Z"
+    "notification_message": "LIMIT_EXCEEDED",
+    "timestamp": "2025-07-22T10:22:22.695Z"
   },
   {
     "msisdn": "5551234567",
-    "message": "Sayın Ege, 10:30 itibariyle Mega 10GB kapsamindaki 100 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "message": "Sayın Ege, 10:30 itibariyle ERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY kapsamindaki 100 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-21T12:56:09.842Z"
+    "notification_message": "LIMIT_EXCEEDED",
+    "timestamp": "2025-07-22T10:24:22.829Z"
   },
   {
     "msisdn": "5551234567",
-    "message": "Sayın Ege, 10:30 itibariyle Mega 10GB kapsamindaki 100 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "message": "Sayın Ege, 10:30 itibariyle ERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY kapsamindaki 100 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "minutes",
     "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-21T13:00:43.983Z"
+    "timestamp": "2025-07-22T10:44:10.625Z"
   },
   {
-    "msisdn": "5079135268",
-    "message": "Sayın Emirhan, 13:12 itibariyle Mega Konuşma kapsamindaki 500 dakika hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "minutes",
-    "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-21T13:15:03.978Z"
-  },
-  {
-    "msisdn": "5378373741",
-    "message": "Sayın miray, 13:07 itibariyle Mini Öğrenci kapsamindaki 50 SMS hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "msisdn": "5434354343",
+    "message": "Sayın esra, 10:54 itibariyle Mini Öğrenci kapsamindaki 50 SMS hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "sms",
     "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-21T13:15:06.512Z"
+    "timestamp": "2025-07-22T10:55:12.049Z"
   },
   {
-    "msisdn": "5540291386",
-    "message": "Sayın Asli, 13:20 itibariyle Mini Konuşma kapsamindaki 100 dakika hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "msisdn": "5551234567",
+    "message": "Sayın Ege, 10:30 itibariyle ERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY kapsamindaki 100 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "minutes",
     "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-21T13:20:53.554Z"
+    "timestamp": "2025-07-22T10:55:12.839Z"
   },
   {
-    "msisdn": "5093781425",
-    "message": "Sayın Sevval, 13:27 itibariyle Genç Tarife kapsamindaki 100 SMS hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "sms",
-    "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-21T13:27:21.647Z"
-  },
-  {
-    "msisdn": "5343225337",
-    "message": "Sayın şevval, 13:28 itibariyle Mega Konuşma kapsamindaki 1.0 GB hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "msisdn": "5537813565",
+    "message": "Sayın Esra, 10:55 itibariyle Aile Paketi kapsamindaki 8.0 GB hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "data",
     "notification_message": "WARNING",
-    "timestamp": "2025-07-21T13:28:36.112Z"
+    "timestamp": "2025-07-22T10:55:25.301Z"
   },
   {
-    "msisdn": "5368120437",
-    "message": "Sayın Can, 06:43 itibariyle Mini İnternet kapsamindaki 30 SMS hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "sms",
-    "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-22T06:43:42.842Z"
-  },
-  {
-    "msisdn": "5497213648",
-    "message": "Sayın Hamude, 06:45 itibariyle Full Paket kapsamindaki 1000 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-22T06:45:28.318Z"
-  },
-  {
-    "msisdn": "5416238091",
-    "message": "Sayın Ekrem, 06:49 itibariyle Süper İnternet kapsamindaki 100 SMS hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "sms",
-    "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-22T06:49:38.872Z"
-  },
-  {
-    "msisdn": "5335970101",
-    "message": "Sayın sena nur, 06:49 itibariyle Mini Öğrenci kapsamindaki 50 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-22T06:49:50.472Z"
-  },
-  {
-    "msisdn": "5397818181",
-    "message": "Sayın efe, 06:50 itibariyle Mini Konuşma kapsamindaki 50 SMS hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "sms",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-22T06:50:14.421Z"
-  },
-  {
-    "msisdn": "5031829465",
-    "message": "Sayın Ali, 06:51 itibariyle Standart Konuşma kapsamindaki 100 SMS hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "sms",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-22T06:51:56.255Z"
-  },
-  {
-    "msisdn": "5647812323",
-    "message": "Sayın esra, 06:53 itibariyle Genç Tarife kapsamindaki 100 SMS hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "sms",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-22T06:53:40.215Z"
-  },
-  {
-    "msisdn": "5436903472",
-    "message": "Sayın Murat, 06:56 itibariyle Mini Öğrenci kapsamindaki 50 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-22T06:56:09.407Z"
-  },
-  {
-    "msisdn": "5436903472",
-    "message": "Sayın Murat, 06:59 itibariyle Mini Öğrenci kapsamindaki 50 dakika hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "msisdn": "5551234567",
+    "message": "Sayın Ege, 10:55 itibariyle Süper İnternet kapsamindaki 100 dakika hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "minutes",
     "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-22T06:59:17.085Z"
+    "timestamp": "2025-07-22T10:55:49.341Z"
   },
   {
-    "msisdn": "5436903472",
-    "message": "Sayın Murat, 07:03 itibariyle Mini Öğrenci kapsamindaki 1.0 GB hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "data",
-    "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-22T07:03:29.750Z"
-  },
-  {
-    "msisdn": "5361111111",
-    "message": "Sayın abcde, 07:21 itibariyle Aile Paketi kapsamindaki 1500 dakika hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "minutes",
-    "notification_message": "WARNING",
-    "timestamp": "2025-07-22T07:21:20.852Z"
-  },
-  {
-    "msisdn": "5361111111",
-    "message": "Sayın abcde, 07:22 itibariyle Aile Paketi kapsamindaki 1500 dakika hakknizin %100'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
-    "success": true,
-    "usage_type": "minutes",
-    "notification_message": "LIMIT_EXCEEDED",
-    "timestamp": "2025-07-22T07:22:30.119Z"
-  },
-  {
-    "msisdn": "5436903472",
-    "message": "Sayın Murat, 07:38 itibariyle Mini Öğrenci kapsamindaki 50 SMS hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
+    "msisdn": "5526189220",
+    "message": "Sayın Atena, 10:56 itibariyle Mini Öğrenci kapsamindaki 50 SMS hakknizin %80'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. ",
     "success": true,
     "usage_type": "sms",
     "notification_message": "WARNING",
-    "timestamp": "2025-07-22T07:38:49.819Z"
+    "timestamp": "2025-07-22T10:56:26.825Z"
   }
 ]

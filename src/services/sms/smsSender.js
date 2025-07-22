@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { smsLogger } from "./smsLogger.js";
 export async function smsSender({ to, parsed }) {
   const total = (type, parsed) => {
@@ -40,17 +41,23 @@ export async function smsSender({ to, parsed }) {
   )} ${usagetype(parsed.usage_type)} hakknizin %${
     parsed.percentage
   }'ini kullandiniz. Kalan kullanim haklarinizi Celi'den öğrenebilirsiniz. `;
-  console.log("🟡 SMS Mesaj'ı gönderildi...");
   const logstatus = await smsLogger({
     to,
     message,
     tip,
     tur,
   });
-  return {
-    success: true,
-    to,
-    message: message,
-    logstatus,
-  };
+  console.log(
+    chalk.yellow(
+      "Sms Gönderildi:",
+      JSON.stringify({
+        success: true,
+        to,
+        message: message,
+        logstatus,
+      }),
+      null,
+      2
+    )
+  );
 }

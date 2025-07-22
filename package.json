@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:kafka": "node  src/kafka/consumer.js",
     "start": "node src/index.js",
     "producer": "node src/kafka/producer.js"
   },
@@ -13,6 +14,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "chalk": "^5.4.1",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "kafkajs": "^2.2.4",
