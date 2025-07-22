@@ -2,6 +2,7 @@ export function LeftPanel() {
   return (
     <div className="left-content">
       <div
+        className="logo-section"
         style={{
           display: 'flex',
           alignItems: 'center',

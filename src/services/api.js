@@ -271,11 +271,13 @@ class ApiService {
     if (!msisdn) throw new Error('No user phone number');
 
     try {
+      console.log('Fetching balance for msisdn:', msisdn);
       const response = await this.request('/api/v1/balance', {
         method: 'POST',
         body: { msisdn },
       });
 
+      console.log('Balance API response:', response);
       return response;
     } catch (error) {
       console.error('Balance API failed:', error.message);
@@ -340,13 +342,16 @@ class ApiService {
   async getActiveTariff() {
     const balance = await this.getBalance();
 
-    return {
+    const tariff = {
       name: balance.packageName,
       price: balance.price,
       period: balance.period,
       startDate: balance.sdate,
       endDate: balance.edate,
     };
+
+    console.log('Active tariff extracted from balance:', tariff);
+    return tariff;
   }
 
   /**

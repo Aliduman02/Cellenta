@@ -7,7 +7,6 @@ html, body {
 
 .login-container {
   min-height: 100vh;
-  height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
@@ -289,40 +288,184 @@ html, body {
 }
 
 /* === RESPONSIVE === */
+
+/* Desktop - Eşit Paneller */
+@media (min-width: 1025px) {
+  .left-panel,
+  .right-panel {
+    flex: 1;
+    min-height: 100vh;
+  }
+  
+  .left-panel {
+    padding: 80px;
+  }
+  
+  .right-panel {
+    padding: 80px;
+  }
+  
+  .login-form-container {
+    max-width: 500px;
+    padding: 48px;
+  }
+}
+
+/* Tablet - Eşit Yan Yana */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .login-container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .left-panel,
+  .right-panel {
+    flex: 1;
+    min-height: 100vh;
+    padding: 40px 30px;
+  }
+  
+  .left-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .right-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .login-form-container {
+    max-width: 400px !important;
+    min-width: 300px !important;
+    padding: 32px;
+    width: 100%;
+  }
+  
+  .form-title {
+    font-size: 24px;
+  }
+  
+  .left-slogan {
+    font-size: 20px;
+  }
+  
+  .description {
+    font-size: 14px;
+  }
+  
+  .logo-section {
+    justify-content: center !important;
+    margin-bottom: 28px !important;
+  }
+  
+  .logo-icon {
+    height: 64px !important;
+  }
+  
+  .logo-title {
+    height: 36px !important;
+  }
+}
+
+/* Mobile - Stack Vertically */
 @media (max-width: 768px) {
   .login-container {
     flex-direction: column;
-    padding-top: 32px;
-    padding-bottom: 16px;
+    padding: 0;
     min-height: 100vh;
     width: 100vw;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
   }
 
-  .left-panel,
+  .left-panel {
+    padding: 32px 20px 24px 20px;
+    min-height: auto;
+    text-align: center;
+  }
+  
   .right-panel {
-    padding: 8px;
-    width: 100%;
+    padding: 0 20px 32px 20px;
+    flex: 1;
+    min-height: auto;
   }
 
   .login-form-container {
-    padding: 16px;
-    max-width: 100%;
-    margin: 0 8px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    min-width: 0;
+    padding: 24px 20px;
+    max-width: 100% !important;
+    margin: 0;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    min-width: 0 !important;
     width: 100%;
   }
 
   .form-title {
-    font-size: 20px;
-    margin-bottom: 18px;
+    font-size: 22px;
+    margin-bottom: 20px;
   }
+  
   .form-fields-flex {
-    gap: 12px;
+    gap: 16px;
+  }
+  
+  .left-slogan {
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  
+  .description {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  
+  .logo-title {
+    height: 32px !important;
+    margin-bottom: 20px;
+  }
+  
+  .logo-section {
+    justify-content: center !important;
+    margin-bottom: 24px !important;
+    gap: 12px !important;
+  }
+  
+  .logo-icon {
+    height: 48px !important;
+  }
+}
+
+/* Small Mobile Adjustments */
+@media (max-width: 480px) {
+  .login-form-container {
+    padding: 20px 16px !important;
+  }
+  
+  .logo-section {
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: center !important;
+  }
+  
+  .logo-icon {
+    height: 40px !important;
+  }
+  
+  .logo-title {
+    height: 24px !important;
+  }
+  
+  .left-slogan {
+    font-size: 16px !important;
+  }
+  
+  .description {
+    font-size: 12px !important;
   }
 }
 .input-with-icon {

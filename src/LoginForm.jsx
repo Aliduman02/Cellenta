@@ -9,6 +9,37 @@ export function LoginForm({ onSignUpClick }) {
   const [errors, setErrors] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
 
+  // Sayfa yüklendiğinde Remember Me verilerini kontrol et
+  React.useEffect(() => {
+    const savedRememberMe = localStorage.getItem('rememberMe') === 'true';
+    const savedPhone = localStorage.getItem('rememberedPhone');
+    
+    if (savedRememberMe && savedPhone) {
+      setRememberMe(true);
+      setPhone(savedPhone);
+      console.log('Remembered phone loaded:', savedPhone);
+    }
+  }, []);
+
+  // Remember Me değiştiğinde localStorage'ı güncelle
+  const handleRememberMeChange = (checked) => {
+    setRememberMe(checked);
+    
+    if (checked) {
+      // Remember Me aktif - telefonu kaydet (eğer var ise)
+      if (phone) {
+        localStorage.setItem('rememberMe', 'true');
+        localStorage.setItem('rememberedPhone', phone);
+        console.log('Phone saved for remember me:', phone);
+      }
+    } else {
+      // Remember Me kapalı - kayıtlı verileri temizle
+      localStorage.removeItem('rememberMe');
+      localStorage.removeItem('rememberedPhone');
+      console.log('Remember me data cleared');
+    }
+  };
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -38,9 +69,15 @@ export function LoginForm({ onSignUpClick }) {
     try {
       const response = await apiService.login(phone, password);
       
-      // Remember me seçeneği
+      // Remember me seçeneği - başarılı login sonrası telefonu kaydet
       if (rememberMe) {
         localStorage.setItem('rememberMe', 'true');
+        localStorage.setItem('rememberedPhone', phone);
+        console.log('Login successful - phone saved for remember me:', phone);
+      } else {
+        // Remember me kapalıysa kayıtlı verileri temizle
+        localStorage.removeItem('rememberMe');
+        localStorage.removeItem('rememberedPhone');
       }
 
       // Dashboard'a yönlendir
@@ -90,7 +127,15 @@ export function LoginForm({ onSignUpClick }) {
             name="phone"
             placeholder="Enter your phone number"
             value={phone}
-            onChange={e => setPhone(e.target.value)}
+            onChange={e => {
+              const newPhone = e.target.value;
+              setPhone(newPhone);
+              
+              // Remember Me aktifse telefonu güncelle
+              if (rememberMe && newPhone) {
+                localStorage.setItem('rememberedPhone', newPhone);
+              }
+            }}
             className={errors.phone ? "error" : ""}
             disabled={isLoading}
           />
@@ -128,7 +173,7 @@ export function LoginForm({ onSignUpClick }) {
           <input
             type="checkbox"
             checked={rememberMe}
-            onChange={() => setRememberMe(!rememberMe)}
+            onChange={() => handleRememberMeChange(!rememberMe)}
             disabled={isLoading}
           />
           <span className="slider" />

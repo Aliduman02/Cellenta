@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import AppleStyleDock from "./components/AppleStyleDock";
+import Sidebar from "./components/Sidebar";
 import ChatWidget from "./components/ChatWidget";
 import apiService from "./services/api";
 
@@ -10,6 +11,34 @@ export default function Store() {
   const [openId, setOpenId] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Responsive check for AppleStyleDock
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1200);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
+  // Prevent background scrolling when package details are open
+  useEffect(() => {
+    if (openId !== null) {
+      // Modal açıldığında scroll'u engelle
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Modal kapandığında scroll'u tekrar etkinleştir
+      document.body.style.overflow = 'auto';
+    }
+
+    // Cleanup function - component unmount olduğunda scroll'u geri yükle
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [openId]);
 
   useEffect(() => {
     const loadPackages = async () => {
@@ -67,6 +96,10 @@ export default function Store() {
       <div
         style={{
           minHeight: "100vh",
+          backgroundImage: "url('/images/bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -77,9 +110,26 @@ export default function Store() {
           background: "rgba(255,255,255,0.9)", 
           padding: "32px", 
           borderRadius: "16px",
-          textAlign: "center"
+          textAlign: "center",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          animation: "fadeIn 0.6s ease"
         }}>
-          <div style={{ fontSize: "18px", fontWeight: 600, color: "#374151" }}>
+          <div style={{ 
+            fontSize: "18px", 
+            fontWeight: 600, 
+            color: "#374151",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px"
+          }}>
+            <div style={{
+              width: "20px",
+              height: "20px",
+              border: "2px solid #e5e7eb",
+              borderTop: "2px solid #7c3aed",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite"
+            }}></div>
             Loading packages...
           </div>
         </div>
@@ -92,6 +142,10 @@ export default function Store() {
       <div
         style={{
           minHeight: "100vh",
+          backgroundImage: "url('/images/bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -103,7 +157,9 @@ export default function Store() {
           padding: "32px", 
           borderRadius: "16px",
           textAlign: "center",
-          maxWidth: "400px"
+          maxWidth: "400px",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          animation: "fadeIn 0.6s ease"
         }}>
           <div style={{ fontSize: "18px", fontWeight: 600, color: "#ef4444", marginBottom: "16px" }}>
             Error
@@ -120,8 +176,11 @@ export default function Store() {
               borderRadius: "8px",
               padding: "12px 24px",
               cursor: "pointer",
-              fontWeight: 600
+              fontWeight: 600,
+              transition: "all 0.3s ease"
             }}
+            onMouseOver={e => e.target.style.background = "#6d28d9"}
+            onMouseOut={e => e.target.style.background = "#7c3aed"}
           >
             Try Again
           </button>
@@ -134,117 +193,325 @@ export default function Store() {
     <div
       style={{
         minHeight: "100vh",
+        backgroundImage: "url('/images/bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         position: "relative",
+        width: "100vw",
+        margin: 0,
+        padding: 0,
       }}
     >
-      <AppleStyleDock />
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "48px 0 0 0" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 32 }}>
-          <div className="header-logo" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <img src="/images/title2.png" alt="Cellenta" height={48} style={{ height: 48, width: "auto", objectFit: "contain" }} />
+      {/* AppleStyleDock only for large screens */}
+      {isDesktop && <AppleStyleDock />}
+      
+      {/* Sidebar for medium and small screens */}
+      {!isDesktop && <Sidebar user={{ name: localStorage.getItem('userName'), phone: localStorage.getItem('userPhone') }} />}
+
+      <div style={{ 
+        maxWidth: isDesktop ? 1200 : "100%", 
+        margin: "0 auto", 
+        padding: isDesktop ? "40px 80px 60px 80px" : "60px 20px 40px 20px",
+        width: "100%"
+      }}>
+        {/* Header Logo */}
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "center", 
+          marginBottom: 40,
+          animation: "fadeInDown 0.8s ease"
+        }}>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <img 
+              src="/images/title2.png" 
+              alt="Cellenta" 
+              style={{ 
+                height: 48, 
+                width: "auto", 
+                objectFit: "contain",
+                transition: "transform 0.3s ease"
+              }}
+              onMouseOver={e => e.target.style.transform = "scale(1.05)"}
+              onMouseOut={e => e.target.style.transform = "scale(1)"}
+            />
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 32 }}>
-          <span style={{ fontSize: 28, fontWeight: 700, color: "#222" }}>Store</span>
+
+        {/* Page Title */}
+        <div style={{ 
+          display: "flex", 
+          alignItems: "center", 
+          justifyContent: "center",
+          marginBottom: 48,
+          animation: "slideInLeft 0.8s ease 0.2s both",
+          width: "100%"
+        }}>
+          <span style={{ 
+            fontSize: 36, 
+            fontWeight: 800, 
+            color: "#1f2937",
+            textShadow: "0 3px 6px rgba(0,0,0,0.15)",
+            letterSpacing: "-0.5px"
+          }}>
+            🛍️ Store
+          </span>
         </div>
-        <div style={{ background: "rgba(255,255,255,0.7)", borderRadius: 24, boxShadow: "0 2px 16px rgba(0,0,0,0.06)", padding: 24 }}>
+
+        {/* Packages Container */}
+        <div style={{ 
+          background: "rgba(255,255,255,0.85)", 
+          backdropFilter: "blur(10px)",
+          borderRadius: 24, 
+          boxShadow: "0 8px 32px rgba(0,0,0,0.12)", 
+          padding: 32,
+          border: "1px solid rgba(255,255,255,0.3)",
+          animation: "slideInUp 0.8s ease 0.4s both"
+        }}>
           {packages.length === 0 ? (
             <div style={{ 
               textAlign: "center", 
               padding: "48px 24px",
               color: "#6b7280",
-              fontSize: "16px"
+              fontSize: "16px",
+              animation: "fadeIn 1s ease"
             }}>
-              No packages available
+              📦 No packages available
             </div>
           ) : (
-            packages.map((pkg) => {
-              const isOpen = openId === pkg.id;
-              return (
-                <div
-                  key={pkg.id}
-                  style={{
-                    border: "1px solid #e5e7eb",
-                    borderRadius: 16,
-                    marginBottom: 18,
-                    background: isOpen ? "#f5f3ff" : "#fff",
-                    boxShadow: isOpen ? "0 4px 16px rgba(124,60,237,0.10)" : "0 1px 4px rgba(0,0,0,0.03)",
-                    transition: "all 0.3s",
-                    overflow: "hidden",
-                  }}
-                >
-                  <button
-                    onClick={() => setOpenId(isOpen ? null : pkg.id)}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              {packages.map((pkg, index) => {
+                const isOpen = openId === pkg.id;
+                return (
+                  <motion.div
+                    key={pkg.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
                     style={{
-                      width: "100%",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      background: "none",
-                      border: "none",
-                      padding: "20px 24px",
-                      cursor: "pointer",
-                      fontSize: 18,
-                      fontWeight: 700,
-                      color: isOpen ? "#7c3aed" : "#222",
-                      outline: "none",
+                      border: "2px solid #e5e7eb",
+                      borderRadius: 20,
+                      background: isOpen 
+                        ? "linear-gradient(135deg, #f5f3ff, #ede9fe)" 
+                        : "rgba(255,255,255,0.9)",
+                      boxShadow: isOpen 
+                        ? "0 8px 32px rgba(124,60,237,0.15), 0 0 0 1px rgba(124,58,237,0.2)" 
+                        : "0 4px 16px rgba(0,0,0,0.08)",
+                      transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                      overflow: "hidden",
+                      position: "relative"
                     }}
                   >
-                    <div style={{ textAlign: "left" }}>
-                      <div style={{ fontWeight: 700 }}>{pkg.name}</div>
-                      <div style={{ fontWeight: 400, fontSize: 15, color: "#444", marginTop: 2 }}>{pkg.summary}</div>
-                    </div>
-                    <motion.span
-                      animate={{ rotate: isOpen ? 90 : 0 }}
-                      transition={{ duration: 0.3 }}
-                      style={{ display: "flex", alignItems: "center", justifyContent: "center", background: "#ede9fe", borderRadius: "50%", width: 36, height: 36 }}
-                    >
-                      <ChevronRight size={22} color="#7c3aed" />
-                    </motion.span>
-                  </button>
-                  <AnimatePresence initial={false}>
+                    {/* Glow effect for opened package */}
                     {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.4, ease: "easeInOut" }}
-                        style={{ overflow: "hidden", background: "#fafaff", padding: "0 24px 20px 24px" }}
-                      >
-                        <div style={{ fontWeight: 700, fontSize: 18, margin: "18px 0 8px 0", color: "#222" }}>{pkg.name}</div>
-                        <ul style={{ listStyle: "none", padding: 0, margin: 0, fontSize: 16, color: "#444" }}>
-                          {pkg.details.map((d, i) => (
-                            <li key={i} style={{ marginBottom: 4 }}>{d}</li>
-                          ))}
-                        </ul>
-                        <button
-                          onClick={() => handlePurchasePackage(pkg.id)}
-                          style={{
-                            marginTop: 18,
-                            width: "100%",
-                            background: "#ede9fe",
-                            color: "#7c3aed",
-                            border: "none",
-                            borderRadius: 8,
-                            padding: "12px 0",
-                            fontWeight: 600,
-                            fontSize: 16,
-                            cursor: "pointer",
-                            transition: "background 0.2s",
-                          }}
-                        >
-                          Select Package
-                        </button>
-                      </motion.div>
+                      <div 
+                        style={{
+                          position: "absolute",
+                          top: -2,
+                          left: -2,
+                          right: -2,
+                          bottom: -2,
+                          background: "linear-gradient(45deg, rgba(124,58,237,0.3), rgba(168,85,247,0.3))",
+                          borderRadius: 22,
+                          zIndex: -1,
+                          animation: "pulse 2s infinite"
+                        }}
+                      />
                     )}
-                  </AnimatePresence>
-                </div>
-              );
-            })
+
+                    <button
+                      onClick={() => setOpenId(isOpen ? null : pkg.id)}
+                      style={{
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        background: "none",
+                        border: "none",
+                        padding: "24px 28px",
+                        cursor: "pointer",
+                        fontSize: 18,
+                        fontWeight: 700,
+                        color: isOpen ? "#7c3aed" : "#1f2937",
+                        outline: "none",
+                        transition: "all 0.3s ease"
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = "rgba(124,58,237,0.05)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = "none";
+                      }}
+                    >
+                      <div style={{ textAlign: "left" }}>
+                        <div style={{ fontWeight: 700, fontSize: 20, marginBottom: 4 }}>
+                          📦 {pkg.name}
+                        </div>
+                        <div style={{ 
+                          fontWeight: 500, 
+                          fontSize: 15, 
+                          color: "#64748b", 
+                          marginTop: 4 
+                        }}>
+                          {pkg.summary}
+                        </div>
+                      </div>
+                      <motion.div
+                        animate={{ rotate: isOpen ? 90 : 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        style={{ 
+                          display: "flex", 
+                          alignItems: "center", 
+                          justifyContent: "center", 
+                          background: isOpen ? "#ede9fe" : "#f3f4f6", 
+                          borderRadius: "50%", 
+                          width: 40, 
+                          height: 40,
+                          transition: "all 0.3s ease"
+                        }}
+                      >
+                        <ChevronRight size={20} color={isOpen ? "#7c3aed" : "#6b7280"} />
+                      </motion.div>
+                    </button>
+
+                    <AnimatePresence initial={false}>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.4, ease: "easeInOut" }}
+                          style={{ overflow: "hidden" }}
+                        >
+                          <div style={{ 
+                            background: "rgba(248,250,252,0.8)", 
+                            padding: "0 28px 28px 28px",
+                            borderTop: "1px solid rgba(148,163,184,0.2)"
+                          }}>
+                            <div style={{ 
+                              fontWeight: 700, 
+                              fontSize: 20, 
+                              margin: "20px 0 12px 0", 
+                              color: "#1f2937",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 8
+                            }}>
+                              ✨ {pkg.name} Details
+                            </div>
+                            <ul style={{ 
+                              listStyle: "none", 
+                              padding: 0, 
+                              margin: 0, 
+                              fontSize: 16, 
+                              color: "#475569" 
+                            }}>
+                              {pkg.details.map((detail, i) => (
+                                <motion.li
+                                  key={i}
+                                  initial={{ opacity: 0, x: -20 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.3, delay: i * 0.1 }}
+                                  style={{ 
+                                    marginBottom: 8, 
+                                    padding: "8px 16px",
+                                    background: "rgba(255,255,255,0.6)",
+                                    borderRadius: 12,
+                                    border: "1px solid rgba(226,232,240,0.8)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 8
+                                  }}
+                                >
+                                  <span style={{ color: "#7c3aed", fontSize: "14px" }}>•</span>
+                                  {detail}
+                                </motion.li>
+                              ))}
+                            </ul>
+                            <motion.button
+                              whileHover={{ scale: 1.02 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => handlePurchasePackage(pkg.id)}
+                              style={{
+                                marginTop: 20,
+                                width: "100%",
+                                background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+                                color: "#fff",
+                                border: "none",
+                                borderRadius: 16,
+                                padding: "16px 0",
+                                fontWeight: 600,
+                                fontSize: 16,
+                                cursor: "pointer",
+                                transition: "all 0.3s ease",
+                                boxShadow: "0 4px 16px rgba(124,58,237,0.3)",
+                                position: "relative",
+                                overflow: "hidden"
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.boxShadow = "0 6px 24px rgba(124,58,237,0.4)";
+                                e.currentTarget.style.transform = "translateY(-2px)";
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.boxShadow = "0 4px 16px rgba(124,58,237,0.3)";
+                                e.currentTarget.style.transform = "translateY(0)";
+                              }}
+                            >
+                              🛒 Select Package
+                            </motion.button>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                );
+              })}
+            </div>
           )}
         </div>
       </div>
+
       <ChatWidget />
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideInLeft {
+          from { opacity: 0; transform: translateX(-30px); }
+          to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInUp {
+          from { opacity: 0; transform: translateY(50px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+          0%, 100% { opacity: 0.5; }
+          50% { opacity: 1; }
+        }
+
+        @media (max-width: 767px) {
+          .packages-container {
+            margin: 0 16px;
+            padding: 24px 20px !important;
+          }
+        }
+      `}</style>
     </div>
   );
 } 

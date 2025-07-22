@@ -3,6 +3,7 @@ import Header from "./Header";
 import TariffInfo from "./TariffInfo";
 import ChatWidget from "./ChatWidget";
 import AppleStyleDock from "./AppleStyleDock";
+import Sidebar from "./Sidebar";
 import Store from "../Store";
 import apiService from "../services/api";
 import "../Dashboard.css";
@@ -13,6 +14,18 @@ export default function Dashboard() {
   const [usageData, setUsageData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  // Responsive check for AppleStyleDock
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1200);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   useEffect(() => {
     const loadDashboardData = async () => {
@@ -67,12 +80,6 @@ export default function Dashboard() {
     loadDashboardData();
   }, []);
 
-  // Paket yoksa store'a yönlendirme kaldırıldı
-  // if (!isLoading && activeTariff && !activeTariff.name) {
-  //   window.location.href = '/store';
-  //   return null;
-  // }
-
   // Basit route: /store ise Store, değilse dashboard
   if (window.location.pathname === "/store") {
     return <Store />;
@@ -97,9 +104,26 @@ export default function Dashboard() {
           background: "rgba(255,255,255,0.9)", 
           padding: "32px", 
           borderRadius: "16px",
-          textAlign: "center"
+          textAlign: "center",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          animation: "fadeIn 0.6s ease"
         }}>
-          <div style={{ fontSize: "18px", fontWeight: 600, color: "#374151" }}>
+          <div style={{ 
+            fontSize: "18px", 
+            fontWeight: 600, 
+            color: "#374151",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px"
+          }}>
+            <div style={{
+              width: "20px",
+              height: "20px",
+              border: "2px solid #e5e7eb",
+              borderTop: "2px solid #7c3aed",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite"
+            }}></div>
             Loading dashboard...
           </div>
         </div>
@@ -127,7 +151,9 @@ export default function Dashboard() {
           padding: "32px", 
           borderRadius: "16px",
           textAlign: "center",
-          maxWidth: "400px"
+          maxWidth: "400px",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          animation: "fadeIn 0.6s ease"
         }}>
           <div style={{ fontSize: "18px", fontWeight: 600, color: "#ef4444", marginBottom: "16px" }}>
             Error
@@ -144,8 +170,11 @@ export default function Dashboard() {
               borderRadius: "8px",
               padding: "12px 24px",
               cursor: "pointer",
-              fontWeight: 600
+              fontWeight: 600,
+              transition: "all 0.3s ease"
             }}
+            onMouseOver={e => e.target.style.background = "#6d28d9"}
+            onMouseOut={e => e.target.style.background = "#7c3aed"}
           >
             Try Again
           </button>
@@ -163,30 +192,24 @@ export default function Dashboard() {
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         minHeight: "100vh",
+        width: "100vw",
+        margin: 0,
+        padding: 0,
       }}
     >
-      {/* Log out button fixed top right */}
-      
-      <AppleStyleDock />
+      {/* AppleStyleDock only for large screens */}
+      {isDesktop && <AppleStyleDock />}
+
       <div className="dashboard-layout">
-        <div className="dashboard-content">
-          {/* Paket yoksa uyarı göster */}
-          {(!activeTariff || !activeTariff.name) && (
-            <div style={{
-              background: '#fff0f0',
-              color: '#b91c1c',
-              border: '1px solid #fecaca',
-              borderRadius: 12,
-              padding: '18px 32px',
-              marginBottom: 32,
-              fontSize: 20,
-              fontWeight: 700,
-              textAlign: 'center',
-              boxShadow: '0 2px 8px rgba(255,0,0,0.04)'
-            }}>
-              Package not found. Please select a package.
-            </div>
-          )}
+        {/* Sidebar for medium and small screens */}
+        {!isDesktop && <Sidebar user={user} />}
+        
+        <div className="dashboard-content" style={{ 
+          paddingTop: !isDesktop ? "60px" : "0",
+          transition: "all 0.3s ease"
+        }}>
+
+          
           <Header user={user} activeTariff={activeTariff} />
           <main className="dashboard-main">
             <TariffInfo usageData={usageData} />
@@ -194,6 +217,23 @@ export default function Dashboard() {
           </main>
         </div>
       </div>
+
+      <style jsx>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shimmer {
+          0% { left: -100%; }
+          100% { left: 100%; }
+        }
+      `}</style>
     </div>
   );
 }

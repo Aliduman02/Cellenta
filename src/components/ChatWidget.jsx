@@ -3,6 +3,7 @@ import apiService, { sendGeminiMessage } from "../services/api";
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false);
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -116,14 +117,55 @@ export default function ChatWidget() {
       <div 
         className="chat-widget"
         onClick={() => setIsOpen(!isOpen)}
-        style={{ cursor: "pointer" }}
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+        style={{ 
+          cursor: "pointer",
+          width: "50px",
+          height: "50px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "8px",
+          position: "relative"
+        }}
       >
         <img src={`${process.env.PUBLIC_URL}/images/icon2.png`} alt="Cellenta Bot" className="chat-widget-logo" />
-        <div className="chat-widget-message">
-          <strong>Hello, this is Cellenta!</strong>
-          <br />
-          How can I help you?
-        </div>
+        
+        {/* Tooltip */}
+        {showTooltip && (
+          <div style={{
+            position: "absolute",
+            right: "65px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            background: "rgba(31, 41, 55, 0.95)",
+            color: "#fff",
+            padding: "8px 12px",
+            borderRadius: "8px",
+            fontSize: "14px",
+            fontWeight: "500",
+            whiteSpace: "nowrap",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+            zIndex: 1001,
+            animation: "fadeIn 0.2s ease"
+          }}>
+            💬 Ask Cellenta Assistant
+            {/* Arrow */}
+            <div style={{
+              position: "absolute",
+              right: "-5px",
+              top: "50%",
+              transform: "translateY(-50%)",
+              width: 0,
+              height: 0,
+              borderLeft: "5px solid rgba(31, 41, 55, 0.95)",
+              borderTop: "5px solid transparent",
+              borderBottom: "5px solid transparent"
+            }} />
+          </div>
+        )}
       </div>
 
       {/* Chat Modal */}

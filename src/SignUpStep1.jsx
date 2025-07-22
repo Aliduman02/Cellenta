@@ -59,7 +59,13 @@ export function SignUpStep1({ onNext, onBack }) {
   };
 
   return (
-    <div className="login-form-container" style={{ minWidth: '400px' }}>
+    <div 
+      className="login-form-container" 
+      style={{ 
+        minWidth: '400px',
+        maxWidth: '100%'
+      }}
+    >
       <h3 className="form-subtitle">Step 1 of 2</h3>
       <h2 className="form-title">Create Your Account</h2>
 
