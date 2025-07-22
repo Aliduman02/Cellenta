@@ -52,8 +52,9 @@ const generateEmailTemplate = (parsed) => {
       )} haklarını tamamen tükettiniz.<br\> Kullanıma devam etmek istiyorsanız ek ${usagetype(
         parsed.usage_type
       )} paketi almanız gerekmektedir. ❗</div>`
-    : `<div class="alert">Paketinizin %${parsed.percentage} kullanım sınırına ulaştınız. ⚠️</div>`;
-
+    : `<div class="alert">Paketinizin ${usagetype(
+        parsed.usage_type
+      )} haklarını %${parsed.percentage} kullandınız. ⚠️</div>`;
   return `
 <!DOCTYPE html>
 <html>
@@ -148,12 +149,9 @@ const generateEmailTemplate = (parsed) => {
               hour: "2-digit",
               minute: "2-digit",
             })}</strong
-          >
-          tarihinde yaptığınız son
-          <strong>${usagetype(parsed.usage_type)}</strong> kullanımı
-          doğrultusunda
+          > tarihinde yaptığınız son kullanım doğrultusunda
         </p>
-        <br />${alertHTML} <br /><br />
+        ${alertHTML}
         <div class="usage-card">
           <h3>Kullanım bilgileriniz aşağıda belirtilmiştir:</h3>
           <div id="progressbar">
