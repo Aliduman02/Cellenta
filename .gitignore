@@ -1,0 +1,5 @@
+*.log
+*.vscode
+kafka-app.log
+kafka-app.2025-07-20.log
+kafka-app.2025-07-19.log 
