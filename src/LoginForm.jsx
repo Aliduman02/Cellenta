@@ -149,34 +149,7 @@ export function LoginForm({ onSignUpClick }) {
       </button>
 
       {/* Debug: API Test Button */}
-      {process.env.NODE_ENV === 'development' && (
-        <button 
-          type="button" 
-          onClick={async () => {
-            console.log('Testing API with existing users...');
-            const result = await apiService.testConnection();
-            console.log('API Test Result:', result);
-            
-            if (result.success) {
-              alert(`API Test: SUCCESS\nFound working user in database!\nResponse: ${JSON.stringify(result.response, null, 2)}`);
-            } else {
-              alert(`API Test: FAILED\n${result.error}\n\nCheck console for detailed logs.`);
-            }
-          }}
-          style={{
-            marginTop: '10px',
-            padding: '8px 16px',
-            background: '#6b7280',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            fontSize: '12px',
-            cursor: 'pointer'
-          }}
-        >
-          Test API with DB Users
-        </button>
-      )}
+      {/* Bu buton kaldırıldı */}
 
       <div className="signup-prompt">
         Don't have an account?{' '}
