@@ -2,15 +2,34 @@ package com.cellenta.cgf.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import com.kafka.message.Message;
 
 @Getter
 @Setter
-public class UsageRecord {
+public class UsageRecord implements Message {
+    private String id;
     private String giver_msisdn;
     private String receiver_msisdn;
     private String usage_date;
     private String usage_type;
     private int usage_duration;
+
+    @Override
+    public void setTimestamp(String timestamp) {
+        this.usage_date = timestamp;
+    }
+
+    public String getTimestamp() {
+        return this.usage_date;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getGiver_msisdn() {
         return giver_msisdn;

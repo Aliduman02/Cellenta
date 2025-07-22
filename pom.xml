@@ -71,6 +71,14 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.30</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.kafka</groupId>
+			<artifactId>kafka-consumer</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/libs/KafkaApp-1.0-SNAPSHOT.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
