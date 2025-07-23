@@ -363,8 +363,8 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
                 <div style={{
                   width: "16px",
                   height: "16px",
-                  border: "2px solid rgba(255,255,255,0.3)",
-                  borderTop: "2px solid #fff",
+                  border: "2px solid rgba(124,58,237,0.3)",
+                  borderTop: "2px solid #7c3aed",
                   borderRadius: "50%",
                   animation: "spin 1s linear infinite"
                 }}></div>
@@ -433,13 +433,11 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
             marginTop: '4px',
             border: '1px solid #e5e7eb',
             borderRadius: '12px',
-            background: 'rgba(255, 255, 255, 0.95)',
-            backdropFilter: 'blur(20px)',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.15), 0 8px 24px rgba(0,0,0,0.1)',
+            background: '#ffffff',
             maxHeight: '280px',
             overflowY: 'auto',
             zIndex: 1000,
-            animation: 'appleSlideDown 0.35s cubic-bezier(0.4, 0, 0.2, 1)'
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
           }}>
             {packages.map((pkg, index) => (
                               <div
