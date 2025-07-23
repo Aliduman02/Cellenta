@@ -250,8 +250,12 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
   const validatePassword = (pass) => {
     const errors = {};
     if (pass.length < 8) errors.length = "En az 8 karakter olmalı";
-    if (!/[A-Z]/.test(pass)) errors.uppercase = "En az 1 büyük harf içermeli";
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(pass)) errors.special = "En az 1 özel karakter içermeli";
+    if (!/[A-Z]/.test(pass)) errors.uppercase = "En az bir büyük harf içermeli (A-Z)";
+    if (!/[a-z]/.test(pass)) errors.lowercase = "En az bir küçük harf içermeli (a-z)";
+    if (!/[0-9]/.test(pass)) errors.digit = "En az bir rakam içermeli (0-9)";
+    if (!/[!@#$%^&*()\-_=+[\]{}|;:,.<>?~`]/.test(pass)) {
+      errors.special = "En az bir özel karakter içermeli: !@#$%^&*()-_=+[]{}|;:,.<>?~`";
+    }
     return errors;
   };
 
@@ -314,7 +318,7 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
               placeholder="en az 8 karakter olmalı"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={errors.length || errors.uppercase || errors.special ? "error" : ""}
+                              className={errors.length || errors.uppercase || errors.lowercase || errors.digit || errors.special ? "error" : ""}
               disabled={isLoading}
             />
             <img
@@ -326,10 +330,12 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
               tabIndex={0}
             />
           </div>
-          {(errors.length || errors.uppercase || errors.special) && (
+          {(errors.length || errors.uppercase || errors.lowercase || errors.digit || errors.special) && (
             <div style={{ fontSize: 12, color: "#ef4444", marginTop: 4 }}>
               {errors.length && <div>{errors.length}</div>}
               {errors.uppercase && <div>{errors.uppercase}</div>}
+              {errors.lowercase && <div>{errors.lowercase}</div>}
+              {errors.digit && <div>{errors.digit}</div>}
               {errors.special && <div>{errors.special}</div>}
             </div>
           )}

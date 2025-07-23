@@ -113,10 +113,10 @@ export default function Store() {
             gap: isDesktop ? "12px" : "10px"
           }}>
             <div style={{
-              width: isDesktop ? "20px" : "18px",
-              height: isDesktop ? "20px" : "18px",
-              border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
-              borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
+              width: "16px",
+              height: "16px",
+              border: "2px solid rgba(124,58,237,0.3)",
+              borderTop: "2px solid #7c3aed",
               borderRadius: "50%",
               animation: "spin 1s linear infinite",
               WebkitAnimation: "spin 1s linear infinite",

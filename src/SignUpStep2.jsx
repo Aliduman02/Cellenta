@@ -60,10 +60,12 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
   const validatePassword = (pass) => {
     const errors = {};
     if (pass.length < 8) errors.length = 'En az 8 karakter olmalı';
-    if (!/[A-Z]/.test(pass)) errors.uppercase = 'En az bir büyük harf içermeli';
-    if (!/[a-z]/.test(pass)) errors.lowercase = 'En az bir küçük harf içermeli';
-    if (!/[0-9]/.test(pass)) errors.digit = 'En az bir rakam içermeli';
-    if (!/[!@#$%^&*()\-_=+]/.test(pass)) errors.special = 'En az bir özel karakter içermeli';
+    if (!/[A-Z]/.test(pass)) errors.uppercase = 'En az bir büyük harf içermeli (A-Z)';
+    if (!/[a-z]/.test(pass)) errors.lowercase = 'En az bir küçük harf içermeli (a-z)';
+    if (!/[0-9]/.test(pass)) errors.digit = 'En az bir rakam içermeli (0-9)';
+    if (!/[!@#$%^&*()\-_=+[\]{}|;:,.<>?~`]/.test(pass)) {
+      errors.special = 'En az bir özel karakter içermeli: !@#$%^&*()-_=+[]{}|;:,.<>?~`';
+    }
     return errors;
   };
 
@@ -359,15 +361,15 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
                 gap: '8px'
               }}>
                 <div style={{
-                  width: '16px',
-                  height: '16px',
-                  border: '2px solid #e5e7eb',
-                  borderTop: '2px solid #6366f1',
-                  borderRadius: '50%',
-                  animation: 'spin 1s linear infinite',
-                  WebkitAnimation: 'spin 1s linear infinite',
-                  MozAnimation: 'spin 1s linear infinite',
-                  msAnimation: 'spin 1s linear infinite'
+                  width: "16px",
+                  height: "16px",
+                  border: "2px solid rgba(124,58,237,0.3)",
+                  borderTop: "2px solid #7c3aed",
+                  borderRadius: "50%",
+                  animation: "spin 1s linear infinite",
+                  WebkitAnimation: "spin 1s linear infinite",
+                  MozAnimation: "spin 1s linear infinite",
+                  msAnimation: "spin 1s linear infinite"
                 }}></div>
             Paketler yükleniyor...
               </div>

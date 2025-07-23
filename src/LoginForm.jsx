@@ -180,7 +180,7 @@ export function LoginForm({ onSignUpClick }) {
           <span className="remember-label">Beni Hatırla</span>
         </label>
 
-        <a className="forgot-password" href="#" onClick={(e) => { e.preventDefault(); window.location.href = "/forgot-password"; }}>Şifremi Unuttum?</a>
+        <a className="forgot-password" href="#" onClick={(e) => { e.preventDefault(); window.location.href = "/forgot-password"; }}>Şifremi Unuttum</a>
       </div>
 
       <button 
