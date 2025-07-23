@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import AppleStyleDock from "./components/AppleStyleDock";
 import Sidebar from "./components/Sidebar";
@@ -87,6 +86,7 @@ export default function Store() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -136,6 +136,7 @@ export default function Store() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -198,6 +199,7 @@ export default function Store() {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
         position: "relative",
         width: "100vw",
         margin: 0,
@@ -262,13 +264,11 @@ export default function Store() {
 
         {/* Packages Container */}
         <div style={{ 
-          background: "rgba(255,255,255,0.85)", 
-          backdropFilter: "blur(10px)",
+          background: "#ffffff", 
           borderRadius: 20, 
-          boxShadow: "0 6px 24px rgba(0,0,0,0.08)", 
+          boxShadow: "0 4px 12px rgba(0,0,0,0.08)", 
           padding: isDesktop ? 24 : 20,
-          border: "1px solid rgba(255,255,255,0.3)",
-          animation: "slideInUp 0.8s ease 0.4s both",
+          border: "1px solid #e5e7eb",
           maxWidth: "100%"
         }}>
           {packages.length === 0 ? (
@@ -286,41 +286,18 @@ export default function Store() {
               {packages.map((pkg, index) => {
                 const isOpen = openId === pkg.id;
                 return (
-                  <motion.div
+                  <div
                     key={pkg.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
                     style={{
-                      border: "2px solid #e5e7eb",
-                      borderRadius: 20,
-                      background: isOpen 
-                        ? "linear-gradient(135deg, #f5f3ff, #ede9fe)" 
-                        : "rgba(255,255,255,0.9)",
-                      boxShadow: isOpen 
-                        ? "0 8px 32px rgba(124,60,237,0.15), 0 0 0 1px rgba(124,58,237,0.2)" 
-                        : "0 4px 16px rgba(0,0,0,0.08)",
-                      transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: 12,
+                      background: "#ffffff",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
                       overflow: "hidden",
                       position: "relative"
                     }}
                   >
-                    {/* Glow effect for opened package */}
-                    {isOpen && (
-                      <div 
-                        style={{
-                          position: "absolute",
-                          top: -2,
-                          left: -2,
-                          right: -2,
-                          bottom: -2,
-                          background: "linear-gradient(45deg, rgba(124,58,237,0.3), rgba(168,85,247,0.3))",
-                          borderRadius: 22,
-                          zIndex: -1,
-                          animation: "pulse 2s infinite"
-                        }}
-                      />
-                    )}
+
 
                     <button
                       onClick={() => setOpenId(isOpen ? null : pkg.id)}
@@ -359,37 +336,27 @@ export default function Store() {
                           {pkg.summary}
                         </div>
                       </div>
-                      <motion.div
-                        animate={{ rotate: isOpen ? 90 : 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      <div
                         style={{ 
                           display: "flex", 
                           alignItems: "center", 
                           justifyContent: "center", 
-                          background: isOpen ? "#ede9fe" : "#f3f4f6", 
+                          background: "#f3f4f6", 
                           borderRadius: "50%", 
                           width: 40, 
-                          height: 40,
-                          transition: "all 0.3s ease"
+                          height: 40
                         }}
                       >
-                        <ChevronRight size={20} color={isOpen ? "#7c3aed" : "#6b7280"} />
-                      </motion.div>
+                        <ChevronRight size={20} color="#6b7280" style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }} />
+                      </div>
                     </button>
 
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.4, ease: "easeInOut" }}
-                          style={{ overflow: "hidden" }}
-                        >
+                    {isOpen && (
+                      <div style={{ overflow: "hidden" }}>
                           <div style={{ 
-                            background: "rgba(248,250,252,0.8)", 
+                            background: "#f8fafc", 
                             padding: "0 28px 28px 28px",
-                            borderTop: "1px solid rgba(148,163,184,0.2)"
+                            borderTop: "1px solid #e2e8f0"
                           }}>
                             <div style={{ 
                               fontWeight: 700, 
@@ -410,17 +377,14 @@ export default function Store() {
                               color: "#475569" 
                             }}>
                               {pkg.details.map((detail, i) => (
-                                <motion.li
+                                <li
                                   key={i}
-                                  initial={{ opacity: 0, x: -20 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ duration: 0.3, delay: i * 0.1 }}
                                   style={{ 
                                     marginBottom: 8, 
                                     padding: "8px 16px",
-                                    background: "rgba(255,255,255,0.6)",
-                                    borderRadius: 12,
-                                    border: "1px solid rgba(226,232,240,0.8)",
+                                    background: "#ffffff",
+                                    borderRadius: 8,
+                                    border: "1px solid #e2e8f0",
                                     display: "flex",
                                     alignItems: "center",
                                     gap: 8
@@ -428,45 +392,30 @@ export default function Store() {
                                 >
                                   <span style={{ color: "#7c3aed", fontSize: "14px" }}>•</span>
                                   {detail}
-                                </motion.li>
+                                </li>
                               ))}
                             </ul>
-                            <motion.button
-                              whileHover={{ scale: 1.02 }}
-                              whileTap={{ scale: 0.98 }}
+                            <button
                               onClick={() => handlePurchasePackage(pkg.id)}
                               style={{
                                 marginTop: 20,
                                 width: "100%",
-                                background: "linear-gradient(135deg, #7c3aed, #a855f7)",
+                                background: "#7c3aed",
                                 color: "#fff",
                                 border: "none",
-                                borderRadius: 16,
-                                padding: "16px 0",
+                                borderRadius: 8,
+                                padding: "12px 0",
                                 fontWeight: 600,
-                                fontSize: 16,
-                                cursor: "pointer",
-                                transition: "all 0.3s ease",
-                                boxShadow: "0 4px 16px rgba(124,58,237,0.3)",
-                                position: "relative",
-                                overflow: "hidden"
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.boxShadow = "0 6px 24px rgba(124,58,237,0.4)";
-                                e.currentTarget.style.transform = "translateY(-2px)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.boxShadow = "0 4px 16px rgba(124,58,237,0.3)";
-                                e.currentTarget.style.transform = "translateY(0)";
+                                fontSize: 14,
+                                cursor: "pointer"
                               }}
                             >
                               🛒 Paketi Seç
-                            </motion.button>
+                            </button>
                           </div>
-                        </motion.div>
+                        </div>
                       )}
-                    </AnimatePresence>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
