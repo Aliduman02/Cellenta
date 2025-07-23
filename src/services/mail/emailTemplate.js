@@ -45,7 +45,19 @@ const generateEmailTemplate = (parsed) => {
     }
     return value || "0";
   };
+  const date = new Date();
+  const options = {
+    timeZone: "Europe/Istanbul",
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  };
 
+  const istanbulFormatted = new Intl.DateTimeFormat("tr-TR", options).format(
+    date
+  );
   const alertHTML = isLimitExceeded
     ? `<div class="alert exceeded">Paketinizin ${usagetype(
         parsed.usage_type
@@ -145,10 +157,7 @@ const generateEmailTemplate = (parsed) => {
         <p>
           <strong>${parsed.package_name}</strong> kullanıcısı olarak,
           <strong
-            >${new Date(parsed.timestamp).toLocaleString("tr-TR", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })}</strong
+            >${istanbulFormatted}</strong
           > tarihinde yaptığınız son kullanım doğrultusunda
         </p>
         ${alertHTML}
@@ -185,7 +194,7 @@ const generateEmailTemplate = (parsed) => {
           <table width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr>
               <td style="text-align: center">
-                Bu e-posta ${new Date().toLocaleString("tr-TR")} tarihinde
+                Bu e-posta ${istanbulFormatted} tarihinde
                 oluşturulmuştur.
               </td>
             </tr>
