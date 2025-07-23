@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import AppleStyleDock from "./components/AppleStyleDock";
 import Sidebar from "./components/Sidebar";
 import ChatWidget from "./components/ChatWidget";
@@ -12,6 +13,9 @@ export default function Store() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [selectedPackageForPurchase, setSelectedPackageForPurchase] = useState(null);
+  const [isPurchasing, setIsPurchasing] = useState(false);
 
   // Responsive check for AppleStyleDock
   useEffect(() => {
@@ -65,16 +69,37 @@ export default function Store() {
     loadPackages();
   }, []);
 
-  const handlePurchasePackage = async (packageId) => {
+  const handleShowConfirmDialog = (pkg) => {
+    setSelectedPackageForPurchase(pkg);
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmPurchase = async () => {
+    if (!selectedPackageForPurchase) return;
+    
+    setIsPurchasing(true);
     try {
       const userId = localStorage.getItem('userId');
-      await apiService.assignPackageToCustomer(userId, packageId);
-      alert('Paket başarıyla satın alındı!');
-      window.location.href = '/dashboard';
+      await apiService.assignPackageToCustomer(userId, selectedPackageForPurchase.id);
+      setShowConfirmDialog(false);
+      setSelectedPackageForPurchase(null);
+      
+      // Başarı mesajı göster
+      setTimeout(() => {
+        window.location.href = '/dashboard';
+      }, 1000);
+      
     } catch (error) {
       console.error('Failed to purchase package:', error);
       alert('Satın alma başarısız. Lütfen tekrar deneyin.');
+    } finally {
+      setIsPurchasing(false);
     }
+  };
+
+  const handleCancelPurchase = () => {
+    setShowConfirmDialog(false);
+    setSelectedPackageForPurchase(null);
   };
 
   if (isLoading) {
@@ -351,13 +376,58 @@ export default function Store() {
                       </div>
                     </button>
 
-                    {isOpen && (
-                      <div style={{ overflow: "hidden" }}>
-                          <div style={{ 
-                            background: "#f8fafc", 
-                            padding: "0 28px 28px 28px",
-                            borderTop: "1px solid #e2e8f0"
-                          }}>
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ 
+                            opacity: 0,
+                            height: 0,
+                            scaleY: 0
+                          }}
+                          animate={{ 
+                            opacity: 1,
+                            height: "auto",
+                            scaleY: 1
+                          }}
+                          exit={{ 
+                            opacity: 0,
+                            height: 0,
+                            scaleY: 0
+                          }}
+                          transition={{
+                            duration: 0.4,
+                            ease: [0.04, 0.62, 0.23, 0.98],
+                            opacity: { duration: 0.25 }
+                          }}
+                          style={{ 
+                            overflow: "hidden",
+                            originY: 0
+                          }}
+                        >
+                          <motion.div 
+                            initial={{ 
+                              opacity: 0,
+                              y: -20
+                            }}
+                            animate={{ 
+                              opacity: 1,
+                              y: 0
+                            }}
+                            exit={{ 
+                              opacity: 0,
+                              y: -10
+                            }}
+                            transition={{
+                              duration: 0.3,
+                              delay: 0.1,
+                              ease: [0.25, 0.46, 0.45, 0.94]
+                            }}
+                            style={{ 
+                              background: "#f8fafc", 
+                              padding: "0 28px 28px 28px",
+                              borderTop: "1px solid #e2e8f0"
+                            }}
+                          >
                             <div style={{ 
                               fontWeight: 700, 
                               fontSize: 20, 
@@ -377,8 +447,28 @@ export default function Store() {
                               color: "#475569" 
                             }}>
                               {pkg.details.map((detail, i) => (
-                                <li
+                                <motion.li
                                   key={i}
+                                  initial={{ 
+                                    opacity: 0,
+                                    x: -20,
+                                    scale: 0.95
+                                  }}
+                                  animate={{ 
+                                    opacity: 1,
+                                    x: 0,
+                                    scale: 1
+                                  }}
+                                  transition={{
+                                    duration: 0.3,
+                                    delay: 0.2 + (i * 0.1),
+                                    ease: [0.25, 0.46, 0.45, 0.94]
+                                  }}
+                                  whileHover={{
+                                    scale: 1.02,
+                                    x: 4,
+                                    transition: { duration: 0.2 }
+                                  }}
                                   style={{ 
                                     marginBottom: 8, 
                                     padding: "8px 16px",
@@ -387,16 +477,53 @@ export default function Store() {
                                     border: "1px solid #e2e8f0",
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: 8
+                                    gap: 8,
+                                    cursor: "default"
                                   }}
                                 >
-                                  <span style={{ color: "#7c3aed", fontSize: "14px" }}>•</span>
+                                  <motion.span 
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    transition={{
+                                      duration: 0.3,
+                                      delay: 0.3 + (i * 0.1),
+                                      type: "spring",
+                                      stiffness: 200
+                                    }}
+                                    style={{ color: "#7c3aed", fontSize: "14px" }}
+                                  >
+                                    •
+                                  </motion.span>
                                   {detail}
-                                </li>
+                                </motion.li>
                               ))}
                             </ul>
-                            <button
-                              onClick={() => handlePurchasePackage(pkg.id)}
+                            <motion.button
+                              onClick={() => handleShowConfirmDialog(pkg)}
+                              initial={{
+                                opacity: 0,
+                                y: 20,
+                                scale: 0.9
+                              }}
+                              animate={{
+                                opacity: 1,
+                                y: 0,
+                                scale: 1
+                              }}
+                              transition={{
+                                duration: 0.4,
+                                delay: 0.4 + (pkg.details.length * 0.1),
+                                ease: [0.25, 0.46, 0.45, 0.94]
+                              }}
+                              whileHover={{
+                                scale: 1.02,
+                                y: -2,
+                                boxShadow: "0 8px 25px rgba(124, 58, 237, 0.3)"
+                              }}
+                              whileTap={{
+                                scale: 0.98,
+                                y: 0
+                              }}
                               style={{
                                 marginTop: 20,
                                 width: "100%",
@@ -407,14 +534,16 @@ export default function Store() {
                                 padding: "12px 0",
                                 fontWeight: 600,
                                 fontSize: 14,
-                                cursor: "pointer"
+                                cursor: "pointer",
+                                boxShadow: "0 4px 15px rgba(124, 58, 237, 0.2)"
                               }}
                             >
                               🛒 Paketi Seç
-                            </button>
-                          </div>
-                        </div>
+                            </motion.button>
+                          </motion.div>
+                        </motion.div>
                       )}
+                    </AnimatePresence>
                   </div>
                 );
               })}
@@ -422,6 +551,183 @@ export default function Store() {
           )}
         </div>
       </div>
+
+      {/* Confirmation Dialog */}
+      {showConfirmDialog && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(0,0,0,0.6)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 9999,
+          padding: "16px",
+          animation: "fadeIn 0.3s ease"
+        }}>
+          <div style={{
+            background: "#ffffff",
+            borderRadius: "20px",
+            padding: isDesktop ? "32px" : "24px",
+            maxWidth: isDesktop ? "500px" : "400px",
+            width: "100%",
+            boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+            animation: "slideInUp 0.4s ease",
+            position: "relative"
+          }}>
+            {/* Header */}
+            <div style={{
+              textAlign: "center",
+              marginBottom: "24px"
+            }}>
+              <div style={{
+                fontSize: isDesktop ? "48px" : "40px",
+                marginBottom: "8px"
+              }}>
+                🛒
+              </div>
+              <h3 style={{
+                fontSize: isDesktop ? "24px" : "20px",
+                fontWeight: "700",
+                color: "#1f2937",
+                margin: 0,
+                marginBottom: "8px"
+              }}>
+                Paket Satın Al
+              </h3>
+              <p style={{
+                fontSize: isDesktop ? "16px" : "14px",
+                color: "#6b7280",
+                margin: 0
+              }}>
+                Bu paketi satın almak istediğinizden emin misiniz?
+              </p>
+            </div>
+
+            {/* Package Info */}
+            {selectedPackageForPurchase && (
+              <div style={{
+                background: "linear-gradient(135deg, #f8fafc, #e2e8f0)",
+                borderRadius: "16px",
+                padding: isDesktop ? "20px" : "16px",
+                marginBottom: "24px",
+                border: "1px solid #e2e8f0"
+              }}>
+                <div style={{
+                  fontSize: isDesktop ? "20px" : "18px",
+                  fontWeight: "700",
+                  color: "#1f2937",
+                  marginBottom: "8px",
+                  textAlign: "center"
+                }}>
+                  📦 {selectedPackageForPurchase.name}
+                </div>
+                <div style={{
+                  fontSize: isDesktop ? "16px" : "14px",
+                  color: "#475569",
+                  textAlign: "center",
+                  marginBottom: "12px"
+                }}>
+                  {selectedPackageForPurchase.summary}
+                </div>
+                <div style={{
+                  fontSize: isDesktop ? "24px" : "20px",
+                  fontWeight: "800",
+                  color: "#059669",
+                  textAlign: "center"
+                }}>
+                  {selectedPackageForPurchase.price} TL
+                </div>
+              </div>
+            )}
+
+            {/* Buttons */}
+            <div style={{
+              display: "flex",
+              gap: "12px",
+              justifyContent: "center"
+            }}>
+              <button
+                onClick={handleCancelPurchase}
+                disabled={isPurchasing}
+                style={{
+                  flex: 1,
+                  padding: isDesktop ? "14px 20px" : "12px 16px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "12px",
+                  background: "#ffffff",
+                  color: "#6b7280",
+                  fontSize: isDesktop ? "16px" : "14px",
+                  fontWeight: "600",
+                  cursor: isPurchasing ? "not-allowed" : "pointer",
+                  transition: "all 0.3s ease",
+                  opacity: isPurchasing ? 0.5 : 1
+                }}
+                onMouseOver={e => {
+                  if (!isPurchasing) {
+                    e.target.style.borderColor = "#d1d5db";
+                    e.target.style.background = "#f9fafb";
+                  }
+                }}
+                onMouseOut={e => {
+                  if (!isPurchasing) {
+                    e.target.style.borderColor = "#e5e7eb";
+                    e.target.style.background = "#ffffff";
+                  }
+                }}
+              >
+                ❌ İptal
+              </button>
+              
+              <button
+                onClick={handleConfirmPurchase}
+                disabled={isPurchasing}
+                style={{
+                  flex: 1,
+                  padding: isDesktop ? "14px 20px" : "12px 16px",
+                  border: "none",
+                  borderRadius: "12px",
+                  background: isPurchasing ? "#9ca3af" : "#7c3aed",
+                  color: "#ffffff",
+                  fontSize: isDesktop ? "16px" : "14px",
+                  fontWeight: "600",
+                  cursor: isPurchasing ? "not-allowed" : "pointer",
+                  transition: "all 0.3s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px"
+                }}
+                onMouseOver={e => {
+                  if (!isPurchasing) {
+                    e.target.style.background = "#6d28d9";
+                  }
+                }}
+                onMouseOut={e => {
+                  if (!isPurchasing) {
+                    e.target.style.background = "#7c3aed";
+                  }
+                }}
+              >
+                {isPurchasing && (
+                  <div style={{
+                    width: "16px",
+                    height: "16px",
+                    border: "2px solid rgba(255,255,255,0.3)",
+                    borderTop: "2px solid #fff",
+                    borderRadius: "50%",
+                    animation: "spin 1s linear infinite"
+                  }}></div>
+                )}
+                {isPurchasing ? "Satın Alınıyor..." : "✅ Onayla"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <ChatWidget />
 
@@ -480,6 +786,19 @@ export default function Store() {
           0%, 100% { opacity: 0.5; }
           50% { opacity: 1; }
         }
+        
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+        
+
 
         @media (max-width: 767px) {
           .packages-container {
@@ -490,4 +809,4 @@ export default function Store() {
       `}</style>
     </div>
   );
-} 
+}

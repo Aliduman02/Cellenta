@@ -7,7 +7,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Merhaba, ben Cellenta Asistanı! Size nasıl yardımcı olabilirim?",
+      text: "Merhaba! Ben Cellenta Bot, Cellenta Online Charging System için özel asistanınızım. Hesap girişi, paket seçimi, kalan kullanım sorguları ve fatura işlemleri konularında size yardımcı olabilirim. Size nasıl yardımcı olabilirim? 😊",
       sender: "bot",
       timestamp: new Date()
     }
@@ -148,9 +148,9 @@ export default function ChatWidget() {
   };
 
   const getButtonStyles = () => ({
-    width: isDesktop ? "50px" : "45px",
-    height: isDesktop ? "50px" : "45px",
-    padding: isDesktop ? "8px" : "6px"
+    width: isDesktop ? "100px" : "82px",
+    height: isDesktop ? "100px" : "82px",
+    padding: isDesktop ? "10px" : "8px"
   });
 
   return (
@@ -176,8 +176,8 @@ export default function ChatWidget() {
           alt="Cellenta Bot" 
           className="chat-widget-logo"
           style={{
-            width: isDesktop ? "36px" : "30px",
-            height: isDesktop ? "36px" : "30px",
+            width: isDesktop ? "42px" : "36px",
+            height: isDesktop ? "42px" : "36px",
             transition: "transform 0.3s ease"
           }}
         />
@@ -186,7 +186,7 @@ export default function ChatWidget() {
         {showTooltip && isDesktop && (
           <div style={{
             position: "absolute",
-            right: "65px",
+            right: isDesktop ? "75px" : "65px",
             top: "50%",
             transform: "translateY(-50%)",
             background: "rgba(31, 41, 55, 0.95)",

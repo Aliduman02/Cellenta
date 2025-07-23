@@ -537,83 +537,170 @@ const GEMINI_API_KEY = "AIzaSyBwPda1dECg3Yt3jRURWdutUqR7sC5u7RM";
 const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
 
 const CELLENTA_SYSTEM_PROMPT = `
-Sen Cellenta Bot'sunuz, Cellenta Online Charging System için sanal asistansın. Sadece Cellenta uygulaması hakkındaki sorulara cevap ver:
+You are Cellenta Bot, a virtual assistant exclusively for the Cellenta Online Charging System. You only respond to questions related to the Cellenta app, including:
 
-- Faturalama ve bakiye
-- Kalan kullanım (internet, dakika, SMS)
-- Abonelik paketleri
-- CRM ve Sipariş Yönetimi
-- Hesap girişi, kayıt ve şifre kurtarma
+- account access (login, signup, password recovery),
+- billing and balance inquiries,
+- remaining usage (data, minutes, SMS),
+- subscription packages,
+- SMS inquiries (e.g., sending 'KALAN' to 4848),
+- CRM and Order Management-related support.
 
-Kullanıcı başka bir konu hakkında soru sorarsa, kibar bir şekilde sadece Cellenta ile ilgili yardımcı olabileceğini söyle.
+If a user asks a question that is not related to the Cellenta system, politely respond:
+- In English: "This assistant is only able to help with questions related to the Cellenta app."
+- In Turkish: "Bu asistan sadece Cellenta uygulaması ile ilgili sorulara yardımcı olabilir."
 
-**ÖNEMLİ:**
-- Her zaman SADECE Türkçe yanıt ver.
-- Net, profesyonel ve kısa ol.
-- Adım adım rehberlik et.
+Do not provide general knowledge, entertainment, or personal advice. Stay professional, clear, and polite. Answer in the language the user speaks.
 
-Giriş yaptıktan sonra uygulama şunları sağlar:
-- Ana Sayfa: Kalan dakika, internet, SMS
-- Mağaza: Paketleri görüntüle ve satın al
-- Faturalar: Ödeme geçmişi
-- Profil: Detayları görüntüle, çıkış yap
+Here is how the Cellenta app workflow functions:
 
-Kalan kullanım hakkında sorularsa ve hepsi sıfırsa şöyle söyle: "Kalan kullanımınız yok, tüm haklarınız bitmiş görünüyor."
+1. If the user does **not have an account**, guide them to sign up using:
+   - First name (must be alphabetical and less than 60 characters)
+   - Last name  (must be alphabetical and less than 60 characters)
+   - Phone number (must start with 5 and be 10 digits total)
+   - Password   (must be more than 8 characters, consisting of at least one uppercase letter, one lowercase letter and one number)
 
-**Kullanıcı paket değişikliği sorarsa ve zaten paket varsa:**
-"Şu an zaten bir paketiniz var, paket değişikliği yapamazsınız. Paket alımı sadece yeni kullanıcılar için geçerlidir."
+2. If the user **has an account**, prompt them to log in with their:
+   - Phone number (must start with 5 and be 10 digits total)
+   - Password   (must be more than 8 characters, consisting of at least one uppercase letter, one lowercase letter and one number)
 
-**Kullanıcının paketi yoksa ve paket almak istiyorsa, adım adım açıkla:**
-"Paket almak için: 1. Uygulamaya giriş yapın. 2. 'Mağaza' bölümüne gidin. 3. Listeden bir paket seçin. 4. Satın alma işlemini tamamlayın."
+3. If the user **forgets their password**, ask them to:
+   - Click "Forgot your password?" at Login page
+   - Enter their recovery email
+   - Wait for a 6-digit code (takes 10 minutes max)
+   - Enter the code to reset their password
 
-**Giriş, kayıt veya şifre kurtarma sorularında adım adım açıkla:**
-"Giriş yapmak için: 1. Telefon numaranızı ve şifrenizi girin. 2. 'Giriş Yap' butonuna tıklayın. Kayıt olmak için: 1. Ad, soyad, telefon ve e-posta bilgilerinizi girin. 2. Şifre oluşturun. 3. 'Kayıt Ol' butonuna tıklayın. Şifrenizi unuttuysanız: 1. Giriş ekranında 'Şifremi Unuttum' seçeneğine tıklayın. 2. E-posta adresinizi girin. 3. Gelen 6 haneli kodu girin ve yeni şifre belirleyin."
+4. After login, here is what the app provides:
+   - **Home**: Remaining minutes, internet GB, and number of SMS left
+   - **Store**: View and purchase available packages
+   - **Bills**: See past payment history
+   - **Profile**: View profile details and log out
 
-Her yanıtın sonunda şunu sor: "Başka bir konuda yardımcı olabilir miyim?"
+🏷️ **About Cellenta Packages**:
+
+- All packages are valid for **30 days**.
+- Each package includes specific minutes, SMS, and GBs.
+- Users can select packages from the Store tab.
+
+📦 **Package Selection Guidance**:
+Use the following logic to recommend packages:
+
+1. **If the user is a student or looking for a cheap package with internet**, recommend:
+   - **Mini Öğrenci** (50 mins, 50 SMS, 1 GB, 25 TL)
+   - **Mini Konuşma** (100 mins, 50 SMS, 250 GB, 30 TL)
+
+2. **If the user needs a lot of internet and is cost-sensitive**, suggest:
+   - **Mini İnternet** (3 GB, 50 mins, 30 SMS, 40 TL)
+   - **Genç Tarife** (4 GB, 200 mins, 100 SMS, 55 TL)
+   - **Sosyal Medya Paketi** (5 GB, 100 mins, 100 SMS, 60 TL)
+
+3. **If the user needs heavy data for streaming or remote work**, suggest:
+   - **Süper İnternet** (20 GB, 100 mins, 100 SMS, 80 TL)
+   - **Full Paket** (10 GB, 1000 mins, 500 SMS, 100 TL)
+
+4. **If they want unlimited or family-style coverage**, suggest:
+   - **Aile Paketi** (8 GB, 1500 mins, 400 SMS, 120 TL)
+
+5. **For users mostly calling**, suggest:
+   - **Mega Konuşma** (1000 mins, 250 SMS, 1 GB, 75 TL)
+   - **Standart Konuşma** (250 mins, 100 SMS, 500 GB, 50 TL)
+
+Always guide users based on their priorities: budget, internet need, or call time. Ask clarifying questions like:
+- "Do you use more internet or minutes?"
+- "Are you looking for the cheapest option or something more complete?"
+
+Assume the user may be confused or unsure about which step comes next. Help them with patience.
 `;
 
 /**
  * Gemini (Google) ile Cellenta Bot'a prompt gönderir ve yanıt alır.
- * @param {string} prompt
+ * @param {string} userPrompt - Kullanıcının sorusu
  * @returns {Promise<string>}
  */
-async function sendGeminiMessage(prompt) {
+async function sendGeminiMessage(userPrompt) {
   const url = `${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`;
 
-  const body = {
+  // Professional format with system instructions
+  const requestBody = {
+    system_instruction: [
+      {
+        role: "system",
+        parts: [
+          {
+            text: CELLENTA_SYSTEM_PROMPT
+          }
+        ]
+      }
+    ],
     contents: [
       {
         parts: [
-          { text: `${CELLENTA_SYSTEM_PROMPT}\n\nUser: ${prompt}` }
+          {
+            text: userPrompt
+          }
         ]
+      }
+    ],
+    generationConfig: {
+      temperature: 0.7,
+      topK: 40,
+      topP: 0.95,
+      maxOutputTokens: 1024,
+    },
+    safetySettings: [
+      {
+        category: "HARM_CATEGORY_HARASSMENT",
+        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+      },
+      {
+        category: "HARM_CATEGORY_HATE_SPEECH", 
+        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+      },
+      {
+        category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+        threshold: "BLOCK_MEDIUM_AND_ABOVE"
+      },
+      {
+        category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+        threshold: "BLOCK_MEDIUM_AND_ABOVE"
       }
     ]
   };
 
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestBody)
+    });
 
-  if (!response.ok) {
-    throw new Error(`Gemini API error: ${response.status}`);
-  }
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Gemini API error: ${response.status} - ${errorText}`);
+      throw new Error(`Gemini API error: ${response.status}`);
+    }
 
-  const data = await response.json();
-  if (
-    data.candidates &&
-    data.candidates[0] &&
-    data.candidates[0].content &&
-    data.candidates[0].content.parts &&
-    data.candidates[0].content.parts[0] &&
-    data.candidates[0].content.parts[0].text
-  ) {
-    return data.candidates[0].content.parts[0].text;
-  } else {
-    throw new Error("No response text found from Gemini API");
+    const data = await response.json();
+    
+    // Extract response text safely
+    if (
+      data.candidates &&
+      data.candidates[0] &&
+      data.candidates[0].content &&
+      data.candidates[0].content.parts &&
+      data.candidates[0].content.parts[0] &&
+      data.candidates[0].content.parts[0].text
+    ) {
+      return data.candidates[0].content.parts[0].text.trim();
+    } else {
+      console.error("Unexpected Gemini API response structure:", data);
+      throw new Error("No response text found from Gemini API");
+    }
+  } catch (error) {
+    console.error("Gemini API request failed:", error);
+    throw new Error(`Failed to get response from Cellenta Bot: ${error.message}`);
   }
 }
 

@@ -215,11 +215,12 @@ export default function Bills() {
           maxWidth: "100%"
         }}>
           {/* Ödenmemiş fatura kutusu (ilk sırada, kartların içinde) */}
-          {bills.length > 0 && bills[0].status === "Unpaid" && (
+          {bills.length > 0 && bills.find(bill => bill.status === "Ödenmedi") && (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
+              className="pending-bill-container"
               style={{
                 border: "2px solid #fbbf24",
                 borderRadius: 20,
@@ -253,34 +254,74 @@ export default function Bills() {
                 }}
               />
               
-              <div
-                style={{ 
-                  background: "linear-gradient(135deg, #9ca3af, #6b7280)", 
-                  color: "#fff", 
-                  border: "none", 
-                  borderRadius: 24, 
-                  padding: "12px 20px", 
-                  fontWeight: 600, 
-                  fontSize: 15, 
-                  cursor: "not-allowed",
-                  boxShadow: "0 2px 8px rgba(107,114,128,0.2)",
-                  transition: "all 0.3s ease",
+              <div className="pending-bill-info" style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 8,
+                flex: 1
+              }}>
+                <div style={{
+                  fontSize: 18,
+                  fontWeight: 700,
+                  color: "#dc2626",
                   display: "flex",
                   alignItems: "center",
-                  gap: 8,
-                  opacity: 0.6
-                }}
-              >
-                                        💳 Faturayı Öde <ChevronRight size={18} />
+                  gap: 8
+                }}>
+                  ⚠️ Bekleyen Fatura
+                </div>
+                <div style={{
+                  fontSize: 14,
+                  color: "#6b7280",
+                  fontWeight: 500,
+                  lineHeight: 1.4
+                }}>
+                  Ödenmemiş faturanız bulunmaktadır. Lütfen en kısa sürede ödeme yapınız.
+                </div>
+                <div
+                  style={{ 
+                    background: "linear-gradient(135deg, #9ca3af, #6b7280)", 
+                    color: "#fff", 
+                    border: "none", 
+                    borderRadius: 16, 
+                    padding: "8px 16px", 
+                    fontWeight: 600, 
+                    fontSize: 13, 
+                    cursor: "not-allowed",
+                    boxShadow: "0 2px 8px rgba(107,114,128,0.2)",
+                    transition: "all 0.3s ease",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    opacity: 0.6,
+                    alignSelf: "flex-start"
+                  }}
+                >
+                  💳 Faturayı Öde <ChevronRight size={16} />
+                </div>
               </div>
               
-              <div style={{ 
-                fontWeight: 800, 
-                fontSize: 24, 
-                color: "#dc2626",
-                textShadow: "0 2px 4px rgba(0,0,0,0.1)"
+              <div className="pending-bill-amount" style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-end",
+                gap: 4
               }}>
-                {bills[0].amount}
+                <div style={{ 
+                  fontWeight: 800, 
+                  fontSize: 24, 
+                  color: "#dc2626",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.1)"
+                }}>
+                  {bills.find(bill => bill.status === "Ödenmedi")?.amount}
+                </div>
+                <div style={{
+                  fontSize: 14,
+                  color: "#6b7280",
+                  fontWeight: 500
+                }}>
+                  📅 {bills.find(bill => bill.status === "Ödenmedi")?.date}
+                </div>
               </div>
             </motion.div>
           )}
@@ -473,6 +514,23 @@ export default function Bills() {
           .bill-status {
             align-self: flex-end;
             min-width: auto !important;
+          }
+          
+          /* Özel fatura kutusu mobil responsive */
+          .pending-bill-container {
+            flex-direction: column !important;
+            gap: 16px !important;
+            padding: 20px !important;
+            text-align: center !important;
+          }
+          
+          .pending-bill-info {
+            align-items: center !important;
+          }
+          
+          .pending-bill-amount {
+            align-items: center !important;
+            text-align: center !important;
           }
         }
       `}</style>
