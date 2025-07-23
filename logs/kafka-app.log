@@ -1,22 +1,26 @@
-2025-07-22 10:24:38.028 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 44041 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
-2025-07-22 10:24:38.030 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
-2025-07-22 10:24:38.331 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-07-22 10:24:38.340 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
-2025-07-22 10:24:38.570 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-07-22 10:24:38.577 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-07-22 10:24:38.578 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-07-22 10:24:38.579 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
-2025-07-22 10:24:38.605 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-07-22 10:24:38.605 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 557 ms
-2025-07-22 10:24:38.774 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-07-22 10:24:38.805 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
-2025-07-22 10:24:38.824 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-07-22 10:24:38.953 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-07-22 10:24:38.965 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-07-22 10:24:39.847 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@44b9c7c4
-2025-07-22 10:24:39.848 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-07-22 10:24:40.112 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-07-22 10:24:40.296 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-07-23 09:19:59.961 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 09:20:00.010 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 09:23:26.108 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 09:23:26.155 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 09:25:40.202 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 09:25:40.257 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 09:27:19.048 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 09:27:19.095 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 09:29:10.326 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 09:29:10.373 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 09:29:10.562 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Starting CgfApplicationTests using Java 24.0.1 with PID 50639 (started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 09:29:10.562 [main] INFO  c.cellenta.cgf.CgfApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 09:29:10.863 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 09:29:10.875 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
+2025-07-23 09:29:11.167 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 09:29:11.211 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 09:29:11.250 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 09:29:11.425 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 09:29:11.442 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 09:29:12.397 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@75dc1c1c
+2025-07-23 09:29:12.398 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 09:29:12.633 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 09:29:12.795 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 21.0
@@ -24,36 +28,32 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-07-22 10:24:40.455 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-07-22 10:24:40.457 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 10:24:40.587 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-07-22 10:24:40.791 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-07-22 10:24:40.796 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-07-22 10:24:40.801 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.945 seconds (process running for 3.346)
-2025-07-22 10:44:27.688 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-07-22 10:44:27.699 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-07-22 10:44:27.705 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 10:44:27.708 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-07-22 10:44:28.323 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-07-22 10:44:30.331 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 44268 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
-2025-07-22 10:44:30.332 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
-2025-07-22 10:44:30.628 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-07-22 10:44:30.637 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
-2025-07-22 10:44:30.834 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-07-22 10:44:30.842 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-07-22 10:44:30.843 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-07-22 10:44:30.843 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
-2025-07-22 10:44:30.864 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-07-22 10:44:30.865 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 510 ms
-2025-07-22 10:44:31.007 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-07-22 10:44:31.032 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
-2025-07-22 10:44:31.049 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-07-22 10:44:31.172 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-07-22 10:44:31.183 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-07-22 10:44:32.121 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@5e3d2765
-2025-07-22 10:44:32.122 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-07-22 10:44:32.376 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-07-22 10:44:32.552 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-07-23 09:29:13.066 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 09:29:13.068 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:29:13.246 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 09:29:13.453 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Started CgfApplicationTests in 3.021 seconds (process running for 3.535)
+2025-07-23 09:29:13.815 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:29:13.816 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 09:29:14.199 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 09:29:20.906 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 50654 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 09:29:20.907 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 09:29:21.232 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 09:29:21.248 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 10 ms. Found 0 JPA repository interfaces.
+2025-07-23 09:29:21.568 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-23 09:29:21.574 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:29:21.581 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-23 09:29:21.581 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-23 09:29:21.603 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-23 09:29:21.604 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 681 ms
+2025-07-23 09:29:21.747 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 09:29:21.762 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 09:29:21.773 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 09:29:21.875 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 09:29:21.885 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 09:29:22.632 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@62faf77
+2025-07-23 09:29:22.633 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 09:29:22.858 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 09:29:23.024 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 21.0
@@ -61,36 +61,36 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-07-22 10:44:32.693 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-07-22 10:44:32.694 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 10:44:32.820 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-07-22 10:44:33.004 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-07-22 10:44:33.010 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-07-22 10:44:33.014 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.87 seconds (process running for 3.193)
-2025-07-22 10:51:05.511 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-07-22 10:51:05.517 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-07-22 10:51:05.522 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 10:51:05.526 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-07-22 10:51:07.499 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-07-22 10:51:09.320 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 44345 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
-2025-07-22 10:51:09.321 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
-2025-07-22 10:51:09.614 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-07-22 10:51:09.622 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 4 ms. Found 0 JPA repository interfaces.
-2025-07-22 10:51:09.817 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-07-22 10:51:09.824 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-07-22 10:51:09.825 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-07-22 10:51:09.825 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
-2025-07-22 10:51:09.848 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-07-22 10:51:09.849 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 506 ms
-2025-07-22 10:51:09.984 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-07-22 10:51:10.007 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
-2025-07-22 10:51:10.019 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-07-22 10:51:10.134 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-07-22 10:51:10.145 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-07-22 10:51:11.190 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@5e3d2765
-2025-07-22 10:51:11.191 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-07-22 10:51:11.445 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-07-22 10:51:11.626 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-07-23 09:29:23.157 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 09:29:23.159 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:29:23.276 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 09:29:23.455 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:29:23.461 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-23 09:29:23.465 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.753 seconds (process running for 3.016)
+2025-07-23 09:29:38.049 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-23 09:29:38.054 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-23 09:29:38.056 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:29:38.058 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 09:29:38.587 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 09:30:00.611 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 50675 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 09:30:00.612 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 09:30:00.895 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 09:30:00.903 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
+2025-07-23 09:30:01.092 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-23 09:30:01.099 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:30:01.100 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-23 09:30:01.100 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-23 09:30:01.125 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-23 09:30:01.126 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 496 ms
+2025-07-23 09:30:01.275 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 09:30:01.311 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 09:30:01.330 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 09:30:01.462 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 09:30:01.480 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 09:30:02.262 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@4bfa5eb9
+2025-07-23 09:30:02.263 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 09:30:02.493 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 09:30:02.656 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 21.0
@@ -98,36 +98,36 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-07-22 10:51:11.771 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-07-22 10:51:11.772 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 10:51:11.895 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-07-22 10:51:12.083 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-07-22 10:51:12.088 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-07-22 10:51:12.093 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.955 seconds (process running for 3.245)
-2025-07-22 11:00:17.540 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-07-22 11:00:17.547 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-07-22 11:00:17.552 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 11:00:17.554 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-07-22 11:00:18.136 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-07-22 11:19:19.892 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 44765 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
-2025-07-22 11:19:19.893 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
-2025-07-22 11:19:20.199 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-07-22 11:19:20.209 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
-2025-07-22 11:19:20.412 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-07-22 11:19:20.419 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-07-22 11:19:20.420 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-07-22 11:19:20.420 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
-2025-07-22 11:19:20.442 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-07-22 11:19:20.442 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 527 ms
-2025-07-22 11:19:20.583 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-07-22 11:19:20.608 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
-2025-07-22 11:19:20.623 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-07-22 11:19:20.745 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-07-22 11:19:20.757 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-07-22 11:19:21.575 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@77cddc0c
-2025-07-22 11:19:21.576 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-07-22 11:19:21.824 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-07-22 11:19:22.007 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-07-23 09:30:02.810 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 09:30:02.812 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:30:02.938 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 09:30:03.128 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:30:03.133 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-23 09:30:03.137 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.689 seconds (process running for 3.021)
+2025-07-23 09:30:14.387 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-23 09:30:14.392 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-23 09:30:14.395 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:30:14.396 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 09:30:14.926 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 09:36:02.205 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 50725 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 09:36:02.207 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 09:36:02.537 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 09:36:02.547 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2025-07-23 09:36:02.762 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-23 09:36:02.770 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:36:02.771 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-23 09:36:02.771 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-23 09:36:02.797 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-23 09:36:02.797 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 557 ms
+2025-07-23 09:36:03.061 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 09:36:03.088 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 09:36:03.105 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 09:36:03.231 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 09:36:03.251 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 09:36:04.270 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@774f2992
+2025-07-23 09:36:04.271 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 09:36:04.532 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 09:36:04.722 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 21.0
@@ -135,108 +135,355 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-07-22 11:19:22.160 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-07-22 11:19:22.162 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 11:19:22.292 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-07-22 11:19:22.511 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-07-22 11:19:22.517 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-07-22 11:19:22.524 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.819 seconds (process running for 3.192)
-2025-07-22 11:33:12.017 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 3 (/34.38.128.100:9094) could not be established. Node may not be available.
-2025-07-22 11:37:35.237 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection oracle.jdbc.driver.T4CConnection@64e023e7 (G/Ç Hatası: Invalid Operation, NOT Connected). Possibly consider using a shorter maxLifetime value.
-2025-07-22 11:37:35.238 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m13s488ms).
-2025-07-22 11:37:45.693 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 399: The coordinator is not aware of this member.
-2025-07-22 11:37:45.695 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 11:37:45.752 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=423, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1604, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 11:37:45.753 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=399, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1582, leaderEpoch=0, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing max.poll.interval.ms or by reducing the maximum size of batches returned in poll() with max.poll.records.
-2025-07-22 11:39:19.200 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m43s962ms).
-2025-07-22 11:39:19.554 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 1 (/34.38.128.100:9092) could not be established. Node may not be available.
-2025-07-22 11:39:19.554 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 2 (/34.38.128.100:9093) could not be established. Node may not be available.
-2025-07-22 11:39:22.169 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 424: The coordinator is not aware of this member.
-2025-07-22 11:39:22.170 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 11:39:22.247 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 11:39:22.247 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=424, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing max.poll.interval.ms or by reducing the maximum size of batches returned in poll() with max.poll.records.
-2025-07-22 11:44:43.367 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m54s149ms).
-2025-07-22 11:44:50.467 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 11:44:50.473 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 11:44:50.474 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 11:44:50.474 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 11:48:47.543 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 1 (/34.38.128.100:9092) could not be established. Node may not be available.
-2025-07-22 11:48:47.544 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 2 (/34.38.128.100:9093) could not be established. Node may not be available.
-2025-07-22 11:48:48.546 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 1 (/34.38.128.100:9092) could not be established. Node may not be available.
-2025-07-22 11:48:48.547 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 2 (/34.38.128.100:9093) could not be established. Node may not be available.
-2025-07-22 11:48:49.434 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 11:48:49.438 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 11:48:49.438 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 11:48:49.438 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 11:49:03.268 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m19s900ms).
-2025-07-22 11:53:33.031 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection oracle.jdbc.driver.T4CConnection@4305d75e (G/Ç Hatası: Invalid Operation, NOT Connected). Possibly consider using a shorter maxLifetime value.
-2025-07-22 11:53:34.129 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 11:53:34.179 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 11:53:34.179 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 11:53:34.180 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 11:53:37.665 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m34s390ms).
-2025-07-22 12:02:35.589 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 12:02:35.594 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 12:02:35.594 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 12:02:35.594 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 12:07:03.698 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m26s33ms).
-2025-07-22 12:11:39.264 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 12:11:39.317 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 12:11:39.317 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 12:11:39.318 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 12:11:58.762 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m55s64ms).
-2025-07-22 12:16:12.267 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 12:16:12.268 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 12:16:12.306 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 12:16:12.306 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing max.poll.interval.ms or by reducing the maximum size of batches returned in poll() with max.poll.records.
-2025-07-22 12:25:20.095 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m21s333ms).
-2025-07-22 12:34:10.238 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection oracle.jdbc.driver.T4CConnection@47241177 (G/Ç Hatası: Invalid Operation, NOT Connected). Possibly consider using a shorter maxLifetime value.
-2025-07-22 12:34:13.174 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 12:34:13.179 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 12:34:13.179 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 12:34:13.179 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 12:38:46.681 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection oracle.jdbc.driver.T4CConnection@33754461 (G/Ç Hatası: Invalid Operation, NOT Connected). Possibly consider using a shorter maxLifetime value.
-2025-07-22 12:43:16.734 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m56s639ms).
-2025-07-22 12:47:53.368 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 12:47:53.375 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 12:47:53.375 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 12:47:53.375 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 12:56:53.784 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.PoolBase - HikariPool-1 - Failed to validate connection oracle.jdbc.driver.T4CConnection@6528720a (Kapalı Bağlantı). Possibly consider using a shorter maxLifetime value.
-2025-07-22 12:57:03.397 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=13m16s684ms).
-2025-07-22 13:04:58.176 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 3 (/34.38.128.100:9094) could not be established. Node may not be available.
-2025-07-22 13:04:58.626 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 1 (/34.38.128.100:9092) could not be established. Node may not be available.
-2025-07-22 13:04:58.956 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 1 (/34.38.128.100:9092) could not be established. Node may not be available.
-2025-07-22 13:04:58.956 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 2 (/34.38.128.100:9093) could not be established. Node may not be available.
-2025-07-22 13:04:59.330 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 3 (/34.38.128.100:9094) could not be established. Node may not be available.
-2025-07-22 13:04:59.563 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 1 (/34.38.128.100:9092) could not be established. Node may not be available.
-2025-07-22 13:05:00.919 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 13:05:00.924 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-1 at offset 428: The coordinator is not aware of this member.
-2025-07-22 13:05:00.925 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 13:05:00.925 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 13:05:16.383 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8m12s986ms).
-2025-07-22 13:16:24.087 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 1 (/34.38.128.100:9092) could not be established. Node may not be available.
-2025-07-22 13:16:24.088 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Connection to node 2 (/34.38.128.100:9093) could not be established. Node may not be available.
-2025-07-22 13:16:25.358 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] The metadata response from the cluster reported a recoverable issue with correlation id 5196 : {chf-to-cgf=LEADER_NOT_AVAILABLE}
-2025-07-22 13:16:25.361 [Thread-3] WARN  o.a.k.c.c.internals.FetchCollector - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Received unknown topic or partition error in fetch for partition chf-to-cgf-0
-2025-07-22 13:16:25.366 [Thread-3] WARN  o.a.k.c.c.internals.FetchCollector - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Received unknown topic or partition error in fetch for partition chf-to-cgf-1
-2025-07-22 13:16:25.423 [Thread-3] WARN  o.a.k.c.c.internals.FetchCollector - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Received unknown topic or partition error in fetch for partition chf-to-cgf-1
-2025-07-22 13:16:25.484 [Thread-3] WARN  o.a.k.c.c.internals.FetchCollector - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Received unknown topic or partition error in fetch for partition chf-to-cgf-1
-2025-07-22 13:16:25.552 [Thread-3] WARN  o.a.k.c.c.internals.FetchCollector - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Received unknown topic or partition error in fetch for partition chf-to-cgf-1
-2025-07-22 13:16:25.594 [kafka-coordinator-heartbeat-thread | UsageRecordConsumerGroup] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-0 at offset 1605: The coordinator is not aware of this member.
-2025-07-22 13:16:25.595 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}, chf-to-cgf-0=OffsetAndMetadata{offset=1605, leaderEpoch=0, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing max.poll.interval.ms or by reducing the maximum size of batches returned in poll() with max.poll.records.
-2025-07-22 13:16:25.595 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 13:16:25.600 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-1=OffsetAndMetadata{offset=428, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 13:16:35.448 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] The metadata response from the cluster reported a recoverable issue with correlation id 5215 : {chf-to-cgf=LEADER_NOT_AVAILABLE}
-2025-07-22 13:16:52.124 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m5s642ms).
-2025-07-22 13:26:30.997 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
-2025-07-22 13:26:31.052 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-0 at offset 0: Specified group generation id is not valid.
-2025-07-22 13:26:31.053 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-0=OffsetAndMetadata{offset=0, leaderEpoch=null, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
-2025-07-22 13:26:31.053 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-0=OffsetAndMetadata{offset=0, leaderEpoch=null, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
-2025-07-22 13:26:46.811 [Thread-3] WARN  o.a.k.c.c.internals.FetchCollector - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Received unknown topic or partition error in fetch for partition chf-to-cgf-0
-2025-07-22 13:26:46.919 [Thread-3] WARN  o.apache.kafka.clients.NetworkClient - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] The metadata response from the cluster reported a recoverable issue with correlation id 6635 : {chf-to-cgf=LEADER_NOT_AVAILABLE}
-2025-07-22 13:26:46.921 [Thread-3] WARN  o.a.k.c.c.internals.FetchCollector - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Received unknown topic or partition error in fetch for partition chf-to-cgf-0
-2025-07-22 13:26:59.379 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-07-22 13:26:59.391 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-07-22 13:26:59.398 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-07-22 13:26:59.402 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-07-22 13:27:00.004 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 09:36:04.905 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 09:36:04.907 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:36:05.055 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 09:36:05.372 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:36:05.377 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-23 09:36:05.383 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 3.401 seconds (process running for 3.954)
+2025-07-23 09:37:08.486 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.. Will continue to join group.
+2025-07-23 09:37:08.493 [Thread-3] ERROR o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Offset commit failed on partition chf-to-cgf-0 at offset 421: The coordinator is not aware of this member.
+2025-07-23 09:37:08.494 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-0=OffsetAndMetadata{offset=421, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer is not part of an active group for auto partition assignment; it is likely that the consumer was kicked out of the group.
+2025-07-23 09:37:08.494 [Thread-3] WARN  o.a.k.c.c.i.ConsumerCoordinator - [Consumer clientId=consumer-UsageRecordConsumerGroup-1, groupId=UsageRecordConsumerGroup] Asynchronous auto-commit of offsets {chf-to-cgf-0=OffsetAndMetadata{offset=421, leaderEpoch=0, metadata=''}} failed: Offset commit cannot be completed since the consumer member's generation is already stale, meaning it has already participated another rebalance and got a new generation. You can try completing the rebalance by calling poll() and then retry commit again
+2025-07-23 09:37:28.098 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m23s721ms).
+2025-07-23 09:41:27.816 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=59s699ms).
+2025-07-23 09:49:25.873 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-23 09:49:25.880 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-23 09:49:25.885 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:49:25.887 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 09:49:25.891 [Thread-3] WARN  c.zaxxer.hikari.pool.ProxyConnection - HikariPool-1 - Connection oracle.jdbc.driver.T4CConnection@774f2992 marked as broken because of SQLSTATE(08006), ErrorCode(17002)
+java.sql.SQLRecoverableException: G/Ç Hatası
+	at oracle.jdbc.driver.T4CCallableStatement.executeForRows(T4CCallableStatement.java:1246)
+	at oracle.jdbc.driver.OracleStatement.executeSQLStatement(OracleStatement.java:1819)
+	at oracle.jdbc.driver.OracleStatement.doExecuteWithTimeout(OracleStatement.java:1471)
+	at oracle.jdbc.driver.OraclePreparedStatement.executeInternal(OraclePreparedStatement.java:3760)
+	at oracle.jdbc.driver.OraclePreparedStatement.execute(OraclePreparedStatement.java:4135)
+	at oracle.jdbc.driver.OracleCallableStatement.execute(OracleCallableStatement.java:4278)
+	at oracle.jdbc.driver.OraclePreparedStatementWrapper.execute(OraclePreparedStatementWrapper.java:1013)
+	at com.zaxxer.hikari.pool.ProxyPreparedStatement.execute(ProxyPreparedStatement.java:44)
+	at com.zaxxer.hikari.pool.HikariProxyCallableStatement.execute(HikariProxyCallableStatement.java)
+	at org.springframework.jdbc.core.JdbcTemplate.lambda$call$6(JdbcTemplate.java:1231)
+	at org.springframework.jdbc.core.JdbcTemplate.execute(JdbcTemplate.java:1172)
+	at org.springframework.jdbc.core.JdbcTemplate.call(JdbcTemplate.java:1230)
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.executeCallInternal(AbstractJdbcCall.java:423)
+	at org.springframework.jdbc.core.simple.AbstractJdbcCall.doExecute(AbstractJdbcCall.java:406)
+	at org.springframework.jdbc.core.simple.SimpleJdbcCall.execute(SimpleJdbcCall.java:200)
+	at com.cellenta.cgf.repository.UsageRecordRepository.callInsertUsageProcedure(UsageRecordRepository.java:53)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728)
+	at com.cellenta.cgf.repository.UsageRecordRepository$$SpringCGLIB$$0.callInsertUsageProcedure(<generated>)
+	at com.cellenta.cgf.service.UsageRecordService.insertUsage(UsageRecordService.java:23)
+	at com.cellenta.cgf.service.KafkaJarConsumerService.lambda$startKafkaConsumer$0(KafkaJarConsumerService.java:41)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at com.cellenta.cgf.service.KafkaJarConsumerService.lambda$startKafkaConsumer$1(KafkaJarConsumerService.java:37)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.nio.channels.AsynchronousCloseException: null
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:203)
+	at java.base/sun.nio.ch.SocketChannelImpl.endRead(SocketChannelImpl.java:396)
+	at java.base/sun.nio.ch.SocketChannelImpl.read(SocketChannelImpl.java:436)
+	at oracle.net.nt.TimeoutSocketChannel.read(TimeoutSocketChannel.java:415)
+	at oracle.net.ns.NSProtocolNIO.doSocketRead(NSProtocolNIO.java:1127)
+	at oracle.net.ns.NIOPacket.readHeader(NIOPacket.java:266)
+	at oracle.net.ns.NIOPacket.readPacketFromSocketChannel(NIOPacket.java:198)
+	at oracle.net.ns.NIOPacket.readFromSocketChannel(NIOPacket.java:140)
+	at oracle.net.ns.NIOPacket.readFromSocketChannel(NIOPacket.java:113)
+	at oracle.net.ns.NIONSDataChannel.readDataFromSocketChannel(NIONSDataChannel.java:97)
+	at oracle.jdbc.driver.T4CMAREngineNIO.prepareForUnmarshall(T4CMAREngineNIO.java:833)
+	at oracle.jdbc.driver.T4CMAREngineNIO.unmarshalUB1(T4CMAREngineNIO.java:486)
+	at oracle.jdbc.driver.T4CTTIfun.receive(T4CTTIfun.java:622)
+	at oracle.jdbc.driver.T4CTTIfun.doRPC(T4CTTIfun.java:298)
+	at oracle.jdbc.driver.T4C8Oall.doOALL(T4C8Oall.java:511)
+	at oracle.jdbc.driver.T4CCallableStatement.doOall8(T4CCallableStatement.java:158)
+	at oracle.jdbc.driver.T4CCallableStatement.executeForRows(T4CCallableStatement.java:1236)
+	... 29 common frames omitted
+2025-07-23 09:49:26.359 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 09:49:34.913 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 50866 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 09:49:34.913 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 09:49:35.208 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 09:49:35.216 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
+2025-07-23 09:49:35.416 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-23 09:49:35.423 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:49:35.424 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-23 09:49:35.425 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-23 09:49:35.450 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-23 09:49:35.451 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 512 ms
+2025-07-23 09:49:35.600 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 09:49:35.629 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 09:49:35.643 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 09:49:35.762 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 09:49:35.774 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 09:49:36.678 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@774f2992
+2025-07-23 09:49:36.679 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 09:49:36.912 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 09:49:37.075 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 21.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-23 09:49:37.247 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 09:49:37.249 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 09:49:37.426 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 09:49:37.641 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-07-23 09:49:37.647 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-23 09:49:37.655 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.937 seconds (process running for 3.248)
+2025-07-23 09:55:16.413 [HikariPool-1:housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m9s589ms).
+2025-07-23 10:10:58.488 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-23 10:10:58.501 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-23 10:10:58.510 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:10:58.514 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 10:10:59.039 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 10:11:33.631 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:11:33.682 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:11:44.734 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:11:44.781 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:11:44.927 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Starting CgfApplicationTests using Java 24.0.1 with PID 51475 (started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 10:11:44.928 [main] INFO  c.cellenta.cgf.CgfApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 10:11:45.174 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 10:11:45.184 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
+2025-07-23 10:11:45.438 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 10:11:45.463 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 10:11:45.477 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 10:11:45.607 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 10:11:45.619 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 10:11:46.618 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@1c6ac73c
+2025-07-23 10:11:46.620 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 10:11:46.875 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 10:11:47.045 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 21.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-23 10:11:47.317 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 10:11:47.320 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:11:47.497 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 10:11:47.687 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Started CgfApplicationTests in 2.849 seconds (process running for 3.326)
+2025-07-23 10:11:47.993 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:11:47.994 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 10:11:48.385 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 10:11:59.069 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:11:59.116 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:13:38.717 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:13:38.761 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:13:56.704 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:13:56.749 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:13:56.888 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Starting CgfApplicationTests using Java 24.0.1 with PID 51567 (started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 10:13:56.889 [main] INFO  c.cellenta.cgf.CgfApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 10:13:57.052 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 10:13:57.064 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2025-07-23 10:13:57.291 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 10:13:57.319 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 10:13:57.337 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 10:13:57.492 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 10:13:57.504 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 10:13:58.566 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@305552d6
+2025-07-23 10:13:58.568 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 10:13:58.867 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 10:13:59.083 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 21.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-23 10:13:59.418 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 10:13:59.419 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:13:59.627 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Started CgfApplicationTests in 2.828 seconds (process running for 3.312)
+2025-07-23 10:13:59.918 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:13:59.919 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 10:14:00.309 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 10:14:15.696 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:14:15.777 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:16:22.330 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:16:22.377 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:17:43.254 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:17:43.306 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:17:43.371 [main] WARN  o.s.test.context.TestContextManager - Caught exception while allowing TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] to prepare test instance [com.cellenta.cgf.CgfApplicationTests@51a06cbe]
+java.lang.NoClassDefFoundError: ch/qos/logback/core/util/StatusPrinter2
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.<init>(LogbackLoggingSystem.java:111)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem$Factory.getLoggingSystem(LogbackLoggingSystem.java:504)
+	at org.springframework.boot.logging.DelegatingLoggingSystemFactory.getLoggingSystem(DelegatingLoggingSystemFactory.java:44)
+	at org.springframework.boot.logging.LoggingSystem.get(LoggingSystem.java:167)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationStartingEvent(LoggingApplicationListener.java:237)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:220)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:185)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:178)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:156)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:138)
+	at org.springframework.boot.context.event.EventPublishingRunListener.multicastInitialEvent(EventPublishingRunListener.java:136)
+	at org.springframework.boot.context.event.EventPublishingRunListener.starting(EventPublishingRunListener.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$starting$0(SpringApplicationRunListeners.java:54)
+	at java.base/java.lang.Iterable.forEach(Iterable.java:75)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:118)
+	at org.springframework.boot.SpringApplicationRunListeners.starting(SpringApplicationRunListeners.java:54)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$3(SpringBootContextLoader.java:144)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1461)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:563)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:144)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:110)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:225)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:152)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:130)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:159)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$10(ClassBasedTestDescriptor.java:383)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:388)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$11(ClassBasedTestDescriptor.java:382)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:215)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:636)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:382)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$6(ClassBasedTestDescriptor.java:293)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:292)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$4(ClassBasedTestDescriptor.java:281)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$5(ClassBasedTestDescriptor.java:280)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:27)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:112)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:111)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:69)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$2(NodeTestTask.java:128)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:128)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:201)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:170)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:94)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:59)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:142)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$1(InterceptingLauncher.java:39)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:38)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:194)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:150)
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:124)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385)
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162)
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495)
+Caused by: java.lang.ClassNotFoundException: ch.qos.logback.core.util.StatusPrinter2
+	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:580)
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:490)
+	... 105 common frames omitted
+2025-07-23 10:21:21.553 [main] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.cellenta.cgf.CgfApplicationTests]: CgfApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-07-23 10:21:21.605 [main] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.cellenta.cgf.CgfApplication for test class com.cellenta.cgf.CgfApplicationTests
+2025-07-23 10:21:21.758 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Starting CgfApplicationTests using Java 24.0.1 with PID 51864 (started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 10:21:21.758 [main] INFO  c.cellenta.cgf.CgfApplicationTests - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 10:21:21.999 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 10:21:22.008 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 JPA repository interfaces.
+2025-07-23 10:21:22.260 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 10:21:22.285 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 10:21:22.306 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 10:21:22.426 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 10:21:22.439 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 10:21:23.534 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@3f1158ee
+2025-07-23 10:21:23.535 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 10:21:23.793 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 10:21:23.971 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 21.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-23 10:21:24.247 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 10:21:24.249 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:21:24.406 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 10:21:24.604 [main] INFO  c.cellenta.cgf.CgfApplicationTests - Started CgfApplicationTests in 2.938 seconds (process running for 3.484)
+2025-07-23 10:21:24.900 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:21:24.901 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 10:21:25.341 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-07-23 10:21:34.852 [main] INFO  com.cellenta.cgf.CgfApplication - Starting CgfApplication using Java 21.0.1 with PID 51882 (/Users/asmeydan/Desktop/i2i/cgf/target/classes started by asmeydan in /Users/asmeydan/Desktop/i2i/cgf)
+2025-07-23 10:21:34.853 [main] INFO  com.cellenta.cgf.CgfApplication - No active profile set, falling back to 1 default profile: "default"
+2025-07-23 10:21:35.163 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-07-23 10:21:35.174 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2025-07-23 10:21:35.372 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-07-23 10:21:35.378 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-07-23 10:21:35.380 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-07-23 10:21:35.380 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.42]
+2025-07-23 10:21:35.401 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-07-23 10:21:35.402 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 533 ms
+2025-07-23 10:21:35.536 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-07-23 10:21:35.551 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.18.Final
+2025-07-23 10:21:35.561 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-07-23 10:21:35.686 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-07-23 10:21:35.697 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-07-23 10:21:36.596 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@47eaf55c
+2025-07-23 10:21:36.597 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-07-23 10:21:36.845 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: OracleDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-07-23 10:21:37.056 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 21.0
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-07-23 10:21:37.183 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-07-23 10:21:37.184 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:21:37.300 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-07-23 10:21:37.488 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-07-23 10:21:37.495 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-07-23 10:21:37.500 [main] INFO  com.cellenta.cgf.CgfApplication - Started CgfApplication in 2.854 seconds (process running for 3.143)
+2025-07-23 10:21:43.285 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-07-23 10:21:43.291 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-07-23 10:21:43.294 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-07-23 10:21:43.295 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-07-23 10:21:43.927 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
