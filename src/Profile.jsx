@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AppleStyleDock from "./components/AppleStyleDock";
 import Sidebar from "./components/Sidebar";
 import ChatWidget from "./components/ChatWidget";
+
 import apiService from "./services/api";
 
 export default function Profile() {
@@ -38,7 +39,7 @@ export default function Profile() {
         setUser(formattedUser);
       } catch (error) {
         console.error('Failed to load user profile:', error);
-        setError('Failed to load profile. Please try again.');
+        setError('Veri yüklenemedi');
         
         // Token geçersizse login'e yönlendir
         if (error.message.includes('401') || error.message.includes('Unauthorized')) {
@@ -104,9 +105,12 @@ export default function Profile() {
               border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
               borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
               borderRadius: "50%",
-              animation: "spin 1s linear infinite"
+              animation: "spin 1s linear infinite",
+              WebkitAnimation: "spin 1s linear infinite",
+              MozAnimation: "spin 1s linear infinite",
+              msAnimation: "spin 1s linear infinite"
             }}></div>
-            Loading profile...
+            Profil yükleniyor...
           </div>
         </div>
       </div>
@@ -144,7 +148,7 @@ export default function Profile() {
             color: "#ef4444", 
             marginBottom: isDesktop ? "16px" : "12px" 
           }}>
-            Error
+            Hata
           </div>
           <div style={{ 
             color: "#6b7280", 
@@ -169,7 +173,7 @@ export default function Profile() {
             onMouseOver={e => e.target.style.background = "#6d28d9"}
             onMouseOut={e => e.target.style.background = "#7c3aed"}
           >
-            Try Again
+            Tekrar Dene
           </button>
         </div>
       </div>
@@ -196,13 +200,14 @@ export default function Profile() {
       {/* Sidebar for medium and small screens */}
       {!isDesktop && <Sidebar user={user} />}
 
-
-
       <div style={{ 
-        maxWidth: isDesktop ? 850 : "100%", 
+        maxWidth: isDesktop ? 900 : "100%", 
         margin: "0 auto", 
-        padding: isDesktop ? "24px 40px 40px 40px" : "50px 16px 32px 16px",
-        width: "100%"
+        padding: isDesktop ? "40px 40px 80px 40px" : "50px 16px 32px 16px",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
       }}>
         {/* Header Logo */}
         <div style={{ 
@@ -244,23 +249,12 @@ export default function Profile() {
             textShadow: "0 3px 6px rgba(0,0,0,0.15)",
             letterSpacing: "-0.5px"
           }}>
-            👤 Profile
+            👤 Profil
           </span>
         </div>
 
         {/* Profile Card */}
-        <div style={{
-          display: "flex",
-          alignItems: isDesktop ? "center" : "flex-start",
-          flexDirection: isDesktop ? "row" : "column",
-          gap: isDesktop ? 50 : 20,
-          background: "#fff",
-          borderRadius: isDesktop ? 32 : 20,
-          boxShadow: "0 6px 24px rgba(0,0,0,0.08)",
-          padding: isDesktop ? "40px 50px" : "32px 24px",
-          maxWidth: isDesktop ? "700px" : "100%",
-          margin: "0 auto",
-          minHeight: isDesktop ? 250 : "auto",
+        <div className="profile-card" style={{
           animation: "slideInUp 0.8s ease 0.4s both",
           position: "relative"
         }}>
@@ -298,27 +292,15 @@ export default function Profile() {
               e.currentTarget.style.boxShadow = "0 3px 12px rgba(238, 90, 82, 0.3)";
             }}
           >
-            🚪 Logout
+            🚪 Çıkış Yap
           </button>
 
           <div 
+            className="profile-avatar"
             style={{
-              width: isDesktop ? 140 : 80,
-              height: isDesktop ? 140 : 80,
-              borderRadius: "50%",
               background: "linear-gradient(135deg, #22d3ee, #06b6d4)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: isDesktop ? 56 : 32,
-              fontWeight: 800,
-              color: "#fff",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
-              border: isDesktop ? "6px solid #e0e7ef" : "4px solid #e0e7ef",
               transition: "transform 0.3s ease",
-              animation: "bounceIn 1s ease 0.6s both",
-              alignSelf: isDesktop ? "auto" : "center",
-              flexShrink: 0
+              animation: "bounceIn 1s ease 0.6s both"
             }}
             onMouseOver={e => e.currentTarget.style.transform = "scale(1.1)"}
             onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}
@@ -326,106 +308,38 @@ export default function Profile() {
             {user?.firstName ? user.firstName[0] : "U"}
           </div>
           
-          <div style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: isDesktop ? 24 : 16,
-            flex: 1,
-            minWidth: 0,
-            alignItems: isDesktop ? "flex-start" : "center",
-            justifyContent: "center"
-          }}>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: isDesktop ? 20 : 12,
-              fontSize: isDesktop ? 19 : 16,
+          <div className="profile-info-list">
+            <div className="profile-info-row" style={{
               opacity: 0,
               animation: "fadeInLeft 0.6s ease forwards",
-              animationDelay: "0.8s",
-              flexDirection: isDesktop ? "row" : "column",
-              textAlign: isDesktop ? "left" : "center"
+              animationDelay: "0.8s"
             }}>
-              <span style={{
-                color: "#888",
-                fontWeight: 700,
-                minWidth: isDesktop ? 130 : "auto",
-                fontSize: isDesktop ? 17 : 14
-              }}>👤 Name</span>
-              <span style={{
-                fontWeight: 800,
-                color: "#1f2937",
-                fontSize: isDesktop ? 19 : 16
-              }}>{user?.firstName || "N/A"}</span>
+              <span className="profile-info-label">👤 Ad</span>
+              <span className="profile-info-value">{user?.firstName || "N/A"}</span>
             </div>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: isDesktop ? 20 : 12,
-              fontSize: isDesktop ? 19 : 16,
+            <div className="profile-info-row" style={{
               opacity: 0,
               animation: "fadeInLeft 0.6s ease forwards",
-              animationDelay: "1.0s",
-              flexDirection: isDesktop ? "row" : "column",
-              textAlign: isDesktop ? "left" : "center"
+              animationDelay: "1.0s"
             }}>
-              <span style={{
-                color: "#888",
-                fontWeight: 700,
-                minWidth: isDesktop ? 130 : "auto",
-                fontSize: isDesktop ? 17 : 14
-              }}>👥 Surname</span>
-              <span style={{
-                fontWeight: 800,
-                color: "#1f2937",
-                fontSize: isDesktop ? 19 : 16
-              }}>{user?.lastName || "N/A"}</span>
+              <span className="profile-info-label">👥 Soyad</span>
+              <span className="profile-info-value">{user?.lastName || "N/A"}</span>
             </div>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: isDesktop ? 20 : 12,
-              fontSize: isDesktop ? 19 : 16,
+            <div className="profile-info-row" style={{
               opacity: 0,
               animation: "fadeInLeft 0.6s ease forwards",
-              animationDelay: "1.2s",
-              flexDirection: isDesktop ? "row" : "column",
-              textAlign: isDesktop ? "left" : "center"
+              animationDelay: "1.2s"
             }}>
-              <span style={{
-                color: "#888",
-                fontWeight: 700,
-                minWidth: isDesktop ? 130 : "auto",
-                fontSize: isDesktop ? 17 : 14
-              }}>📱 Phone</span>
-              <span style={{
-                fontWeight: 800,
-                color: "#1f2937",
-                fontSize: isDesktop ? 19 : 16
-              }}>{user?.phone || "N/A"}</span>
+              <span className="profile-info-label">📱 Telefon</span>
+              <span className="profile-info-value">{user?.phone || "N/A"}</span>
             </div>
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              gap: isDesktop ? 20 : 12,
-              fontSize: isDesktop ? 19 : 16,
+            <div className="profile-info-row" style={{
               opacity: 0,
               animation: "fadeInLeft 0.6s ease forwards",
-              animationDelay: "1.4s",
-              flexDirection: isDesktop ? "row" : "column",
-              textAlign: isDesktop ? "left" : "center"
+              animationDelay: "1.4s"
             }}>
-              <span style={{
-                color: "#888",
-                fontWeight: 700,
-                minWidth: isDesktop ? 130 : "auto",
-                fontSize: isDesktop ? 17 : 14
-              }}>✉️ Email</span>
-              <span style={{
-                fontWeight: 800,
-                color: "#1f2937",
-                fontSize: isDesktop ? 19 : 16
-              }}>{user?.email || "N/A"}</span>
+              <span className="profile-info-label">✉️ E-posta</span>
+              <span className="profile-info-value">{user?.email || "N/A"}</span>
             </div>
           </div>
         </div>
@@ -435,8 +349,33 @@ export default function Profile() {
 
       <style jsx>{`
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% { 
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+          }
+          100% { 
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+          }
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @-moz-keyframes spin {
+          0% { -moz-transform: rotate(0deg); }
+          100% { -moz-transform: rotate(360deg); }
+        }
+        
+        @-ms-keyframes spin {
+          0% { -ms-transform: rotate(0deg); }
+          100% { -ms-transform: rotate(360deg); }
         }
         
         @keyframes fadeIn {
@@ -474,6 +413,17 @@ export default function Profile() {
           50% { opacity: 1; transform: scale(1.1); }
           70% { transform: scale(0.9); }
           100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes fadeInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
         }
 
         @media (max-width: 767px) {

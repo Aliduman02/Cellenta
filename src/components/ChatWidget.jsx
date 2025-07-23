@@ -7,7 +7,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Hello, this is Cellenta! How can I help you?",
+      text: "Merhaba, ben Cellenta Asistanı! Size nasıl yardımcı olabilirim?",
       sender: "bot",
       timestamp: new Date()
     }
@@ -72,7 +72,8 @@ export default function ChatWidget() {
       // Kalan kullanım sorgusu mu?
       if (
         /kalan.*(kullanım|internet|dakika|sms|bakiye)/i.test(message) ||
-        /usage|balance|remaining/i.test(message)
+        /ne.*(kadar|kaldı)/i.test(message) ||
+        /kullanım.*(sorgula|bilgi)/i.test(message)
       ) {
         const usage = await apiService.getUsageData();
         let usageText;
@@ -81,15 +82,12 @@ export default function ChatWidget() {
           usage.remainingMinutes === 0 &&
           usage.remainingSms === 0
         ) {
-          usageText = "You have no remaining usage, all your allowances appear to be used up.";
+          usageText = "Kalan kullanımınız bulunmuyor, tüm haklarınız tükenmiş görünüyor.";
         } else {
-          usageText = `Remaining data: ${usage.remainingData} MB, minutes: ${usage.remainingMinutes}, SMS: ${usage.remainingSms}`;
+          usageText = `Kalan internet: ${usage.remainingData} MB, dakika: ${usage.remainingMinutes}, SMS: ${usage.remainingSms}`;
         }
-        // Kullanıcı mesajı İngilizce mi Türkçe mi kontrol et
-        const isEnglish = /[a-z]/i.test(message) && !/[çğıöşü]/i.test(message);
-        const prompt = isEnglish
-          ? `My current usage is: ${usageText}. Please explain this to the user in English and also tell them they can see more details on the home page.`
-          : `Kalan kullanımım: ${usageText}. Lütfen bunu kullanıcıya Türkçe açıkla ve ayrıntılı bilgi için ana sayfaya gidebileceğini belirt.`;
+        // Her zaman Türkçe yanıt ver
+        const prompt = `Kalan kullanımım: ${usageText}. Lütfen bunu kullanıcıya Türkçe açıkla ve ayrıntılı bilgi için ana sayfaya gidebileceğini belirt.`;
         botResponse = await sendGeminiMessage(prompt);
       } else {
         // Gemini API'den gerçek cevap al
@@ -108,7 +106,7 @@ export default function ChatWidget() {
       console.error("API Error:", error);
       const errorMessage = {
         id: Date.now() + 1,
-        text: "I'm sorry, I'm having trouble connecting right now. Please try again later.",
+        text: "Üzgünüm, şu anda bağlantı sorunu yaşıyorum. Lütfen daha sonra tekrar deneyin.",
         sender: "bot",
         timestamp: new Date()
       };
@@ -202,7 +200,7 @@ export default function ChatWidget() {
             zIndex: 1001,
             animation: "fadeIn 0.2s ease"
           }}>
-            💬 Ask Cellenta Assistant
+            💬 Cellenta Asistanına Sor
             {/* Arrow */}
             <div style={{
               position: "absolute",
@@ -331,7 +329,7 @@ export default function ChatWidget() {
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
-              placeholder="Type your message..."
+              placeholder="Mesajınızı yazın..."
               disabled={isLoading}
               style={{
                 flex: 1,

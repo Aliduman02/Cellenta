@@ -45,16 +45,16 @@ export function LoginForm({ onSignUpClick }) {
 
     // Telefon validasyonu
     if (!phone) {
-      newErrors.phone = "Phone number is required";
+      newErrors.phone = 'Telefon numarası gerekli';
     } else if (!/^\d{10}$/.test(phone)) {
-      newErrors.phone = "Phone number must be 10 digits";
+      newErrors.phone = 'Telefon numarası 10 haneli olmalı';
     } else if (phone.startsWith('0')) {
-      newErrors.phone = "Enter your number without leading zero";
+      newErrors.phone = 'Numaranızı başında sıfır olmadan girin';
     }
 
     // Şifre validasyonu
     if (!password) {
-      newErrors.password = "Password is required";
+      newErrors.password = 'Şifre gerekli';
     }
 
     setErrors(newErrors);
@@ -88,11 +88,11 @@ export function LoginForm({ onSignUpClick }) {
       
       // API'den gelen hata mesajlarını göster
       if (error.message.includes('401') || error.message.includes('Invalid credentials')) {
-        setErrors({ general: "Invalid phone number or password" });
+        setErrors({ general: 'Geçersiz telefon numarası veya şifre' });
       } else if (error.message.includes('404') || error.message.includes('User not found')) {
-        setErrors({ general: "Account not found. Please sign up first." });
+        setErrors({ general: 'Hesap bulunamadı. Lütfen önce kayıt olun.' });
       } else {
-        setErrors({ general: error.message || "Login failed. Please try again." });
+        setErrors({ general: error.message || 'Giriş başarısız. Lütfen tekrar deneyin.' });
       }
     } finally {
       setIsLoading(false);
@@ -101,8 +101,8 @@ export function LoginForm({ onSignUpClick }) {
 
   return (
     <div className="login-form-container">
-      <h3 className="form-subtitle">Welcome back</h3>
-      <h2 className="form-title">Log In to your Account</h2>
+      <h3 className="form-subtitle">Tekrar Hoş Geldiniz</h3>
+      <h2 className="form-title">Hesabınıza Giriş Yapın</h2>
 
       {errors.general && (
         <div style={{ 
@@ -120,12 +120,12 @@ export function LoginForm({ onSignUpClick }) {
 
       <div className="form-fields-flex">
         <div className="form-group">
-          <label htmlFor="phone">Phone Number</label>
+          <label htmlFor="phone">Telefon Numarası</label>
           <input
             type="tel"
             id="phone"
             name="phone"
-            placeholder="Enter your phone number"
+            placeholder="Telefon numaranızı girin"
             value={phone}
             onChange={e => {
               const newPhone = e.target.value;
@@ -143,13 +143,13 @@ export function LoginForm({ onSignUpClick }) {
         </div>
 
         <div className="form-group password-group">
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Şifre</label>
           <div className="password-wrapper">
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder="Şifrenizi girin"
               value={password}
               onChange={e => setPassword(e.target.value)}
               className={errors.password ? "error" : ""}
@@ -157,7 +157,7 @@ export function LoginForm({ onSignUpClick }) {
             />
             <img
               src={showPassword ? "/images/close-eye.png" : "/images/seen.png"}
-              alt={showPassword ? "Hide password" : "Show password"}
+              alt={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
               className="eye-icon"
               onClick={() => setShowPassword(prev => !prev)}
               role="button"
@@ -177,10 +177,10 @@ export function LoginForm({ onSignUpClick }) {
             disabled={isLoading}
           />
           <span className="slider" />
-          <span className="remember-label">Remember Me</span>
+          <span className="remember-label">Beni Hatırla</span>
         </label>
 
-        <a className="forgot-password" href="#" onClick={(e) => { e.preventDefault(); window.location.href = "/forgot-password"; }}>Forgot Password?</a>
+        <a className="forgot-password" href="#" onClick={(e) => { e.preventDefault(); window.location.href = "/forgot-password"; }}>Şifremi Unuttum?</a>
       </div>
 
       <button 
@@ -188,20 +188,71 @@ export function LoginForm({ onSignUpClick }) {
         className="login-button" 
         onClick={handleSubmit}
         disabled={isLoading}
-        style={{ opacity: isLoading ? 0.7 : 1 }}
+        style={{ 
+          opacity: isLoading ? 0.7 : 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "8px"
+        }}
       >
-        {isLoading ? "Logging in..." : "Log In"}
+        {isLoading && (
+          <div style={{
+            width: "16px",
+            height: "16px",
+            border: "2px solid rgba(255,255,255,0.3)",
+            borderTop: "2px solid #fff",
+            borderRadius: "50%",
+            animation: "spin 1s linear infinite",
+            WebkitAnimation: "spin 1s linear infinite",
+            MozAnimation: "spin 1s linear infinite",
+            msAnimation: "spin 1s linear infinite"
+          }}></div>
+        )}
+        {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
       </button>
 
       {/* Debug: API Test Button */}
       {/* Bu buton kaldırıldı */}
 
       <div className="signup-prompt">
-        Don't have an account?{' '}
+        Hesabınız yok mu?{' '}
         <a href="#" onClick={(e) => { e.preventDefault(); onSignUpClick(); }}>
-          Create an account
+          Hesap oluşturun
         </a>
       </div>
+      
+      <style jsx>{`
+        @keyframes spin {
+          0% { 
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+          }
+          100% { 
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+          }
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @-moz-keyframes spin {
+          0% { -moz-transform: rotate(0deg); }
+          100% { -moz-transform: rotate(360deg); }
+        }
+        
+        @-ms-keyframes spin {
+          0% { -ms-transform: rotate(0deg); }
+          100% { -ms-transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

@@ -4,6 +4,9 @@ import { CheckCircle, FileText, ChevronRight } from "lucide-react";
 import AppleStyleDock from "./components/AppleStyleDock";
 import Sidebar from "./components/Sidebar";
 import ChatWidget from "./components/ChatWidget";
+
+
+
 import apiService from "./services/api";
 
 export default function Bills() {
@@ -29,13 +32,30 @@ export default function Bills() {
         const billsData = await apiService.getBills();
         console.log('Bills API response:', billsData);
         // API'den gelen faturaları uygun şekilde map'le
-        const mappedBills = (billsData || []).map(bill => ({
-          id: bill.id,
-          date: bill.startDate ? bill.startDate.split('T')[0] : '',
-          amount: (bill.price !== undefined ? bill.price + ' TL' : ''),
-          status: bill.paymentStatus === 'PAID' ? 'Paid' : bill.paymentStatus === 'UNPAID' ? 'Unpaid' : bill.paymentStatus,
-          left: bill.daysLeft // API'de yok, isterseniz hesaplanabilir
-        }));
+        const mappedBills = (billsData || []).map(bill => {
+          console.log('Bill payment status:', bill.paymentStatus, 'for bill ID:', bill.id);
+          
+          // API'den gelen farklı status değerlerini kontrol et
+          let status = 'Bilinmiyor';
+          if (bill.paymentStatus === 'paid' || bill.paymentStatus === 'ödendi' || bill.paymentStatus === 'PAID') {
+            status = 'Ödendi';
+          } else if (bill.paymentStatus === 'unpaid' || bill.paymentStatus === 'ödenmemiş' || bill.paymentStatus === 'UNPAID') {
+            status = 'Ödenmedi';
+          } else if (bill.paymentStatus === 'overdue' || bill.paymentStatus === 'vadesi_geçti' || bill.paymentStatus === 'OVERDUE') {
+            status = 'Vadesi Geçti';
+          } else {
+            // Bilinmeyen durum için gerçek değeri göster
+            status = `Durum: ${bill.paymentStatus}`;
+          }
+          
+          return {
+            id: bill.id,
+            date: bill.startDate ? bill.startDate.split('T')[0] : '',
+            amount: (bill.price !== undefined ? bill.price + ' TL' : ''),
+            status: status,
+            left: bill.daysLeft // API'de yok, isterseniz hesaplanabilir
+          };
+        });
         setBills(mappedBills);
       } catch (error) {
         console.error('Failed to load bills:', error);
@@ -60,7 +80,7 @@ export default function Bills() {
       setBills(updatedBills);
     } catch (error) {
       console.error('Failed to pay bill:', error);
-      alert('Payment failed. Please try again.');
+      alert('Ödeme başarısız. Lütfen tekrar deneyin.');
     }
   };
 
@@ -104,9 +124,12 @@ export default function Bills() {
               border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
               borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
               borderRadius: "50%",
-              animation: "spin 1s linear infinite"
+              animation: "spin 1s linear infinite",
+              WebkitAnimation: "spin 1s linear infinite",
+              MozAnimation: "spin 1s linear infinite",
+              msAnimation: "spin 1s linear infinite"
             }}></div>
-            Loading bills...
+            Faturalar yükleniyor...
           </div>
         </div>
       </div>
@@ -179,7 +202,7 @@ export default function Bills() {
             textShadow: "0 3px 6px rgba(0,0,0,0.15)",
             letterSpacing: "-0.5px"
           }}>
-            💳 Last Payments
+            💳 Son Ödemeler
           </span>
         </div>
 
@@ -251,7 +274,7 @@ export default function Bills() {
                   opacity: 0.6
                 }}
               >
-                💳 Pay the bill <ChevronRight size={18} />
+                                        💳 Faturayı Öde <ChevronRight size={18} />
               </div>
               
               <div style={{ 
@@ -274,7 +297,7 @@ export default function Bills() {
               fontSize: "16px",
               animation: "fadeIn 1s ease"
             }}>
-              📄 No bills found
+              📄 Fatura bulunamadı
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -313,13 +336,17 @@ export default function Bills() {
                     alignItems: "center", 
                     justifyContent: "center", 
                     borderRadius: "50%", 
-                    background: bill.status === "Paid" 
-                      ? "linear-gradient(135deg, #d1fae5, #a7f3d0)" 
-                      : "linear-gradient(135deg, #fef3c7, #fde68a)",
+                    background: bill.status === "Ödendi" 
+                      ? "linear-gradient(135deg, #d1fae5, #a7f3d0)" // Yeşil
+                      : bill.status === "Ödenmedi"
+                      ? "linear-gradient(135deg, #fee2e2, #fecaca)" // Kırmızı
+                      : "linear-gradient(135deg, #fef3c7, #fde68a)", // Sarı (Vadesi Geçti)
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
                   }}>
-                    {bill.status === "Paid" ? (
+                    {bill.status === "Ödendi" ? (
                       <CheckCircle size={24} color="#059669" />
+                    ) : bill.status === "Ödenmedi" ? (
+                      <FileText size={24} color="#dc2626" />
                     ) : (
                       <FileText size={24} color="#d97706" />
                     )}
@@ -339,24 +366,34 @@ export default function Bills() {
                       color: "#6b7280", 
                       fontWeight: 500
                     }}>
-                      Amount: {bill.amount}
+                                                Tutar: {bill.amount}
                     </div>
                   </div>
                   
                   <div style={{ 
                     minWidth: 100, 
                     textAlign: "right", 
-                    color: bill.status === "Paid" ? "#059669" : "#d97706", 
+                    color: bill.status === "Ödendi" 
+                      ? "#059669" // Yeşil
+                      : bill.status === "Ödenmedi"
+                      ? "#dc2626" // Kırmızı
+                      : "#d97706", // Sarı (Vadesi Geçti)
                     fontWeight: 700, 
                     fontSize: 16,
                     padding: "8px 16px",
                     borderRadius: 12,
-                    background: bill.status === "Paid" 
-                      ? "rgba(5, 150, 105, 0.1)" 
-                      : "rgba(217, 119, 6, 0.1)",
-                    border: `2px solid ${bill.status === "Paid" ? "rgba(5, 150, 105, 0.2)" : "rgba(217, 119, 6, 0.2)"}`
+                    background: bill.status === "Ödendi" 
+                      ? "rgba(5, 150, 105, 0.1)" // Yeşil arkaplan
+                      : bill.status === "Ödenmedi"
+                      ? "rgba(220, 38, 38, 0.1)" // Kırmızı arkaplan
+                      : "rgba(217, 119, 6, 0.1)", // Sarı arkaplan (Vadesi Geçti)
+                    border: `2px solid ${bill.status === "Ödendi" 
+                      ? "rgba(5, 150, 105, 0.2)" 
+                      : bill.status === "Ödenmedi"
+                      ? "rgba(220, 38, 38, 0.2)"
+                      : "rgba(217, 119, 6, 0.2)"}`
                   }}>
-                    {bill.status === "Paid" ? "✅ Paid" : "⏳ Unpaid"}
+                    {bill.status === "Ödendi" ? `✅ ${bill.status}` : bill.status === "Ödenmedi" ? `❌ ${bill.status}` : `⏳ ${bill.status}`}
                   </div>
                 </motion.div>
               ))}
@@ -369,8 +406,33 @@ export default function Bills() {
 
       <style jsx>{`
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% { 
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+          }
+          100% { 
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+          }
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @-moz-keyframes spin {
+          0% { -moz-transform: rotate(0deg); }
+          100% { -moz-transform: rotate(360deg); }
+        }
+        
+        @-ms-keyframes spin {
+          0% { -ms-transform: rotate(0deg); }
+          100% { -ms-transform: rotate(360deg); }
         }
         
         @keyframes fadeIn {

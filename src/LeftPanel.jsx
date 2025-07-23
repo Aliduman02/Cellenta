@@ -1,4 +1,7 @@
+import React from 'react';
+
 export function LeftPanel() {
+
   return (
     <div className="left-content">
       <div
@@ -18,15 +21,17 @@ export function LeftPanel() {
         />
         <img
           src="/images/title-white.png"
-          alt="CELLENTA Title"
+          alt="CELLENTA Başlığı"
           className="logo-title"
           style={{ height: '48px', objectFit: 'contain' }}
         />
       </div>
-      <h2 className="left-slogan">Connecting You to Tomorrow</h2>
+      
+      <h2 className="left-slogan">
+        Sizi Yarının Dünyasına Bağlıyoruz
+      </h2>
       <p className="description">
-        Experience seamless communication, reliable coverage, and innovative
-        solutions for a truly connected world.
+        Kesintisiz iletişim, güvenilir kapsama ve gerçekten bağlı bir dünya için yenilikçi çözümler deneyimleyin.
       </p>
     </div>
   );

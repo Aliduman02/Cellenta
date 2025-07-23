@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import AppleStyleDock from "./components/AppleStyleDock";
 import Sidebar from "./components/Sidebar";
 import ChatWidget from "./components/ChatWidget";
+
 import apiService from "./services/api";
 
 export default function Store() {
@@ -50,7 +51,7 @@ export default function Store() {
         setPackages(formattedPackages);
       } catch (error) {
         console.error('Failed to load packages:', error);
-        setError('Failed to load packages. Please try again.');
+        setError('Paketler yüklenemedi. Lütfen tekrar deneyin.');
         
         // Token geçersizse login'e yönlendir
         if (error.message.includes('401') || error.message.includes('Unauthorized')) {
@@ -69,11 +70,11 @@ export default function Store() {
     try {
       const userId = localStorage.getItem('userId');
       await apiService.assignPackageToCustomer(userId, packageId);
-      alert('Package purchased successfully!');
+      alert('Paket başarıyla satın alındı!');
       window.location.href = '/dashboard';
     } catch (error) {
       console.error('Failed to purchase package:', error);
-      alert('Purchase failed. Please try again.');
+      alert('Satın alma başarısız. Lütfen tekrar deneyin.');
     }
   };
 
@@ -117,9 +118,12 @@ export default function Store() {
               border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
               borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
               borderRadius: "50%",
-              animation: "spin 1s linear infinite"
+              animation: "spin 1s linear infinite",
+              WebkitAnimation: "spin 1s linear infinite",
+              MozAnimation: "spin 1s linear infinite",
+              msAnimation: "spin 1s linear infinite"
             }}></div>
-            Loading packages...
+            Paketler yükleniyor...
           </div>
         </div>
       </div>
@@ -157,7 +161,7 @@ export default function Store() {
             color: "#ef4444", 
             marginBottom: isDesktop ? "16px" : "12px" 
           }}>
-            Error
+            Hata
           </div>
           <div style={{ 
             color: "#6b7280", 
@@ -182,7 +186,7 @@ export default function Store() {
             onMouseOver={e => e.target.style.background = "#6d28d9"}
             onMouseOut={e => e.target.style.background = "#7c3aed"}
           >
-            Try Again
+            Tekrar Dene
           </button>
         </div>
       </div>
@@ -255,7 +259,7 @@ export default function Store() {
             textShadow: "0 3px 6px rgba(0,0,0,0.15)",
             letterSpacing: "-0.5px"
           }}>
-            🛍️ Store
+            🛍️ Mağaza
           </span>
         </div>
 
@@ -278,7 +282,7 @@ export default function Store() {
               fontSize: "16px",
               animation: "fadeIn 1s ease"
             }}>
-              📦 No packages available
+              📦 Mevcut paket yok
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -399,7 +403,7 @@ export default function Store() {
                               alignItems: "center",
                               gap: 8
                             }}>
-                              ✨ {pkg.name} Details
+                              ✨ {pkg.name} Detayları
                             </div>
                             <ul style={{ 
                               listStyle: "none", 
@@ -459,7 +463,7 @@ export default function Store() {
                                 e.currentTarget.style.transform = "translateY(0)";
                               }}
                             >
-                              🛒 Select Package
+                              🛒 Paketi Seç
                             </motion.button>
                           </div>
                         </motion.div>
@@ -477,8 +481,33 @@ export default function Store() {
 
       <style jsx>{`
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% { 
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+          }
+          100% { 
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+          }
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @-moz-keyframes spin {
+          0% { -moz-transform: rotate(0deg); }
+          100% { -moz-transform: rotate(360deg); }
+        }
+        
+        @-ms-keyframes spin {
+          0% { -ms-transform: rotate(0deg); }
+          100% { -ms-transform: rotate(360deg); }
         }
         
         @keyframes fadeIn {

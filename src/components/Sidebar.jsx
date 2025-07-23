@@ -27,10 +27,10 @@ export default function Sidebar({ user }) {
   }, []);
 
   const menuItems = [
-    { href: "/dashboard", icon: <Home />, label: "Home" },
-    { href: "/store", icon: <Package />, label: "Store" },
-    { href: "/bills", icon: <FileText />, label: "Bills" },
-    { href: "/profile", icon: <User />, label: "Profile" },
+    { href: "/dashboard", icon: <Home />, label: "Ana Sayfa" },
+    { href: "/store", icon: <Package />, label: "Mağaza" },
+    { href: "/bills", icon: <FileText />, label: "Faturalar" },
+    { href: "/profile", icon: <User />, label: "Profil" },
   ];
 
   const toggleSidebar = () => {

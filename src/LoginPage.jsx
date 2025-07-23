@@ -10,15 +10,26 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 export default function LoginPage() {
   const [step, setStep] = useState('login');
   const [userData, setUserData] = useState(null);
+  const [passwordData, setPasswordData] = useState(null);
 
   const handleSignUpClick = () => setStep('signup1');
   const handleBackToLogin = () => {
     setStep('login');
     setUserData(null);
+    setPasswordData(null);
   };
   const handleContinue = (data) => {
+    // Eğer passwordData varsa (step1'den step2'ye dönüş), şifre verilerini geri yükle
+    if (data.passwordData) {
+      setPasswordData(data.passwordData);
+      delete data.passwordData; // userData'dan çıkar
+    }
     setUserData(data);
     setStep('signup2');
+  };
+  const handleBackToStep1 = (currentPasswordData) => {
+    setPasswordData(currentPasswordData); // Şifre verilerini koru
+    setStep('signup1');
   };
 
   return (
@@ -44,9 +55,21 @@ export default function LoginPage() {
             <div>
               {step === 'login' && <LoginForm onSignUpClick={handleSignUpClick} />}
               {step === 'signup1' && (
-                <SignUpStep1 onNext={handleContinue} onBack={handleBackToLogin} />
+                <SignUpStep1 
+                  onNext={handleContinue} 
+                  onBack={handleBackToLogin}
+                  userData={userData}
+                  passwordData={passwordData}
+                />
               )}
-              {step === 'signup2' && <SignUpStep2 onBack={handleBackToLogin} userData={userData} />}
+              {step === 'signup2' && (
+                <SignUpStep2 
+                  onBack={handleBackToLogin} 
+                  onBackToStep1={handleBackToStep1}
+                  userData={userData}
+                  passwordData={passwordData}
+                />
+              )}
             </div>
           </CSSTransition>
         </SwitchTransition>

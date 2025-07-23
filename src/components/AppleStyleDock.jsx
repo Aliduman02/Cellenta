@@ -3,10 +3,10 @@ import { Dock, DockIcon, DockItem } from "./Dock";
 import React from "react";
 
 const data = [
-  { title: "Home", icon: <Home />, href: "/dashboard" },
-  { title: "Store", icon: <Package />, href: "/store" },
-  { title: "Bills", icon: <FileText />, href: "/bills" },
-  { title: "Profile", icon: <User />, href: "/profile" },
+  { title: "Ana Sayfa", icon: <Home />, href: "/dashboard" },
+  { title: "Mağaza", icon: <Package />, href: "/store" },
+  { title: "Faturalar", icon: <FileText />, href: "/bills" },
+  { title: "Profil", icon: <User />, href: "/profile" },
 ];
 
 function isActive(href) {

@@ -6,6 +6,7 @@ import AppleStyleDock from "./AppleStyleDock";
 import Sidebar from "./Sidebar";
 import Store from "../Store";
 import apiService from "../services/api";
+
 import "../Dashboard.css";
 
 export default function Dashboard() {
@@ -65,7 +66,7 @@ export default function Dashboard() {
         
       } catch (error) {
         console.error('Failed to load dashboard data:', error);
-        setError('Failed to load dashboard data. Please try again.');
+        setError('Veri yüklenemedi');
         
         // Token geçersizse login'e yönlendir
         if (error.message.includes('401') || error.message.includes('Unauthorized')) {
@@ -125,9 +126,12 @@ export default function Dashboard() {
               border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
               borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
               borderRadius: "50%",
-              animation: "spin 1s linear infinite"
+              animation: "spin 1s linear infinite",
+              WebkitAnimation: "spin 1s linear infinite",
+              MozAnimation: "spin 1s linear infinite",
+              msAnimation: "spin 1s linear infinite"
             }}></div>
-            Loading dashboard...
+            Dashboard yükleniyor...
           </div>
         </div>
       </div>
@@ -165,7 +169,7 @@ export default function Dashboard() {
             color: "#ef4444", 
             marginBottom: isDesktop ? "16px" : "12px" 
           }}>
-            Error
+            Hata
           </div>
           <div style={{ 
             color: "#6b7280", 
@@ -190,7 +194,7 @@ export default function Dashboard() {
             onMouseOver={e => e.target.style.background = "#6d28d9"}
             onMouseOut={e => e.target.style.background = "#7c3aed"}
           >
-            Try Again
+            Tekrar Dene
           </button>
         </div>
       </div>
@@ -223,8 +227,7 @@ export default function Dashboard() {
           transition: "all 0.3s ease"
         }}>
 
-          
-          <Header user={user} activeTariff={activeTariff} />
+                    <Header user={user} activeTariff={activeTariff} />
           <main className="dashboard-main">
             <TariffInfo usageData={usageData} />
             <ChatWidget />
@@ -234,8 +237,33 @@ export default function Dashboard() {
 
       <style jsx>{`
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% { 
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+          }
+          100% { 
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+          }
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @-moz-keyframes spin {
+          0% { -moz-transform: rotate(0deg); }
+          100% { -moz-transform: rotate(360deg); }
+        }
+        
+        @-ms-keyframes spin {
+          0% { -ms-transform: rotate(0deg); }
+          100% { -ms-transform: rotate(360deg); }
         }
         
         @keyframes fadeIn {

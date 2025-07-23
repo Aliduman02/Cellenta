@@ -14,7 +14,7 @@ function DockProvider({ children, value }) {
 
 function useDock() {
   const context = useContext(DockContext);
-  if (!context) throw new Error("useDock must be used within a DockProvider");
+  if (!context) throw new Error("useDock, DockProvider içinde kullanılmalıdır");
   return context;
 }
 

@@ -306,7 +306,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'Poppins', sans-serif;
   padding: 0;
   margin: 0;
   width: 100vw;
@@ -739,14 +738,14 @@ body {
 .profile-card {
   display: flex;
   align-items: center;
-  gap: 60px;
+  gap: 50px;
   background: #fff;
-  border-radius: 40px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
-  padding: 60px 80px 60px 60px;
-  max-width: 800px;
+  border-radius: 32px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  padding: 48px 60px;
+  max-width: 750px;
   margin: 0 auto;
-  min-height: 320px;
+  min-height: 280px;
   animation: slideInUp 0.8s ease;
 }
 
@@ -762,10 +761,9 @@ body {
 }
 
 .profile-avatar {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
-  background: #22b8cf;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -775,6 +773,8 @@ body {
   box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   border: 8px solid #e0e7ef;
   transition: transform 0.3s ease;
+  align-self: auto;
+  flex-shrink: 0;
 }
 
 .profile-avatar:hover {
@@ -784,16 +784,24 @@ body {
 .profile-info-list {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .profile-info-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
   font-size: 20px;
   opacity: 0;
   animation: fadeInLeft 0.6s ease forwards;
+  flex-direction: row;
+  text-align: left;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .profile-info-row:nth-child(1) { animation-delay: 0.2s; }
@@ -812,17 +820,37 @@ body {
   }
 }
 
+@keyframes bounceIn {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.3); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.1); 
+  }
+  70% { 
+    transform: scale(0.9); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
 .profile-info-label {
   color: #888;
   font-weight: 700;
   min-width: 140px;
-  font-size: 16px;
+  font-size: 18px;
+  text-align: left;
 }
 
 .profile-info-value {
   font-weight: 800;
   color: #1f2937;
-  font-size: 18px;
+  font-size: 20px;
+  text-align: left;
 }
 
 .profile-home-btn {
@@ -913,6 +941,56 @@ body {
     bottom: 20px !important;
     right: 20px !important;
   }
+  
+  /* Profile responsive kuralları - Medium screens (Tablet) */
+  .profile-card {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 40px !important;
+    padding: 36px 40px !important;
+    margin: 0 24px !important;
+    border-radius: 28px !important;
+    max-width: 680px !important;
+    min-height: 240px !important;
+    text-align: left !important;
+  }
+  
+  .profile-avatar {
+    width: 110px !important;
+    height: 110px !important;
+    font-size: 48px !important;
+    border: 6px solid #e0e7ef !important;
+    align-self: center !important;
+  }
+  
+  .profile-info-list {
+    gap: 20px !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  
+  .profile-info-row {
+    flex-direction: row !important;
+    gap: 16px !important;
+    text-align: left !important;
+    font-size: 18px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+  }
+  
+  .profile-info-label {
+    font-size: 16px !important;
+    min-width: 120px !important;
+    text-align: left !important;
+  }
+  
+  .profile-info-value {
+    font-size: 18px !important;
+    text-align: left !important;
+  }
 }
 
 /* Small screens (600px - 767px) */
@@ -986,6 +1064,59 @@ body {
   .chat-widget {
     bottom: 16px !important;
     right: 16px !important;
+  }
+  
+  /* Profile responsive için ek kurallar - Small screens */
+  .profile-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 24px;
+    gap: 24px;
+    margin: 0 16px;
+    border-radius: 24px;
+    min-height: auto;
+    max-width: none;
+    text-align: center;
+  }
+  
+  .profile-avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 42px;
+    border: 6px solid #e0e7ef;
+    align-self: center;
+  }
+  
+  .profile-info-list {
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-info-row {
+    flex-direction: column !important;
+    gap: 6px !important;
+    text-align: center !important;
+    font-size: 17px !important;
+    align-items: center !important;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .profile-info-label {
+    font-size: 15px !important;
+    min-width: auto !important;
+    color: #888 !important;
+    text-align: center !important;
+  }
+  
+  .profile-info-value {
+    font-size: 17px !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    word-break: break-all;
   }
 }
 
@@ -1070,20 +1201,55 @@ body {
   }
   
   .profile-card {
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 16px;
-    gap: 20px;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 24px 16px !important;
+    gap: 20px !important;
+    margin: 0 12px !important;
+    border-radius: 20px !important;
+    min-height: auto !important;
+    max-width: none !important;
+    text-align: center !important;
   }
   
   .profile-avatar {
-    width: 70px;
-    height: 70px;
-    font-size: 32px;
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 36px !important;
+    border: 4px solid #e0e7ef !important;
+    align-self: center !important;
+  }
+  
+  .profile-info-list {
+    gap: 16px !important;
+    width: 100% !important;
+    align-items: center !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   
   .profile-info-row {
-    font-size: 15px;
+    flex-direction: column !important;
+    gap: 4px !important;
+    text-align: center !important;
+    font-size: 15px !important;
+    align-items: center !important;
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  
+  .profile-info-label {
+    font-size: 13px !important;
+    min-width: auto !important;
+    color: #888 !important;
+    text-align: center !important;
+  }
+  
+  .profile-info-value {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    word-break: break-all !important;
   }
   
   .chat-widget {

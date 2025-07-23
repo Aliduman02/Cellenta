@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import './LoginPage.css';
+import { StepIndicator } from './components/StepIndicator';
 
-export function SignUpStep1({ onNext, onBack }) {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
+  const [firstName, setFirstName] = useState(userData?.firstName || '');
+  const [lastName, setLastName] = useState(userData?.lastName || '');
+  const [phone, setPhone] = useState(userData?.phone || '');
+  const [email, setEmail] = useState(userData?.email || '');
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
@@ -13,32 +14,32 @@ export function SignUpStep1({ onNext, onBack }) {
 
     // İsim validasyonu
     if (!firstName) {
-      newErrors.firstName = "First name is required";
+      newErrors.firstName = 'Ad gerekli';
     } else if (!/^[a-zA-ZğüşıöçĞÜŞİÖÇ]{2,}$/.test(firstName)) {
-      newErrors.firstName = "First name must be at least 2 characters";
+      newErrors.firstName = 'Ad en az 2 karakter olmalı ve yalnızca harf içermeli';
     }
 
     // Soyisim validasyonu
     if (!lastName) {
-      newErrors.lastName = "Last name is required";
+      newErrors.lastName = 'Soyad gerekli';
     } else if (!/^[a-zA-ZğüşıöçĞÜŞİÖÇ]{2,}$/.test(lastName)) {
-      newErrors.lastName = "Last name must be at least 2 characters";
+      newErrors.lastName = 'Soyad en az 2 karakter olmalı ve yalnızca harf içermeli';
     }
 
     // Telefon validasyonu
     if (!phone) {
-      newErrors.phone = "Phone number is required";
+      newErrors.phone = 'Telefon numarası gerekli';
     } else if (!/^\d{10}$/.test(phone)) {
-      newErrors.phone = "Phone number must be 10 digits";
+      newErrors.phone = 'Telefon numarası 10 haneli olmalı';
     } else if (phone.startsWith('0')) {
-      newErrors.phone = "Enter your number without leading zero";
+      newErrors.phone = 'Numaranızı başında sıfır olmadan girin';
     }
 
     // Email validasyonu
     if (!email) {
-      newErrors.email = "Email is required";
+      newErrors.email = 'E-posta gerekli';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Please enter a valid email address";
+      newErrors.email = 'Geçerli bir e-posta adresi girin';
     }
 
     setErrors(newErrors);
@@ -48,12 +49,13 @@ export function SignUpStep1({ onNext, onBack }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Form verilerini onNext'e geçir
+      // Form verilerini onNext'e geçir (şifre verileri varsa onları da koru)
       onNext({
         firstName,
         lastName,
         phone,
-        email
+        email,
+        ...(passwordData && { passwordData }) // Şifre verileri varsa dahil et
       });
     }
   };
@@ -66,19 +68,19 @@ export function SignUpStep1({ onNext, onBack }) {
         maxWidth: '100%'
       }}
     >
-      <h3 className="form-subtitle">Step 1 of 2</h3>
-      <h2 className="form-title">Create Your Account</h2>
+      <StepIndicator currentStep={1} />
+      <h2 className="form-title">Hesabınızı Oluşturun</h2>
 
       <div className="form-fields-flex">
         <div className="form-group icon-input">
-          <label htmlFor="firstName">First Name</label>
+          <label htmlFor="firstName">Ad</label>
           <div className="input-with-icon">
             <span className="input-icon">👤</span>
             <input 
               type="text" 
               id="firstName" 
               name="firstName" 
-              placeholder="Enter your first name" 
+              placeholder="Adınızı girin" 
               value={firstName} 
               onChange={(e) => setFirstName(e.target.value)}
               className={errors.firstName ? "error" : ""}
@@ -88,14 +90,14 @@ export function SignUpStep1({ onNext, onBack }) {
         </div>
 
         <div className="form-group icon-input">
-          <label htmlFor="lastName">Last Name</label>
+          <label htmlFor="lastName">Soyad</label>
           <div className="input-with-icon">
             <span className="input-icon">👤</span>
             <input 
               type="text" 
               id="lastName" 
               name="lastName" 
-              placeholder="Enter your last name" 
+              placeholder="Soyadınızı girin" 
               value={lastName} 
               onChange={(e) => setLastName(e.target.value)}
               className={errors.lastName ? "error" : ""}
@@ -105,14 +107,14 @@ export function SignUpStep1({ onNext, onBack }) {
         </div>
 
         <div className="form-group icon-input">
-          <label htmlFor="phone">Phone Number</label>
+          <label htmlFor="phone">Telefon Numarası</label>
           <div className="input-with-icon">
             <span className="input-icon">📞</span>
             <input 
               type="text" 
               id="phone" 
               name="phone" 
-              placeholder="Enter your phone number" 
+              placeholder="Telefon numaranızı girin" 
               value={phone} 
               onChange={(e) => setPhone(e.target.value)}
               className={errors.phone ? "error" : ""}
@@ -122,14 +124,14 @@ export function SignUpStep1({ onNext, onBack }) {
         </div>
 
         <div className="form-group icon-input">
-          <label htmlFor="email">Email Address</label>
+          <label htmlFor="email">E-posta</label>
           <div className="input-with-icon">
             <span className="input-icon">📧</span>
             <input 
               type="text" 
               id="email" 
               name="email" 
-              placeholder="Enter your email" 
+              placeholder="E-posta adresinizi girin" 
               value={email} 
               onChange={(e) => setEmail(e.target.value)}
               className={errors.email ? "error" : ""}
@@ -144,11 +146,11 @@ export function SignUpStep1({ onNext, onBack }) {
         className="login-button"
         onClick={handleSubmit}
       >
-        Next Step
+        Sonraki Adım
       </button>
 
       <div className="signup-prompt">
-        Already have an account?{' '}
+        Zaten hesabınız var mı?{' '}
         <a
           href="#"
           onClick={(e) => {
@@ -156,7 +158,7 @@ export function SignUpStep1({ onNext, onBack }) {
             onBack();
           }}
         >
-          Log In
+          Giriş yapın
         </a>
       </div>
     </div>

@@ -37,17 +37,17 @@ export default function TariffInfo({ usageData }) {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <div className="tariff-info-title">Tariff Information</div>
+      <div className="tariff-info-title">Tarife Bilgileri</div>
       <div className="circle-group">
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
           <AnimatedCircularProgressBar
             value={formattedData.minutes.remaining}
             max={formattedData.minutes.total}
-            unit="min"
+            unit="DK"
             gaugePrimaryColor="#14b8a6"
           />
           <div style={{ marginTop: 4, fontSize: "1.1rem", fontWeight: 500, color: "#444" }}>
-            {formattedData.minutes.remaining} min left from {formattedData.minutes.total} min
+            {formattedData.minutes.total} DK'dan {formattedData.minutes.remaining} DK kaldı
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -58,7 +58,7 @@ export default function TariffInfo({ usageData }) {
             gaugePrimaryColor="#0ea5e9"
           />
           <div style={{ marginTop: 4, fontSize: "1.1rem", fontWeight: 500, color: "#444" }}>
-            {mbToGb(formattedData.data.remaining).toFixed(2)} GB left from {mbToGb(formattedData.data.total).toFixed(2)} GB
+            {mbToGb(formattedData.data.total).toFixed(2)} GB'dan {mbToGb(formattedData.data.remaining).toFixed(2)} GB kaldı
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
@@ -69,7 +69,7 @@ export default function TariffInfo({ usageData }) {
             gaugePrimaryColor="#a21caf"
           />
           <div style={{ marginTop: 4, fontSize: "1.1rem", fontWeight: 500, color: "#444" }}>
-            {formattedData.sms.remaining} SMS left from {formattedData.sms.total} SMS
+            {formattedData.sms.total} SMS'den {formattedData.sms.remaining} SMS kaldı
           </div>
         </div>
       </div>

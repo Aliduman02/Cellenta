@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import apiService from './services/api';
 import './LoginPage.css';
+import { StepIndicator } from './components/StepIndicator';
 
-export function SignUpStep2({ onBack, userData }) {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
+  const [password, setPassword] = useState(passwordData?.password || '');
+  const [confirmPassword, setConfirmPassword] = useState(passwordData?.confirmPassword || '');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -29,13 +30,13 @@ export function SignUpStep2({ onBack, userData }) {
           amountData: pkg.amountData,
           amountSms: pkg.amountSms,
           period: pkg.period,
-          summary: `${pkg.amountMinutes} dk, ${pkg.amountData} MB, ${pkg.amountSms} SMS - ${pkg.period} gün`
+          summary: `${pkg.amountMinutes} DK, ${pkg.amountData} MB, ${pkg.amountSms} SMS - ${pkg.period} gün`
         }));
         
         setPackages(formattedPackages);
       } catch (error) {
         console.error('Failed to load packages:', error);
-        setErrors({ general: 'Failed to load packages. Please refresh the page.' });
+        setErrors({ general: 'Paketler yüklenemedi. Lütfen sayfayı yenileyin.' });
       } finally {
         setPackagesLoading(false);
       }
@@ -58,11 +59,11 @@ export function SignUpStep2({ onBack, userData }) {
 
   const validatePassword = (pass) => {
     const errors = {};
-    if (pass.length < 8) errors.length = "Must be at least 8 characters";
-    if (!/[A-Z]/.test(pass)) errors.uppercase = "Must contain at least 1 uppercase letter";
-    if (!/[a-z]/.test(pass)) errors.lowercase = "Must contain at least 1 lowercase letter";
-    if (!/[0-9]/.test(pass)) errors.digit = "Must contain at least 1 digit";
-    if (!/[!@#$%^&*()\-_=+]/.test(pass)) errors.special = "Must contain at least 1 special character (!@#$%^&*()-_+=)";
+    if (pass.length < 8) errors.length = 'En az 8 karakter olmalı';
+    if (!/[A-Z]/.test(pass)) errors.uppercase = 'En az bir büyük harf içermeli';
+    if (!/[a-z]/.test(pass)) errors.lowercase = 'En az bir küçük harf içermeli';
+    if (!/[0-9]/.test(pass)) errors.digit = 'En az bir rakam içermeli';
+    if (!/[!@#$%^&*()\-_=+]/.test(pass)) errors.special = 'En az bir özel karakter içermeli';
     return errors;
   };
 
@@ -71,22 +72,27 @@ export function SignUpStep2({ onBack, userData }) {
     
     // Şifre validasyonu
     if (!password) {
-      newErrors.password = "Password is required";
+      newErrors.password = "Şifre gerekli";
     } else {
       const passwordErrors = validatePassword(password);
-      Object.assign(newErrors, passwordErrors);
+      // Her hata türünü ayrı ayrı ekle
+      if (passwordErrors.length) newErrors.length = passwordErrors.length;
+      if (passwordErrors.uppercase) newErrors.uppercase = passwordErrors.uppercase;
+      if (passwordErrors.lowercase) newErrors.lowercase = passwordErrors.lowercase;
+      if (passwordErrors.digit) newErrors.digit = passwordErrors.digit;
+      if (passwordErrors.special) newErrors.special = passwordErrors.special;
     }
 
     // Şifre onayı
     if (!confirmPassword) {
-      newErrors.confirmPassword = "Password confirmation is required";
+      newErrors.confirmPassword = "Şifre onayı gerekli";
     } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
+      newErrors.confirmPassword = "Şifreler eşleşmiyor";
     }
 
     // Paket seçimi validasyonu
     if (!selectedPackage) {
-      newErrors.package = "Please select a package to continue";
+      newErrors.package = "Devam etmek için bir paket seçin";
     }
 
     setErrors(newErrors);
@@ -137,7 +143,7 @@ export function SignUpStep2({ onBack, userData }) {
            console.error('Both package purchase methods failed:', assignError);
            // Kullanıcıya bilgi verebiliriz ama kayıt başarılı olduğu için devam ediyoruz
            setErrors({ 
-             general: 'Account created successfully, but package assignment failed. You can select a package from the Store page later.' 
+             general: 'Hesap başarıyla oluşturuldu, ancak paket ataması başarısız oldu. Daha sonra Store sayfasından paket seçebilirsiniz.' 
            });
          }
       }
@@ -150,11 +156,11 @@ export function SignUpStep2({ onBack, userData }) {
       
       // API'den gelen hata mesajlarını göster
       if (error.message.includes('409') || error.message.includes('already exists')) {
-        setErrors({ general: "User already exists with this phone number or email" });
+        setErrors({ general: "Bu telefon numarası veya e-posta ile zaten bir kullanıcı mevcut" });
       } else if (error.message.includes('400') || error.message.includes('Invalid data')) {
-        setErrors({ general: "Invalid data provided. Please check your information." });
+        setErrors({ general: "Geçersiz veri sağlandı. Lütfen bilgilerinizi kontrol edin." });
       } else {
-        setErrors({ general: error.message || "Signup failed. Please try again." });
+        setErrors({ general: error.message || "Kayıt başarısız. Lütfen tekrar deneyin." });
       }
     } finally {
       setIsLoading(false);
@@ -170,8 +176,56 @@ export function SignUpStep2({ onBack, userData }) {
         overflow: 'visible'
       }}
     >
-      <h3 className="form-subtitle">Step 2/2</h3>
-      <h2 className="form-title">Set Your Password</h2>
+      <StepIndicator currentStep={2} />
+      
+      {/* Title with inline Back Button */}
+      <div style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "16px",
+        marginBottom: "32px"
+      }}>
+        <button
+          type="button"
+          onClick={() => onBackToStep1 && onBackToStep1({ password, confirmPassword })}
+          disabled={isLoading}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "8px",
+            background: "rgba(0, 114, 255, 0.1)",
+            border: "1px solid rgba(0, 114, 255, 0.3)",
+            borderRadius: "8px",
+            color: "#0072ff",
+            fontSize: "18px",
+            fontWeight: "600",
+            cursor: isLoading ? "not-allowed" : "pointer",
+            transition: "all 0.2s ease",
+            opacity: isLoading ? 0.5 : 1,
+            width: "40px",
+            height: "40px"
+          }}
+          onMouseOver={e => {
+            if (!isLoading) {
+              e.target.style.background = "rgba(0, 114, 255, 0.15)";
+              e.target.style.borderColor = "rgba(0, 114, 255, 0.4)";
+              e.target.style.transform = "translateY(-1px)";
+            }
+          }}
+          onMouseOut={e => {
+            if (!isLoading) {
+              e.target.style.background = "rgba(0, 114, 255, 0.1)";
+              e.target.style.borderColor = "rgba(0, 114, 255, 0.3)";
+              e.target.style.transform = "translateY(0)";
+            }
+          }}
+        >
+          ←
+        </button>
+        
+        <h2 className="form-title" style={{ margin: 0 }}>Şifrenizi Belirleyin</h2>
+      </div>
 
       {errors.general && (
         <div style={{ 
@@ -189,47 +243,49 @@ export function SignUpStep2({ onBack, userData }) {
 
       <div className="form-fields-flex">
         <div className="form-group">
-          <label htmlFor="password">Create Password</label>
+          <label htmlFor="password">Şifre</label>
           <div className="input-with-icon">
             <span className="input-icon">🔒</span>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
-              placeholder="Must be 8+ characters"
+              placeholder="Şifrenizi girin"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={errors.password || errors.length || errors.uppercase || errors.special ? "error" : ""}
+              className={errors.password || errors.length || errors.uppercase || errors.lowercase || errors.digit || errors.special ? "error" : ""}
               disabled={isLoading}
             />
             <img
               src={showPassword ? "/images/close-eye.png" : "/images/seen.png"}
-              alt={showPassword ? "Hide password" : "Show password"}
+              alt={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
               className="eye-icon"
               onClick={() => setShowPassword(!showPassword)}
               role="button"
               tabIndex={0}
             />
           </div>
-          {(errors.password || errors.length || errors.uppercase || errors.special) && (
+          {(errors.password || errors.length || errors.uppercase || errors.lowercase || errors.digit || errors.special) && (
             <div style={{ color: '#ef4444', fontSize: '13px', marginTop: '4px' }}>
-              {errors.password && <div>{errors.password}</div>}
-              {errors.length && <div>{errors.length}</div>}
-              {errors.uppercase && <div>{errors.uppercase}</div>}
-              {errors.special && <div>{errors.special}</div>}
+              {errors.password && <div>• {errors.password}</div>}
+              {errors.length && <div>• {errors.length}</div>}
+              {errors.uppercase && <div>• {errors.uppercase}</div>}
+              {errors.lowercase && <div>• {errors.lowercase}</div>}
+              {errors.digit && <div>• {errors.digit}</div>}
+              {errors.special && <div>• {errors.special}</div>}
             </div>
           )}
         </div>
 
         <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label htmlFor="confirmPassword">Şifre Onayı</label>
           <div className="input-with-icon">
             <span className="input-icon">🔒</span>
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               name="confirmPassword"
-              placeholder="Repeat your password"
+              placeholder="Şifrenizi tekrar girin"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className={errors.confirmPassword ? "error" : ""}
@@ -237,7 +293,7 @@ export function SignUpStep2({ onBack, userData }) {
             />
             <img
               src={showConfirmPassword ? "/images/close-eye.png" : "/images/seen.png"}
-              alt={showConfirmPassword ? "Hide password" : "Show password"}
+              alt={showConfirmPassword ? "Şifreyi gizle" : "Şifreyi göster"}
               className="eye-icon"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               role="button"
@@ -261,7 +317,7 @@ export function SignUpStep2({ onBack, userData }) {
           marginBottom: '12px', 
           color: '#333' 
         }}>
-          📦 Choose Your Package
+                      📦 Paket Seçin
         </label>
         
         {/* Package Dropdown Button */}
@@ -308,9 +364,12 @@ export function SignUpStep2({ onBack, userData }) {
                   border: '2px solid #e5e7eb',
                   borderTop: '2px solid #6366f1',
                   borderRadius: '50%',
-                  animation: 'spin 1s linear infinite'
+                  animation: 'spin 1s linear infinite',
+                  WebkitAnimation: 'spin 1s linear infinite',
+                  MozAnimation: 'spin 1s linear infinite',
+                  msAnimation: 'spin 1s linear infinite'
                 }}></div>
-                Loading packages...
+            Paketler yükleniyor...
               </div>
             ) : selectedPackage ? (
               <div>
@@ -334,7 +393,7 @@ export function SignUpStep2({ onBack, userData }) {
                 fontSize: '15px', 
                 color: '#9ca3af' 
               }}>
-                Select a package...
+                Bir paket seçin...
               </div>
             )}
           </div>
@@ -473,20 +532,66 @@ export function SignUpStep2({ onBack, userData }) {
         )}
       </div>
 
+      {/* Create Account Button */}
       <button
         type="submit"
         className="login-button"
         onClick={handleSubmit}
         disabled={isLoading}
-        style={{ opacity: isLoading ? 0.7 : 1 }}
+        style={{ 
+          width: "100%",
+          opacity: isLoading ? 0.7 : 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "8px"
+        }}
       >
-        {isLoading ? "Creating account..." : "Sign up"}
+        {isLoading && (
+          <div style={{
+            width: "16px",
+            height: "16px",
+            border: "2px solid rgba(255,255,255,0.3)",
+            borderTop: "2px solid #fff",
+            borderRadius: "50%",
+            animation: "spin 1s linear infinite",
+            WebkitAnimation: "spin 1s linear infinite",
+            MozAnimation: "spin 1s linear infinite",
+            msAnimation: "spin 1s linear infinite"
+          }}></div>
+        )}
+        {isLoading ? 'Hesap oluşturuluyor...' : 'Hesap Oluştur'}
       </button>
 
       <style jsx>{`
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% { 
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+          }
+          100% { 
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+          }
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @-moz-keyframes spin {
+          0% { -moz-transform: rotate(0deg); }
+          100% { -moz-transform: rotate(360deg); }
+        }
+        
+        @-ms-keyframes spin {
+          0% { -ms-transform: rotate(0deg); }
+          100% { -ms-transform: rotate(360deg); }
         }
         
         @keyframes appleSlideDown {

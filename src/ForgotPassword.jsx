@@ -3,7 +3,7 @@ import apiService from "./services/api";
 import { LeftPanel } from "./LeftPanel";
 import "./LoginPage.css";
 
-// Adım 1: Email girişi
+// Adım 1: Email giriši
 function EmailStep({ onNext, onBack }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -12,7 +12,7 @@ function EmailStep({ onNext, onBack }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
-      setError("Email is required");
+      setError("E-posta gerekli");
       return;
     }
 
@@ -23,9 +23,9 @@ function EmailStep({ onNext, onBack }) {
     } catch (error) {
       console.error('Forgot password failed:', error);
       if (error.message.includes('404')) {
-        setError("No such email is registered");
+        setError("Bu e-posta adresi kayıtlı değil");
       } else {
-        setError("Failed to send code. Please try again.");
+        setError("Kod gönderilemedi. Lütfen tekrar deneyin.");
       }
     } finally {
       setIsLoading(false);
@@ -34,19 +34,19 @@ function EmailStep({ onNext, onBack }) {
 
   return (
     <div className="login-form-container">
-      <h3 className="form-subtitle">Forgot password?</h3>
-      <h2 className="form-title">Don't worry! It happens.</h2>
+      <h3 className="form-subtitle">Şifrenizi mi unuttunuz?</h3>
+      <h2 className="form-title">Endişelenmeyin! Olur böyle şeyler.</h2>
       <p style={{ fontSize: 16, color: "#666", marginBottom: 32, textAlign: "center" }}>
-        Please enter the email associated with your account.
+        Lütfen hesabınızla ilişkili e-posta adresini girin.
       </p>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">E-posta</label>
           <input
             type="email"
             id="email"
             name="email"
-            placeholder="Enter your email"
+            placeholder="E-posta adresinizi girin"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={error ? "error" : ""}
@@ -58,13 +58,32 @@ function EmailStep({ onNext, onBack }) {
           type="submit" 
           className="login-button"
           disabled={isLoading}
-          style={{ opacity: isLoading ? 0.7 : 1 }}
+          style={{ 
+            opacity: isLoading ? 0.7 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px"
+          }}
         >
-          {isLoading ? "Sending..." : "Send code"}
+          {isLoading && (
+            <div style={{
+              width: "16px",
+              height: "16px",
+              border: "2px solid rgba(255,255,255,0.3)",
+              borderTop: "2px solid #fff",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+              WebkitAnimation: "spin 1s linear infinite",
+              MozAnimation: "spin 1s linear infinite",
+              msAnimation: "spin 1s linear infinite"
+            }}></div>
+          )}
+          {isLoading ? "Gönderiliyor..." : "Kod Gönder"}
         </button>
       </form>
       <div className="signup-prompt">
-        Remember password? <a href="/login">Log in</a>
+        Şifrenizi hatırladınız mı? <a href="/login">Giriş yapın</a>
       </div>
     </div>
   );
@@ -104,7 +123,7 @@ function CodeStep({ onNext, onBack, email }) {
     e.preventDefault();
     const fullCode = code.join("");
     if (fullCode.length !== 6) {
-      setError("Please enter 6-digit code");
+      setError("Lütfen 6 haneli kodu girin");
       return;
     }
 
@@ -115,9 +134,9 @@ function CodeStep({ onNext, onBack, email }) {
     } catch (error) {
       console.error('Code verification failed:', error);
       if (error.message.includes('400')) {
-        setError("Invalid code");
+        setError("Geçersiz kod");
       } else {
-        setError("Verification failed. Please try again.");
+        setError("Doğrulama başarısız. Lütfen tekrar deneyin.");
       }
     } finally {
       setIsLoading(false);
@@ -133,14 +152,14 @@ function CodeStep({ onNext, onBack, email }) {
       setError("");
     } catch (error) {
       console.error('Resend failed:', error);
-      setError("Failed to resend code. Please try again.");
+      setError("Kod tekrar gönderilemedi. Lütfen tekrar deneyin.");
     }
   };
 
   return (
     <div className="login-form-container">
-      <h3 className="form-subtitle">Please, check your mail</h3>
-      <h2 className="form-title">We've sent a code to your mail</h2>
+      <h3 className="form-subtitle">Lütfen e-postanızı kontrol edin</h3>
+      <h2 className="form-title">E-postanıza bir kod gönderdik</h2>
       <form onSubmit={handleSubmit}>
         <div style={{ display: "flex", gap: 12, justifyContent: "center", marginBottom: 32 }}>
           {code.map((digit, index) => (
@@ -173,9 +192,28 @@ function CodeStep({ onNext, onBack, email }) {
           type="submit" 
           className="login-button"
           disabled={isLoading}
-          style={{ opacity: isLoading ? 0.7 : 1 }}
+          style={{ 
+            opacity: isLoading ? 0.7 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px"
+          }}
         >
-          {isLoading ? "Verifying..." : "Verify"}
+          {isLoading && (
+            <div style={{
+              width: "16px",
+              height: "16px",
+              border: "2px solid rgba(255,255,255,0.3)",
+              borderTop: "2px solid #fff",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+              WebkitAnimation: "spin 1s linear infinite",
+              MozAnimation: "spin 1s linear infinite",
+              msAnimation: "spin 1s linear infinite"
+            }}></div>
+          )}
+          {isLoading ? "Doğrulanıyor..." : "Doğrula"}
         </button>
       </form>
       <div style={{ textAlign: "center", marginTop: 24, fontSize: 14, color: "#666" }}>
@@ -190,10 +228,10 @@ function CodeStep({ onNext, onBack, email }) {
               fontWeight: 600 
             }}
           >
-            Send code again
+            Kodu tekrar gönder
           </button>
         ) : (
-          <span>Send code again {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}</span>
+          <span>Kodu tekrar gönder {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}</span>
         )}
       </div>
     </div>
@@ -211,9 +249,9 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
 
   const validatePassword = (pass) => {
     const errors = {};
-    if (pass.length < 8) errors.length = "Must be at least 8 characters";
-    if (!/[A-Z]/.test(pass)) errors.uppercase = "Must contain at least 1 uppercase letter";
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(pass)) errors.special = "Must contain at least 1 special character";
+    if (pass.length < 8) errors.length = "En az 8 karakter olmalı";
+    if (!/[A-Z]/.test(pass)) errors.uppercase = "En az 1 büyük harf içermeli";
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(pass)) errors.special = "En az 1 özel karakter içermeli";
     return errors;
   };
 
@@ -223,7 +261,7 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
     const newErrors = { ...passwordErrors };
     
     if (password !== confirmPassword) {
-      newErrors.confirm = "Passwords do not match";
+      newErrors.confirm = "Şifreler eşleşmiyor";
     }
     
     if (Object.keys(newErrors).length === 0) {
@@ -234,9 +272,9 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
       } catch (error) {
         console.error('Password reset failed:', error);
         if (error.message.includes('400')) {
-          setErrors({ general: "Invalid data provided. Please try again." });
+          setErrors({ general: "Geçersiz veri sağlandı. Lütfen tekrar deneyin." });
         } else {
-          setErrors({ general: "Password reset failed. Please try again." });
+          setErrors({ general: "Şifre sıfırlama başarısız. Lütfen tekrar deneyin." });
         }
       } finally {
         setIsLoading(false);
@@ -248,8 +286,8 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
 
   return (
     <div className="login-form-container">
-      <h3 className="form-subtitle">Reset your password</h3>
-      <h2 className="form-title">Please type something you'll remember</h2>
+      <h3 className="form-subtitle">Şifrenizi sıfırlayın</h3>
+      <h2 className="form-title">Lütfen hatırlayacağınız bir şey yazın</h2>
 
       {errors.general && (
         <div style={{ 
@@ -267,13 +305,13 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="newPassword">New password</label>
+          <label htmlFor="newPassword">Yeni şifre</label>
           <div className="password-wrapper">
             <input
               type={showPassword ? "text" : "password"}
               id="newPassword"
               name="newPassword"
-              placeholder="must be 8 characters"
+              placeholder="en az 8 karakter olmalı"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className={errors.length || errors.uppercase || errors.special ? "error" : ""}
@@ -281,7 +319,7 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
             />
             <img
               src={showPassword ? "/images/close-eye.png" : "/images/seen.png"}
-              alt={showPassword ? "Hide password" : "Show password"}
+              alt={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
               className="eye-icon"
               onClick={() => setShowPassword(!showPassword)}
               role="button"
@@ -297,13 +335,13 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
           )}
         </div>
         <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm new password</label>
+          <label htmlFor="confirmPassword">Yeni şifreyi onayla</label>
           <div className="password-wrapper">
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               name="confirmPassword"
-              placeholder="repeat password"
+              placeholder="şifreyi tekrarla"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className={errors.confirm ? "error" : ""}
@@ -311,7 +349,7 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
             />
             <img
               src={showConfirmPassword ? "/images/close-eye.png" : "/images/seen.png"}
-              alt={showConfirmPassword ? "Hide password" : "Show password"}
+              alt={showConfirmPassword ? "Şifreyi gizle" : "Şifreyi göster"}
               className="eye-icon"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               role="button"
@@ -324,13 +362,32 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
           type="submit" 
           className="login-button"
           disabled={isLoading}
-          style={{ opacity: isLoading ? 0.7 : 1 }}
+          style={{ 
+            opacity: isLoading ? 0.7 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px"
+          }}
         >
-          {isLoading ? "Resetting..." : "Reset password"}
+          {isLoading && (
+            <div style={{
+              width: "16px",
+              height: "16px",
+              border: "2px solid rgba(255,255,255,0.3)",
+              borderTop: "2px solid #fff",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite",
+              WebkitAnimation: "spin 1s linear infinite",
+              MozAnimation: "spin 1s linear infinite",
+              msAnimation: "spin 1s linear infinite"
+            }}></div>
+          )}
+          {isLoading ? "Sıfırlanıyor..." : "Şifreyi Sıfırla"}
         </button>
       </form>
       <div className="signup-prompt">
-        Already have an account? <a href="/login">Log in</a>
+        Zaten hesabınız var mı? <a href="/login">Giriş yapın</a>
       </div>
     </div>
   );
@@ -340,14 +397,14 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
 function SuccessStep() {
   return (
     <div className="login-form-container">
-      <h3 className="form-subtitle">Password changed</h3>
-      <h2 className="form-title">Your password has been changed successfully</h2>
+      <h3 className="form-subtitle">Şifre değiştirildi</h3>
+      <h2 className="form-title">Şifreniz başarıyla değiştirildi</h2>
       <button
         onClick={() => (window.location.href = "/login")}
         className="login-button"
         style={{ marginTop: 32 }}
       >
-        Back to login
+        Giriş sayfasına dön
       </button>
     </div>
   );
@@ -400,6 +457,38 @@ export default function ForgotPassword() {
       <div className="right-panel">
         {renderStep()}
       </div>
+      
+      <style jsx>{`
+        @keyframes spin {
+          0% { 
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+            -moz-transform: rotate(0deg);
+            -ms-transform: rotate(0deg);
+          }
+          100% { 
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+          }
+        }
+        
+        @-webkit-keyframes spin {
+          0% { -webkit-transform: rotate(0deg); }
+          100% { -webkit-transform: rotate(360deg); }
+        }
+        
+        @-moz-keyframes spin {
+          0% { -moz-transform: rotate(0deg); }
+          100% { -moz-transform: rotate(360deg); }
+        }
+        
+        @-ms-keyframes spin {
+          0% { -ms-transform: rotate(0deg); }
+          100% { -ms-transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 } 
