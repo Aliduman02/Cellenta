@@ -24,21 +24,7 @@ export default function Store() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Prevent background scrolling when package details are open
-  useEffect(() => {
-    if (openId !== null) {
-      // Modal açıldığında scroll'u engelle
-      document.body.style.overflow = 'hidden';
-    } else {
-      // Modal kapandığında scroll'u tekrar etkinleştir
-      document.body.style.overflow = 'auto';
-    }
 
-    // Cleanup function - component unmount olduğunda scroll'u geri yükle
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [openId]);
 
   useEffect(() => {
     const loadPackages = async () => {
