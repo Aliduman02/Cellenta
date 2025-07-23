@@ -73,10 +73,7 @@ function EmailStep({ onNext, onBack }) {
               border: "2px solid rgba(255,255,255,0.3)",
               borderTop: "2px solid #fff",
               borderRadius: "50%",
-              animation: "spin 1s linear infinite",
-              WebkitAnimation: "spin 1s linear infinite",
-              MozAnimation: "spin 1s linear infinite",
-              msAnimation: "spin 1s linear infinite"
+              animation: "spin 1s linear infinite"
             }}></div>
           )}
           {isLoading ? "Gönderiliyor..." : "Kod Gönder"}
@@ -207,10 +204,7 @@ function CodeStep({ onNext, onBack, email }) {
               border: "2px solid rgba(255,255,255,0.3)",
               borderTop: "2px solid #fff",
               borderRadius: "50%",
-              animation: "spin 1s linear infinite",
-              WebkitAnimation: "spin 1s linear infinite",
-              MozAnimation: "spin 1s linear infinite",
-              msAnimation: "spin 1s linear infinite"
+              animation: "spin 1s linear infinite"
             }}></div>
           )}
           {isLoading ? "Doğrulanıyor..." : "Doğrula"}
@@ -383,10 +377,7 @@ function ResetPasswordStep({ onNext, onBack, email, code }) {
               border: "2px solid rgba(255,255,255,0.3)",
               borderTop: "2px solid #fff",
               borderRadius: "50%",
-              animation: "spin 1s linear infinite",
-              WebkitAnimation: "spin 1s linear infinite",
-              MozAnimation: "spin 1s linear infinite",
-              msAnimation: "spin 1s linear infinite"
+              animation: "spin 1s linear infinite"
             }}></div>
           )}
           {isLoading ? "Sıfırlanıyor..." : "Şifreyi Sıfırla"}

@@ -111,12 +111,20 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
           <div className="input-with-icon">
             <span className="input-icon">📞</span>
             <input 
-              type="text" 
+              type="tel" 
               id="phone" 
               name="phone" 
               placeholder="Telefon numaranızı girin" 
-              value={phone} 
-              onChange={(e) => setPhone(e.target.value)}
+              value={phone}
+              maxLength={10}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                // Sadece rakamları kabul et
+                const numericValue = inputValue.replace(/[^0-9]/g, '');
+                setPhone(numericValue);
+              }}
               className={errors.phone ? "error" : ""}
             />
           </div>

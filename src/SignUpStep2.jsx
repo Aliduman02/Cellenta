@@ -363,13 +363,10 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
                 <div style={{
                   width: "16px",
                   height: "16px",
-                  border: "2px solid rgba(124,58,237,0.3)",
-                  borderTop: "2px solid #7c3aed",
+                  border: "2px solid rgba(255,255,255,0.3)",
+                  borderTop: "2px solid #fff",
                   borderRadius: "50%",
-                  animation: "spin 1s linear infinite",
-                  WebkitAnimation: "spin 1s linear infinite",
-                  MozAnimation: "spin 1s linear infinite",
-                  msAnimation: "spin 1s linear infinite"
+                  animation: "spin 1s linear infinite"
                 }}></div>
             Paketler yükleniyor...
               </div>
@@ -556,10 +553,7 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
             border: "2px solid rgba(255,255,255,0.3)",
             borderTop: "2px solid #fff",
             borderRadius: "50%",
-            animation: "spin 1s linear infinite",
-            WebkitAnimation: "spin 1s linear infinite",
-            MozAnimation: "spin 1s linear infinite",
-            msAnimation: "spin 1s linear infinite"
+            animation: "spin 1s linear infinite"
           }}></div>
         )}
         {isLoading ? 'Hesap oluşturuluyor...' : 'Hesap Oluştur'}

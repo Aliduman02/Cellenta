@@ -127,13 +127,18 @@ export function LoginForm({ onSignUpClick }) {
             name="phone"
             placeholder="Telefon numaranızı girin"
             value={phone}
+            maxLength={10}
+            inputMode="numeric"
+            pattern="[0-9]*"
             onChange={e => {
-              const newPhone = e.target.value;
-              setPhone(newPhone);
+              const inputValue = e.target.value;
+              // Sadece rakamları kabul et
+              const numericValue = inputValue.replace(/[^0-9]/g, '');
+              setPhone(numericValue);
               
               // Remember Me aktifse telefonu güncelle
-              if (rememberMe && newPhone) {
-                localStorage.setItem('rememberedPhone', newPhone);
+              if (rememberMe && numericValue) {
+                localStorage.setItem('rememberedPhone', numericValue);
               }
             }}
             className={errors.phone ? "error" : ""}
@@ -203,10 +208,7 @@ export function LoginForm({ onSignUpClick }) {
             border: "2px solid rgba(255,255,255,0.3)",
             borderTop: "2px solid #fff",
             borderRadius: "50%",
-            animation: "spin 1s linear infinite",
-            WebkitAnimation: "spin 1s linear infinite",
-            MozAnimation: "spin 1s linear infinite",
-            msAnimation: "spin 1s linear infinite"
+            animation: "spin 1s linear infinite"
           }}></div>
         )}
         {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
