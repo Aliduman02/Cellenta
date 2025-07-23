@@ -1,7 +1,6 @@
 package com.example.tgf;
 
 import java.util.Random;
-import java.util.concurrent.locks.LockSupport;
 
 public class TrafficSimulator implements Runnable {
     private final MsisdnManager msisdnManager;
@@ -15,38 +14,39 @@ public class TrafficSimulator implements Runnable {
 
     @Override
     public void run() {
-        String[] usageTypes = {"minutes", "sms", "data"}; 
+        String[] usageTypes = {"minutes", "sms", "data"};
 
         while (!Thread.currentThread().isInterrupted()) {
-            String msisdn = msisdnManager.getRandomMsisdn();
-            String calledNumber = null;
-
-            if (msisdn != null) {
+            for (int i = 0; i < 300; i++) { // saniyede ~300 istek simülasyonu için ayarlandı
+                String sender = msisdnManager.getRandomMsisdn();
+                String receiver = msisdnManager.getRandomDifferentMsisdn(sender);
                 String usageType = usageTypes[random.nextInt(usageTypes.length)];
-                int amount;
 
+                int amount;
                 switch (usageType) {
                     case "minutes":
-                        amount = 1 + random.nextInt(5);
-                        calledNumber = msisdnManager.getRandomDifferentMsisdn(msisdn);
+                        amount = 1 + random.nextInt(60);
                         break;
                     case "sms":
-                        amount = 1 + random.nextInt(2);
-                        calledNumber = msisdnManager.getRandomDifferentMsisdn(msisdn);
+                        amount = 1 + random.nextInt(10);
                         break;
                     case "data":
-                        amount = 1 + random.nextInt(50);
+                        amount = 10 + random.nextInt(500);
                         break;
                     default:
                         amount = 1;
                 }
 
                 long timestamp = System.currentTimeMillis();
-                chfClient.sendChargingRequest(msisdn, usageType, amount, timestamp, calledNumber);
+                chfClient.sendChargingRequest(sender, usageType, amount, timestamp, usageType.equals("data") ? null : receiver);
             }
 
-            // Daha hassas ve kısa süreli uyku (örneğin 100 mikro saniye = 100_000 nanosaniye)
-            LockSupport.parkNanos(100_000); 
+            try {
+                Thread.sleep(1000); 
+            } catch (InterruptedException e) {
+                System.out.println("Simülasyon durduruldu.");
+                break;
+            }
         }
     }
 }

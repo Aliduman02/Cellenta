@@ -8,7 +8,10 @@ public class Main {
         ChfClient chfClient = new ChfClient();
         CommandProcessor processor = new CommandProcessor(msisdnManager, chfClient);
         processor.processCommand("start");
-        processor.start();
+        if (System.console() != null) {
+            processor.start(); // sadece interaktif terminalde çalışıyorsa başlat
+        }
+
 
     }
 }

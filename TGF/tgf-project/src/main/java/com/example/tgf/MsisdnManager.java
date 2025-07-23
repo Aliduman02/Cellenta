@@ -1,7 +1,5 @@
 package com.example.tgf;
 
-import static java.time.Instant.now;
-import static java.time.LocalDate.now;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,7 +47,7 @@ public class MsisdnManager {
         Thread updater = new Thread(() -> {
             while (updating) {
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(30000);
                     System.out.println("[AUTO-UPDATE] MSISDN listesi güncelleniyor...");
                     updateList();
                 } catch (InterruptedException e) {
