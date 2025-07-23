@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SMS Logları</title>
+    <link
+      href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        font-family: sans-serif;
+      }
+      .panel {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        align-items: end;
+        gap: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Cellenta SMS Logları</h2>
+
+    <div class="panel">
+      <input
+        id="global-search"
+        type="text"
+        placeholder="Ara..."
+        style="margin-bottom: 10px; padding: 5px; width: 200px"
+      />
+      <div class="buttons">
+        <div>
+          <button>Seçili: <span id="select-stats">0</span></button>
+          <button id="select-row">Hepsini Seç</button>
+          <button id="deselect-row">Seçimi Bırak</button>
+        </div>
+        <div class="download">
+          <button id="download-csv">CSV Indir</button>
+          <button id="download-json">JSON Indir</button>
+          <button id="download-pdf">PDF Indir</button>
+          <button id="download-html">HTML Indir</button>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <div id="log-table"></div>
+    <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+    <script>
+      let table;
+      fetch("http://localhost:3000/api/sms-logs")
+        .then((res) => res.json())
+        .then((data) => {
+          table = new Tabulator("#log-table", {
+            data: data,
+            layout: "fitColumns",
+            history: true,
+            pagination: "local",
+            paginationSize: 20,
+            downloadRowRange: "selected",
+            responsiveLayout: "collapse",
+            paginationCounter: "rows",
+            selectableRows: true,
+            resizable: false,
+            selectable: true,
+            rowClick: (e, row) => row.toggleSelect(),
+            columns: [
+              {
+                formatter: "rowSelection",
+                titleFormatter: "rowSelection",
+                hozAlign: "center",
+                headerSort: false,
+                width: 50,
+              },
+              ,
+              { title: "Telefon", field: "msisdn" },
+              {
+                title: "Mesaj",
+                field: "message",
+                widthGrow: 5,
+              },
+              {
+                title: "Tip",
+                field: "usage_type",
+                headerFilter: "select",
+                headerFilterParams: {
+                  values: { sms: "sms", minutes: "minutes", data: "data" },
+                },
+              },
+              {
+                title: "Durum",
+                field: "notification_message",
+                headerFilter: "select",
+                headerFilterParams: {
+                  values: {
+                    WARNING: "WARNING",
+                    LIMIT_EXCEEDED: "LIMIT_EXCEEDED",
+                  },
+                },
+              },
+              {
+                title: "Zaman",
+                field: "timestamp",
+                formatter: (cell) => {
+                  const d = new Date(cell.getValue());
+                  return d.toLocaleString("tr-TR", {
+                    timeZone: "Europe/Istanbul",
+                  });
+                },
+              },
+            ],
+          });
+
+          const getRowRange = () => {
+            const selected = table.getSelectedRows();
+            return selected.length > 0 ? "selected" : "active";
+          };
+
+          document
+            .getElementById("download-csv")
+            .addEventListener("click", () => {
+              bom: true,
+                table.download("csv", "data.csv", { rowRange: getRowRange() });
+            });
+
+          document
+            .getElementById("download-json")
+            .addEventListener("click", () => {
+              bom: true,
+                table.download("json", "data.json", {
+                  rowRange: getRowRange(),
+                });
+            });
+
+          document
+            .getElementById("download-pdf")
+            .addEventListener("click", () => {
+              bom: true,
+                table.download("pdf", "data.pdf", {
+                  orientation: "portrait",
+                  title: "Cellenta SMS Logları",
+                  rowRange: getRowRange(),
+                });
+            });
+
+          document
+            .getElementById("download-html")
+            .addEventListener("click", () => {
+              bom: true,
+                table.download("html", "data.html", {
+                  style: true,
+                  rowRange: getRowRange(),
+                });
+            });
+
+          document
+            .getElementById("global-search")
+            .addEventListener("keyup", function () {
+              const query = this.value.toLowerCase();
+              table.setFilter((row) =>
+                Object.values(row).some((val) =>
+                  String(val).toLowerCase().includes(query)
+                )
+              );
+            });
+
+          table.on("rowSelectionChanged", function (data, rows) {
+            document.getElementById("select-stats").innerHTML = data.length;
+          });
+
+          document
+            .getElementById("select-row")
+            .addEventListener("click", () => {
+              table.selectRow();
+            });
+
+          document
+            .getElementById("deselect-row")
+            .addEventListener("click", () => {
+              table.deselectRow();
+            });
+        })
+        .catch((err) => console.error("Veri alınamadı:", err));
+    </script>
+  </body>
+</html>

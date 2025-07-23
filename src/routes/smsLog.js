@@ -1,4 +1,3 @@
-import { log } from "console";
 import { Router } from "express";
 import { promises as fs } from "fs";
 import path from "path";
