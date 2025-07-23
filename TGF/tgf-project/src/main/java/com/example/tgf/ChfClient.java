@@ -9,6 +9,7 @@ public class ChfClient {
 
     public void sendChargingRequest(String msisdn, String usageType, int amount, long timestamp, String calledNumber) {
         try {
+            @SuppressWarnings("deprecation")
             URL url = new URL("http://35.241.210.255:8080/chf/usage");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
