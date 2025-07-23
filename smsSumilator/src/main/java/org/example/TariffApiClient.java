@@ -20,7 +20,6 @@ public class TariffApiClient {
             conn.setRequestProperty("Accept", "application/json");
             conn.setDoOutput(true);
 
-            // JSON gönderimi
             String jsonInputString = "{\"msisdn\": \"" + number + "\"}";
 
             try (OutputStream os = conn.getOutputStream()) {
@@ -29,11 +28,8 @@ public class TariffApiClient {
             }
 
             int status = conn.getResponseCode();
-
-            // Eğer 500 hatası varsa: numara bulunamadı mesajı ver
             if (status == 500) {
                 return "Numara sisteme kayıtlı değil. Lütfen kayıt olmak için şu sayfayı ziyaret edin:\nhttps://cellanta.com/register";
-
             }
 
             InputStream responseStream = conn.getInputStream();
@@ -46,14 +42,10 @@ public class TariffApiClient {
             }
 
             String responseBody = response.toString();
-
-            // Eğer packageName yoksa: numara bulunamamıştır
             if (!responseBody.contains("packageName")) {
                 return "Numara sisteme kayıtlı değil. Lütfen kayıt olmak için şu sayfayı ziyaret edin:\nhttps://cellanta.com/register";
-
             }
 
-            // Regex ile tüm alanları çek
             Pattern packagePattern = Pattern.compile("\"packageName\"\\s*:\\s*\"(.*?)\"");
             Pattern remainingMinutesPattern = Pattern.compile("\"remainingMinutes\"\\s*:\\s*(\\d+)");
             Pattern remainingDataPattern = Pattern.compile("\"remainingData\"\\s*:\\s*(\\d+)");
@@ -82,18 +74,29 @@ public class TariffApiClient {
                     && sd.find() && ed.find() && pr.find()
                     && amtMin.find() && amtData.find() && amtSms.find() && per.find()) {
 
-                return "Tarife Bilgileri:\n" +
-                        "Tarife Adı       : " + pkg.group(1) + "\n" +
-                        "Kalan Dakika     : " + remMin.group(1) + "\n" +
-                        "Kalan SMS        : " + remSms.group(1) + "\n" +
-                        "Kalan Data       : " + remData.group(1) + " MB\n" +
-                        "Başlangıç Tarihi : " + sd.group(1) + "\n" +
-                        "Bitiş Tarihi     : " + ed.group(1) + "\n" +
-                        "Fiyat            : " + pr.group(1) + " TL\n" +
-                        "Toplam Dakika    : " + amtMin.group(1) + "\n" +
-                        "Toplam Data      : " + amtData.group(1) + " MB\n" +
-                        "Toplam SMS       : " + amtSms.group(1) + "\n" +
-                        "Süre             : " + per.group(1) + " gün";
+                return "<html><body style='font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif; " +
+                        "font-size:16pt; font-weight:600; color:#222222;'>" +
+
+                        "<div style='font-size:20pt; font-weight:700; margin-bottom:10px;'>" + pkg.group(1) + "</div>" +
+
+                        "Dakika: " + remMin.group(1) + " / " + amtMin.group(1) + "<br>" +
+                        "SMS: " + remSms.group(1) + " / " + amtSms.group(1) + "<br>" +
+                        "İnternet: " + remData.group(1) + " / " + amtData.group(1) + " MB<br><br>" +
+
+                        "<b>Başlangıç Tarihi:</b><br>" + sd.group(1).substring(0, 10) + "<br>" +
+                        "<b>Bitiş Tarihi:</b><br>" + ed.group(1).substring(0, 10) + "<br>" +
+                        "<b>Süre:</b> " + per.group(1) + " gün<br><br>" +
+
+                        "<b>Fiyat:</b> " + pr.group(1) + " TL" +
+
+                        "</body></html>";
+
+
+
+
+
+
+
             } else {
                 return "Tarife bilgileri eksik ya da hatalı döndü.";
             }

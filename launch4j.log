@@ -1,0 +1,64 @@
+
+
+Version:	3.50
+CmdLine:	C:\smsSumilator\smsApp.exe --l4j-debug
+JNI:		No
+WOW64:		Yes
+Working dir:	C:\smsSumilator\.
+Requires JDK:	No
+Requires 64-Bit: No
+Java min ver:	1.022.000
+Java max ver:	
+Substitute:	JAVA_HOME = 
+Substitute:	PATH = C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\apache-maven-3.9.10\bin;C:\Users\sevyl_26tvvn3\AppData\Local\Programs\Python\Python312\;C:\Users\sevyl_26tvvn3\anaconda3;C:\Users\sevyl_26tvvn3\anaconda3\Library\mingw-w64\bin;C:\Users\sevyl_26tvvn3\anaconda3\Library\usr\bin;C:\Users\sevyl_26tvvn3\anaconda3\Library\bin;C:\Users\sevyl_26tvvn3\anaconda3\Scripts;C:\Users\sevyl_26tvvn3\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.1\bin;;C:\MinGW\bin;C:\Users\sevyl_26tvvn3\IntelliJ IDEA 2024.3.5\bin;;C:\apache-maven-3.9.10\bin;C:\Users\sevyl_26tvvn3\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Java\jre-1.8\bin
+JRE paths:	;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\apache-maven-3.9.10\bin;C:\Users\sevyl_26tvvn3\AppData\Local\Programs\Python\Python312\;C:\Users\sevyl_26tvvn3\anaconda3;C:\Users\sevyl_26tvvn3\anaconda3\Library\mingw-w64\bin;C:\Users\sevyl_26tvvn3\anaconda3\Library\usr\bin;C:\Users\sevyl_26tvvn3\anaconda3\Library\bin;C:\Users\sevyl_26tvvn3\anaconda3\Scripts;C:\Users\sevyl_26tvvn3\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.1\bin;;C:\MinGW\bin;C:\Users\sevyl_26tvvn3\IntelliJ IDEA 2024.3.5\bin;;C:\apache-maven-3.9.10\bin;C:\Users\sevyl_26tvvn3\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Program Files\Java\jre-1.8\bin
+Check launcher:	C:\Program Files\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\VMware\VMware Player\bin\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files (x86)\Common Files\Oracle\Java\javapath\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\system32\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\System32\Wbem\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\System32\WindowsPowerShell\v1.0\bin\javaw.exe (not found)
+Check launcher:	C:\WINDOWS\System32\OpenSSH\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Git\cmd\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Docker\Docker\resources\bin\javaw.exe (not found)
+Check launcher:	C:\apache-maven-3.9.10\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\AppData\Local\Programs\Python\Python312\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\anaconda3\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\anaconda3\Library\mingw-w64\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\anaconda3\Library\usr\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\anaconda3\Library\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\anaconda3\Scripts\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\AppData\Local\Microsoft\WindowsApps\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2024.1.1\bin\javaw.exe (not found)
+Check launcher:	C:\MinGW\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\IntelliJ IDEA 2024.3.5\bin\javaw.exe (not found)
+Check launcher:	C:\apache-maven-3.9.10\bin\javaw.exe (not found)
+Check launcher:	C:\Users\sevyl_26tvvn3\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin\javaw.exe (not found)
+Check launcher:	C:\Program Files\Java\jre-1.8\bin\javaw.exe (OK)
+Version string: 1.008.000_401 / 64-Bit (Ignore)
+64-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8
+Version string: 1.008.000 / 64-Bit (Ignore)
+Ignore:		1.008.000
+Check:		SOFTWARE\JavaSoft\Java Runtime Environment\1.8.0_401
+Version string: 1.008.000_401 / 64-Bit (Ignore)
+Ignore:		1.008.000_401
+32-bit search:	SOFTWARE\JavaSoft\Java Runtime Environment...
+64-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+32-bit search:	SOFTWARE\JavaSoft\Java Development Kit...
+64-bit search:	SOFTWARE\JavaSoft\JRE...
+32-bit search:	SOFTWARE\JavaSoft\JRE...
+64-bit search:	SOFTWARE\JavaSoft\JDK...
+Check:		SOFTWARE\JavaSoft\JDK\21.0.6
+Version string: 1.021.000_006 / 64-Bit (Ignore)
+Ignore:		1.021.000_006
+Check:		SOFTWARE\JavaSoft\JDK\24.0.1
+Version string: 1.024.000_001 / 64-Bit (OK)
+Check launcher:	C:\Program Files\Java\jdk-24\bin\javaw.exe (OK)
+Match:		1.024.000_001
+Runtime used:	1.024.000_001 (64-bit)
+Launcher:	C:\Program Files\Java\jdk-24\bin\javaw.exe
+Launcher args:	-jar "C:\smsSumilator\smsApp.exe"
+Args length:	33/32768 chars
+Exit code:	0

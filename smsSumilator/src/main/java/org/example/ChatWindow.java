@@ -39,7 +39,6 @@ public class ChatWindow extends JFrame {
         };
         headerPanel.setOpaque(false);
         headerPanel.setPreferredSize(new Dimension(400, 45));
-
         headerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 5)); // Ortalanmış logo
 
         // LOGO
@@ -53,10 +52,12 @@ public class ChatWindow extends JFrame {
 
         // MESAJ PANELİ
         messagePanel = new JPanel();
+        messagePanel.setName("messagePanel"); // Test amaçlı
         messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
         messagePanel.setBackground(Color.decode("#F4F7F8"));
 
         scrollPane = new JScrollPane(messagePanel);
+        scrollPane.setName("messageScrollPane"); // Test amaçlı
         scrollPane.setBorder(null);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
@@ -68,19 +69,33 @@ public class ChatWindow extends JFrame {
         inputPanel.setBackground(Color.WHITE);
         inputPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-        messageField = new JTextArea(1, 20);
+        // MESAJ ALANI (textarea)
+        messageField = new JTextArea(1, 28);
+        messageField.setName("messageField");
         messageField.setLineWrap(true);
         messageField.setWrapStyleWord(true);
-        messageField.setFont(new Font("Arial", Font.PLAIN, 14));
-        messageField.setBackground(new Color(255, 255, 255, 180));
+        messageField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        messageField.setBackground(Color.WHITE);
         messageField.setForeground(Color.BLACK);
-        messageField.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
-        messageField.setMaximumSize(new Dimension(280, 30));
+        messageField.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        messageField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+
+        messageField.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER && !evt.isShiftDown()) {
+                    evt.consume();  // Enter'ın yeni satır eklemesini engelle
+                    sendButton.doClick();  // Send butonuna tıklama simülasyonu
+                }
+            }
+        });
 
         JScrollPane messageFieldScrollPane = new JScrollPane(messageField);
         messageFieldScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         messageFieldScrollPane.setBorder(null);
+        messageFieldScrollPane.setPreferredSize(new Dimension(320, 40));
 
+        // GÖNDER BUTONU
         sendButton = new JButton("Gönder") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -102,15 +117,14 @@ public class ChatWindow extends JFrame {
                 super.paintComponent(g);
             }
         };
+        sendButton.setName("gonderBtn");
         sendButton.setForeground(Color.WHITE);
-        sendButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        sendButton.setFont(new Font("Segoe UI", Font.BOLD, 16));
         sendButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        sendButton.setBorder(BorderFactory.createEmptyBorder(4, 14, 4, 14));
+        sendButton.setBorder(BorderFactory.createEmptyBorder(6, 18, 6, 18));
+        sendButton.setPreferredSize(new Dimension(100, 36));
         sendButton.setContentAreaFilled(false);
         sendButton.setFocusPainted(false);
-
-        messageField.setBackground(Color.WHITE);
-        messageField.setOpaque(true);
 
         inputPanel.add(messageFieldScrollPane, BorderLayout.CENTER);
         inputPanel.add(sendButton, BorderLayout.EAST);
@@ -148,15 +162,17 @@ public class ChatWindow extends JFrame {
                 addMessage(msg, true);
                 messageField.setText("");
 
+                // 1 saniye sonra yanıt göster
                 Timer timer = new Timer(1000, evt -> {
                     String lowerMsg = msg.toLowerCase();
                     if (lowerMsg.contains("kalan")) {
                         String number = msg.replaceAll("[^0-9]", "");
-                        if (number.length() == 10 || number.length() == 11) {
+                        if (number.length() >= 10) {
+                            // API çağrısı burada
                             String result = TariffApiClient.getTariffFromMiddleware(number);
                             addMessage(result, false);
                         } else {
-                            addMessage("Lütfen numarayı doğru formatta giriniz. Örnek: 05321112233 kalan", false);
+                            addMessage("Lütfen numarayı doğru formatta giriniz. Örnek: 5321112233 kalan", false);
                         }
                     } else {
                         addMessage("Geçersiz komut. Numara ile birlikte 'kalan' yazmalısınız.", false);
@@ -169,7 +185,9 @@ public class ChatWindow extends JFrame {
     }
 
     public void addMessage(String text, boolean isSentByUser) {
-        MessageBubble bubble = new MessageBubble(text, isSentByUser);
+        int panelWidth = messagePanel.getWidth() > 0 ? messagePanel.getWidth() : getWidth();
+
+        MessageBubble bubble = new MessageBubble(text, isSentByUser, panelWidth);
         messagePanel.add(bubble);
         messagePanel.add(Box.createRigidArea(new Dimension(0, 5)));
         messagePanel.revalidate();
@@ -180,4 +198,5 @@ public class ChatWindow extends JFrame {
             vertical.setValue(vertical.getMaximum());
         });
     }
+
 }
