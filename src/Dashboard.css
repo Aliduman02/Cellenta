@@ -684,7 +684,6 @@ body {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 50%;
-  padding: 12px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
   display: flex;
   align-items: center;
@@ -693,8 +692,6 @@ body {
   animation: bounceIn 1s ease 1.2s both;
   z-index: 1000;
   border: 1px solid rgba(255, 255, 255, 0.3);
-  width: 60px !important;
-  height: 60px !important;
 }
 
 @keyframes bounceIn {
@@ -721,8 +718,6 @@ body {
 }
 
 .chat-widget-logo {
-  width: 36px;
-  height: 36px;
   transition: transform 0.3s ease;
 }
 
@@ -917,9 +912,6 @@ body {
   .chat-widget {
     bottom: 20px !important;
     right: 20px !important;
-    width: 55px !important;
-    height: 55px !important;
-    padding: 10px !important;
   }
 }
 
@@ -994,9 +986,6 @@ body {
   .chat-widget {
     bottom: 16px !important;
     right: 16px !important;
-    width: 50px !important;
-    height: 50px !important;
-    padding: 8px !important;
   }
 }
 
@@ -1100,13 +1089,5 @@ body {
   .chat-widget {
     bottom: 16px !important;
     right: 12px !important;
-    width: 45px !important;
-    height: 45px !important;
-    padding: 6px !important;
-  }
-  
-  .chat-widget-logo {
-    width: 30px;
-    height: 30px;
   }
 }

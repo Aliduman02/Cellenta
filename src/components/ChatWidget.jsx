@@ -14,7 +14,19 @@ export default function ChatWidget() {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const messagesEndRef = useRef(null);
+
+  // Responsive check
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -111,6 +123,38 @@ export default function ChatWidget() {
     sendMessage(inputMessage);
   };
 
+  // Responsive styles
+  const getModalStyles = () => {
+    if (isDesktop) {
+      return {
+        position: "fixed",
+        bottom: 100,
+        right: 32,
+        width: 380,
+        height: 520,
+        maxHeight: "calc(100vh - 140px)"
+      };
+    } else {
+      // Mobile and tablet
+      return {
+        position: "fixed",
+        bottom: 80,
+        right: 16,
+        left: 16,
+        width: "auto",
+        height: 450,
+        maxHeight: "calc(100vh - 120px)",
+        maxWidth: 400
+      };
+    }
+  };
+
+  const getButtonStyles = () => ({
+    width: isDesktop ? "50px" : "45px",
+    height: isDesktop ? "50px" : "45px",
+    padding: isDesktop ? "8px" : "6px"
+  });
+
   return (
     <>
       {/* Chat Widget Button */}
@@ -121,20 +165,27 @@ export default function ChatWidget() {
         onMouseLeave={() => setShowTooltip(false)}
         style={{ 
           cursor: "pointer",
-          width: "50px",
-          height: "50px",
           borderRadius: "50%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: "8px",
-          position: "relative"
+          position: "relative",
+          ...getButtonStyles()
         }}
       >
-        <img src={`${process.env.PUBLIC_URL}/images/icon2.png`} alt="Cellenta Bot" className="chat-widget-logo" />
+        <img 
+          src={`${process.env.PUBLIC_URL}/images/icon2.png`} 
+          alt="Cellenta Bot" 
+          className="chat-widget-logo"
+          style={{
+            width: isDesktop ? "36px" : "30px",
+            height: isDesktop ? "36px" : "30px",
+            transition: "transform 0.3s ease"
+          }}
+        />
         
-        {/* Tooltip */}
-        {showTooltip && (
+        {/* Tooltip - only show on desktop */}
+        {showTooltip && isDesktop && (
           <div style={{
             position: "absolute",
             right: "65px",
@@ -171,11 +222,7 @@ export default function ChatWidget() {
       {/* Chat Modal */}
       {isOpen && (
         <div style={{
-          position: "fixed",
-          bottom: 100,
-          right: 32,
-          width: 350,
-          height: 500,
+          ...getModalStyles(),
           background: "#fff",
           borderRadius: 16,
           boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
@@ -186,23 +233,37 @@ export default function ChatWidget() {
         }}>
           {/* Header */}
           <div style={{
-            padding: "16px 20px",
+            padding: isDesktop ? "16px 20px" : "12px 16px",
             borderBottom: "1px solid #e5e7eb",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            background: "#f8fafc"
+            background: "#f8fafc",
+            borderRadius: "16px 16px 0 0"
           }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <img src={`${process.env.PUBLIC_URL}/images/icon2.png`} alt="Cellenta Bot" style={{ width: 24, height: 24 }} />
-              <span style={{ fontWeight: 600, color: "#1f2937" }}>Cellenta Assistant</span>
+              <img 
+                src={`${process.env.PUBLIC_URL}/images/icon2.png`} 
+                alt="Cellenta Bot" 
+                style={{ 
+                  width: isDesktop ? 24 : 20, 
+                  height: isDesktop ? 24 : 20 
+                }} 
+              />
+              <span style={{ 
+                fontWeight: 600, 
+                color: "#1f2937",
+                fontSize: isDesktop ? "16px" : "14px"
+              }}>
+                Cellenta Assistant
+              </span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
               style={{
                 background: "none",
                 border: "none",
-                fontSize: 18,
+                fontSize: isDesktop ? 18 : 16,
                 cursor: "pointer",
                 color: "#6b7280",
                 padding: 4
@@ -216,10 +277,10 @@ export default function ChatWidget() {
           <div style={{
             flex: 1,
             overflowY: "auto",
-            padding: "16px",
+            padding: isDesktop ? "16px" : "12px",
             display: "flex",
             flexDirection: "column",
-            gap: 12
+            gap: isDesktop ? 12 : 10
           }}>
             {messages.map((message) => (
               <div
@@ -230,13 +291,14 @@ export default function ChatWidget() {
                 }}
               >
                 <div style={{
-                  maxWidth: "80%",
-                  padding: "12px 16px",
+                  maxWidth: isDesktop ? "80%" : "85%",
+                  padding: isDesktop ? "12px 16px" : "10px 14px",
                   borderRadius: 16,
                   background: message.sender === "user" ? "#7c3aed" : "#f3f4f6",
                   color: message.sender === "user" ? "#fff" : "#1f2937",
-                  fontSize: 14,
-                  lineHeight: 1.4
+                  fontSize: isDesktop ? 14 : 13,
+                  lineHeight: 1.4,
+                  wordBreak: "break-word"
                 }}>
                   {message.text}
                 </div>
@@ -245,11 +307,11 @@ export default function ChatWidget() {
             {isLoading && (
               <div style={{ display: "flex", justifyContent: "flex-start" }}>
                 <div style={{
-                  padding: "12px 16px",
+                  padding: isDesktop ? "12px 16px" : "10px 14px",
                   borderRadius: 16,
                   background: "#f3f4f6",
                   color: "#6b7280",
-                  fontSize: 14
+                  fontSize: isDesktop ? 14 : 13
                 }}>
                   Typing...
                 </div>
@@ -260,10 +322,10 @@ export default function ChatWidget() {
 
           {/* Input */}
           <form onSubmit={handleSubmit} style={{
-            padding: "16px",
+            padding: isDesktop ? "16px" : "12px",
             borderTop: "1px solid #e5e7eb",
             display: "flex",
-            gap: 8
+            gap: isDesktop ? 8 : 6
           }}>
             <input
               type="text"
@@ -273,10 +335,10 @@ export default function ChatWidget() {
               disabled={isLoading}
               style={{
                 flex: 1,
-                padding: "12px 16px",
+                padding: isDesktop ? "12px 16px" : "10px 14px",
                 border: "1px solid #d1d5db",
                 borderRadius: 20,
-                fontSize: 14,
+                fontSize: isDesktop ? 14 : 13,
                 outline: "none"
               }}
             />
@@ -284,15 +346,16 @@ export default function ChatWidget() {
               type="submit"
               disabled={isLoading || !inputMessage.trim()}
               style={{
-                padding: "12px 16px",
+                padding: isDesktop ? "12px 16px" : "10px 14px",
                 background: "#7c3aed",
                 color: "#fff",
                 border: "none",
                 borderRadius: 20,
                 cursor: "pointer",
-                fontSize: 14,
+                fontSize: isDesktop ? 14 : 13,
                 fontWeight: 600,
-                opacity: (isLoading || !inputMessage.trim()) ? 0.5 : 1
+                opacity: (isLoading || !inputMessage.trim()) ? 0.5 : 1,
+                minWidth: isDesktop ? "auto" : "60px"
               }}
             >
               Send

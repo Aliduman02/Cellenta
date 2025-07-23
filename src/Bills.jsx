@@ -131,9 +131,9 @@ export default function Bills() {
       {!isDesktop && <Sidebar user={{ name: localStorage.getItem('userName'), phone: localStorage.getItem('userPhone') }} />}
 
       <div style={{ 
-        maxWidth: isDesktop ? 1200 : "100%", 
+        maxWidth: isDesktop ? 850 : "100%", 
         margin: "0 auto", 
-        padding: isDesktop ? "40px 80px 60px 80px" : "60px 20px 40px 20px",
+        padding: isDesktop ? "24px 40px 40px 40px" : "50px 16px 32px 16px",
         width: "100%"
       }}>
         {/* Header Logo */}
@@ -141,7 +141,7 @@ export default function Bills() {
           display: "flex", 
           alignItems: "center", 
           justifyContent: "center", 
-          marginBottom: 40,
+          marginBottom: 24,
           animation: "fadeInDown 0.8s ease"
         }}>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -149,7 +149,7 @@ export default function Bills() {
               src="/images/title2.png" 
               alt="Cellenta" 
               style={{ 
-                height: 48, 
+                height: isDesktop ? 48 : 40, 
                 width: "auto", 
                 objectFit: "contain",
                 transition: "transform 0.3s ease"
@@ -165,12 +165,12 @@ export default function Bills() {
           display: "flex", 
           alignItems: "center",
           justifyContent: "center",
-          marginBottom: 48,
+          marginBottom: 32,
           animation: "slideInLeft 0.8s ease 0.2s both",
           width: "100%"
         }}>
           <span style={{ 
-            fontSize: 36, 
+            fontSize: isDesktop ? 36 : 28, 
             fontWeight: 800, 
             color: "#1f2937",
             textShadow: "0 3px 6px rgba(0,0,0,0.15)",
@@ -184,11 +184,12 @@ export default function Bills() {
         <div style={{ 
           background: "rgba(255,255,255,0.85)", 
           backdropFilter: "blur(10px)",
-          borderRadius: 24, 
-          boxShadow: "0 8px 32px rgba(0,0,0,0.12)", 
-          padding: 32,
+          borderRadius: 20, 
+          boxShadow: "0 6px 24px rgba(0,0,0,0.08)", 
+          padding: isDesktop ? 24 : 20,
           border: "1px solid rgba(255,255,255,0.3)",
-          animation: "slideInUp 0.8s ease 0.4s both"
+          animation: "slideInUp 0.8s ease 0.4s both",
+          maxWidth: "100%"
         }}>
           {/* Ödenmemiş fatura kutusu (ilk sırada, kartların içinde) */}
           {bills.length > 0 && bills[0].status === "Unpaid" && (
@@ -273,7 +274,7 @@ export default function Bills() {
               📄 No bills found
             </div>
           ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
               {bills.map((bill, i) => (
                 <motion.div
                   key={bill.id}
