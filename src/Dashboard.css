@@ -839,15 +839,15 @@ body {
 }
 
 .profile-info-label {
-  color: #888;
-  font-weight: 700;
+  color: #000000;
+  font-weight: 800;
   min-width: 140px;
   font-size: 18px;
   text-align: left;
 }
 
 .profile-info-value {
-  font-weight: 800;
+  font-weight: 400;
   color: #1f2937;
   font-size: 20px;
   text-align: left;
@@ -983,12 +983,15 @@ body {
   
   .profile-info-label {
     font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #000000 !important;
     min-width: 120px !important;
     text-align: left !important;
   }
   
   .profile-info-value {
     font-size: 18px !important;
+    font-weight: 400 !important;
     text-align: left !important;
   }
 }
@@ -1107,14 +1110,15 @@ body {
   
   .profile-info-label {
     font-size: 15px !important;
+    font-weight: 800 !important;
     min-width: auto !important;
-    color: #888 !important;
+    color: #000000 !important;
     text-align: center !important;
   }
   
   .profile-info-value {
     font-size: 17px !important;
-    font-weight: 800 !important;
+    font-weight: 400 !important;
     text-align: center !important;
     word-break: break-all;
   }
@@ -1240,14 +1244,15 @@ body {
   
   .profile-info-label {
     font-size: 13px !important;
+    font-weight: 800 !important;
     min-width: auto !important;
-    color: #888 !important;
+    color: #000000 !important;
     text-align: center !important;
   }
   
   .profile-info-value {
     font-size: 15px !important;
-    font-weight: 800 !important;
+    font-weight: 400 !important;
     text-align: center !important;
     word-break: break-all !important;
   }

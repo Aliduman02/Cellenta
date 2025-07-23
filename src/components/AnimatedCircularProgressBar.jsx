@@ -15,8 +15,18 @@ export default function AnimatedCircularProgressBar({
   const targetPercent = ((value - min) / (max - min)) * 100;
 
   // Framer Motion animasyonlu value ve percent
-  const springValue = useSpring(0, { duration: 1.2 });
-  const springPercent = useSpring(0, { duration: 1.2 });
+  const springValue = useSpring(0, { 
+    duration: 6,
+    bounce: 0,
+    damping: 40,
+    stiffness: 40
+  });
+  const springPercent = useSpring(0, { 
+    duration: 6,
+    bounce: 0,
+    damping: 40,
+    stiffness: 40
+  });
 
   const [displayValue, setDisplayValue] = useState(0);
   const [displayPercent, setDisplayPercent] = useState(0);
@@ -60,7 +70,6 @@ export default function AnimatedCircularProgressBar({
             strokeDasharray: `${circumference} ${circumference}`,
             transform: "rotate(-90deg)",
             transformOrigin: "50% 50%",
-            transition: "all 1s ease",
             opacity: 1,
           }}
         />
@@ -74,7 +83,6 @@ export default function AnimatedCircularProgressBar({
           strokeLinejoin="round"
           style={{
             stroke: gaugePrimaryColor,
-            transition: "all 1s ease",
             transform: "rotate(-90deg)",
             transformOrigin: "50% 50%",
           }}
