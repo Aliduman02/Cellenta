@@ -58,6 +58,7 @@
 
     </dependencies>
 
+
     <build>
         <plugins>
             <!-- Main class ile çalıştırmak için -->

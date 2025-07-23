@@ -1,5 +1,7 @@
 package com.example.tgf;
 
+import static java.time.Instant.now;
+import static java.time.LocalDate.now;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -19,9 +21,6 @@ public class MsisdnManager {
     public void updateList() {
         msisdnList = new ArrayList<>(MsisdnService.getAllRegisteredMsisdns());
         System.out.println("Güncellendi: " + msisdnList.size() + " MSISDN bulundu.");
-        for (String msisdn : msisdnList) {
-            System.out.println(msisdn);
-        }
     }
 
     public List<String> getMsisdnList() {
@@ -42,5 +41,29 @@ public class MsisdnManager {
         } while (selected.equals(exclude));
 
         return selected;
+    }
+
+    private volatile boolean updating = true;
+
+    public void startAutoUpdate() {
+        Thread updater = new Thread(() -> {
+            while (updating) {
+                try {
+                    Thread.sleep(60000);
+                    System.out.println("[AUTO-UPDATE] MSISDN listesi güncelleniyor...");
+                    updateList();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                     System.out.println("[AUTO-UPDATE] Güncelleme iptal edildi.");
+                    break;
+                }
+            }
+        });
+        updater.setDaemon(true); // Program kapanınca otomatik sonlanır
+        updater.start();
+    }
+
+    public void stopAutoUpdate() {
+        updating = false;
     }
 }
