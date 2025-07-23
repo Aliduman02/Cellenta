@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use("/api", smsRouter);
 import smsLogRoutes from "./routes/smsLog.js";
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0", () => {
   console.log("🚀 Mock SMS servisi 3000 portunda çalışıyor.");
 });
 app.use("/api", smsLogRoutes);
