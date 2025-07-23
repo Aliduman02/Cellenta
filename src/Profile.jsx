@@ -81,25 +81,28 @@ export default function Profile() {
       >
         <div style={{ 
           background: "rgba(255,255,255,0.9)", 
-          padding: "32px", 
+          padding: isDesktop ? "32px" : "24px", 
           borderRadius: "16px",
           textAlign: "center",
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          animation: "fadeIn 0.6s ease"
+          animation: "fadeIn 0.6s ease",
+          maxWidth: isDesktop ? "400px" : "320px",
+          margin: "0 16px"
         }}>
           <div style={{ 
-            fontSize: "18px", 
+            fontSize: isDesktop ? "18px" : "16px", 
             fontWeight: 600, 
             color: "#374151",
             display: "flex",
             alignItems: "center",
-            gap: "12px"
+            justifyContent: "center",
+            gap: isDesktop ? "12px" : "10px"
           }}>
             <div style={{
-              width: "20px",
-              height: "20px",
-              border: "2px solid #e5e7eb",
-              borderTop: "2px solid #7c3aed",
+              width: isDesktop ? "20px" : "18px",
+              height: isDesktop ? "20px" : "18px",
+              border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
+              borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
               borderRadius: "50%",
               animation: "spin 1s linear infinite"
             }}></div>
@@ -127,17 +130,27 @@ export default function Profile() {
       >
         <div style={{ 
           background: "rgba(255,255,255,0.9)", 
-          padding: "32px", 
+          padding: isDesktop ? "32px" : "24px", 
           borderRadius: "16px",
           textAlign: "center",
-          maxWidth: "400px",
+          maxWidth: isDesktop ? "400px" : "320px",
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          animation: "fadeIn 0.6s ease"
+          animation: "fadeIn 0.6s ease",
+          margin: "0 16px"
         }}>
-          <div style={{ fontSize: "18px", fontWeight: 600, color: "#ef4444", marginBottom: "16px" }}>
+          <div style={{ 
+            fontSize: isDesktop ? "18px" : "16px", 
+            fontWeight: 600, 
+            color: "#ef4444", 
+            marginBottom: isDesktop ? "16px" : "12px" 
+          }}>
             Error
           </div>
-          <div style={{ color: "#6b7280", marginBottom: "24px" }}>
+          <div style={{ 
+            color: "#6b7280", 
+            marginBottom: isDesktop ? "24px" : "20px",
+            fontSize: isDesktop ? "14px" : "13px"
+          }}>
             {error}
           </div>
           <button
@@ -147,9 +160,10 @@ export default function Profile() {
               color: "#fff",
               border: "none",
               borderRadius: "8px",
-              padding: "12px 24px",
+              padding: isDesktop ? "12px 24px" : "10px 20px",
               cursor: "pointer",
               fontWeight: 600,
+              fontSize: isDesktop ? "14px" : "13px",
               transition: "all 0.3s ease"
             }}
             onMouseOver={e => e.target.style.background = "#6d28d9"}
@@ -185,9 +199,9 @@ export default function Profile() {
 
 
       <div style={{ 
-        maxWidth: isDesktop ? 1200 : "100%", 
+        maxWidth: isDesktop ? 850 : "100%", 
         margin: "0 auto", 
-        padding: isDesktop ? "40px 80px 60px 80px" : "60px 20px 40px 20px",
+        padding: isDesktop ? "24px 40px 40px 40px" : "50px 16px 32px 16px",
         width: "100%"
       }}>
         {/* Header Logo */}
@@ -195,7 +209,7 @@ export default function Profile() {
           display: "flex", 
           alignItems: "center", 
           justifyContent: "center", 
-          marginBottom: 40,
+          marginBottom: isDesktop ? 32 : 24,
           animation: "fadeInDown 0.8s ease"
         }}>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -203,7 +217,7 @@ export default function Profile() {
               src="/images/title2.png" 
               alt="Cellenta" 
               style={{ 
-                height: 48, 
+                height: isDesktop ? 48 : 40, 
                 width: "auto", 
                 objectFit: "contain",
                 transition: "transform 0.3s ease"
@@ -219,12 +233,12 @@ export default function Profile() {
           display: "flex", 
           alignItems: "center",
           justifyContent: "center",
-          marginBottom: 48,
+          marginBottom: isDesktop ? 40 : 32,
           animation: "slideInLeft 0.8s ease 0.2s both",
           width: "100%"
         }}>
           <span style={{ 
-            fontSize: 36, 
+            fontSize: isDesktop ? 36 : 28, 
             fontWeight: 800, 
             color: "#1f2937",
             textShadow: "0 3px 6px rgba(0,0,0,0.15)",
@@ -235,7 +249,18 @@ export default function Profile() {
         </div>
 
         {/* Profile Card */}
-        <div className="profile-card" style={{
+        <div style={{
+          display: "flex",
+          alignItems: isDesktop ? "center" : "flex-start",
+          flexDirection: isDesktop ? "row" : "column",
+          gap: isDesktop ? 60 : 20,
+          background: "#fff",
+          borderRadius: isDesktop ? 32 : 20,
+          boxShadow: "0 6px 24px rgba(0,0,0,0.08)",
+          padding: isDesktop ? "48px 60px" : "32px 24px",
+          maxWidth: "100%",
+          margin: "0 auto",
+          minHeight: isDesktop ? 280 : "auto",
           animation: "slideInUp 0.8s ease 0.4s both",
           position: "relative"
         }}>
@@ -244,22 +269,22 @@ export default function Profile() {
             onClick={handleLogout}
             style={{
               position: "absolute",
-              top: 24,
-              right: 24,
+              top: isDesktop ? 20 : 16,
+              right: isDesktop ? 20 : 16,
               background: "linear-gradient(135deg, #ff6b6b, #ee5a52)",
               color: "#fff",
               border: "none",
-              borderRadius: 16,
-              padding: "10px 16px",
+              borderRadius: isDesktop ? 14 : 12,
+              padding: isDesktop ? "10px 16px" : "8px 12px",
               fontWeight: 600,
-              fontSize: 13,
+              fontSize: isDesktop ? 13 : 12,
               cursor: "pointer",
               boxShadow: "0 3px 12px rgba(238, 90, 82, 0.3)",
               transition: "all 0.3s ease",
               zIndex: 10,
               display: "flex",
               alignItems: "center",
-              gap: 6,
+              gap: isDesktop ? 6 : 4,
               animation: "fadeInRight 1s ease 1.6s both"
             }}
             onMouseOver={e => {
@@ -277,31 +302,127 @@ export default function Profile() {
           </button>
 
           <div 
-            className="profile-avatar"
             style={{
+              width: isDesktop ? 120 : 80,
+              height: isDesktop ? 120 : 80,
+              borderRadius: "50%",
               background: "linear-gradient(135deg, #22d3ee, #06b6d4)",
-              animation: "bounceIn 1s ease 0.6s both"
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: isDesktop ? 48 : 32,
+              fontWeight: 800,
+              color: "#fff",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+              border: isDesktop ? "6px solid #e0e7ef" : "4px solid #e0e7ef",
+              transition: "transform 0.3s ease",
+              animation: "bounceIn 1s ease 0.6s both",
+              alignSelf: isDesktop ? "auto" : "center"
             }}
+            onMouseOver={e => e.currentTarget.style.transform = "scale(1.1)"}
+            onMouseOut={e => e.currentTarget.style.transform = "scale(1)"}
           >
             {user?.firstName ? user.firstName[0] : "U"}
           </div>
           
-          <div className="profile-info-list">
-            <div className="profile-info-row" style={{ animationDelay: "0.8s" }}>
-              <span className="profile-info-label">👤 Name</span>
-              <span className="profile-info-value">{user?.firstName || "N/A"}</span>
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: isDesktop ? 20 : 16,
+            width: "100%",
+            alignItems: isDesktop ? "flex-start" : "center"
+          }}>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: isDesktop ? 16 : 12,
+              fontSize: isDesktop ? 18 : 16,
+              opacity: 0,
+              animation: "fadeInLeft 0.6s ease forwards",
+              animationDelay: "0.8s",
+              flexDirection: isDesktop ? "row" : "column",
+              textAlign: isDesktop ? "left" : "center"
+            }}>
+              <span style={{
+                color: "#888",
+                fontWeight: 700,
+                minWidth: isDesktop ? 120 : "auto",
+                fontSize: isDesktop ? 16 : 14
+              }}>👤 Name</span>
+              <span style={{
+                fontWeight: 800,
+                color: "#1f2937",
+                fontSize: isDesktop ? 18 : 16
+              }}>{user?.firstName || "N/A"}</span>
             </div>
-            <div className="profile-info-row" style={{ animationDelay: "1.0s" }}>
-              <span className="profile-info-label">👥 Surname</span>
-              <span className="profile-info-value">{user?.lastName || "N/A"}</span>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: isDesktop ? 16 : 12,
+              fontSize: isDesktop ? 18 : 16,
+              opacity: 0,
+              animation: "fadeInLeft 0.6s ease forwards",
+              animationDelay: "1.0s",
+              flexDirection: isDesktop ? "row" : "column",
+              textAlign: isDesktop ? "left" : "center"
+            }}>
+              <span style={{
+                color: "#888",
+                fontWeight: 700,
+                minWidth: isDesktop ? 120 : "auto",
+                fontSize: isDesktop ? 16 : 14
+              }}>👥 Surname</span>
+              <span style={{
+                fontWeight: 800,
+                color: "#1f2937",
+                fontSize: isDesktop ? 18 : 16
+              }}>{user?.lastName || "N/A"}</span>
             </div>
-            <div className="profile-info-row" style={{ animationDelay: "1.2s" }}>
-              <span className="profile-info-label">📱 Phone</span>
-              <span className="profile-info-value">{user?.phone || "N/A"}</span>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: isDesktop ? 16 : 12,
+              fontSize: isDesktop ? 18 : 16,
+              opacity: 0,
+              animation: "fadeInLeft 0.6s ease forwards",
+              animationDelay: "1.2s",
+              flexDirection: isDesktop ? "row" : "column",
+              textAlign: isDesktop ? "left" : "center"
+            }}>
+              <span style={{
+                color: "#888",
+                fontWeight: 700,
+                minWidth: isDesktop ? 120 : "auto",
+                fontSize: isDesktop ? 16 : 14
+              }}>📱 Phone</span>
+              <span style={{
+                fontWeight: 800,
+                color: "#1f2937",
+                fontSize: isDesktop ? 18 : 16
+              }}>{user?.phone || "N/A"}</span>
             </div>
-            <div className="profile-info-row" style={{ animationDelay: "1.4s" }}>
-              <span className="profile-info-label">✉️ Email</span>
-              <span className="profile-info-value">{user?.email || "N/A"}</span>
+            <div style={{
+              display: "flex",
+              alignItems: "center",
+              gap: isDesktop ? 16 : 12,
+              fontSize: isDesktop ? 18 : 16,
+              opacity: 0,
+              animation: "fadeInLeft 0.6s ease forwards",
+              animationDelay: "1.4s",
+              flexDirection: isDesktop ? "row" : "column",
+              textAlign: isDesktop ? "left" : "center"
+            }}>
+              <span style={{
+                color: "#888",
+                fontWeight: 700,
+                minWidth: isDesktop ? 120 : "auto",
+                fontSize: isDesktop ? 16 : 14
+              }}>✉️ Email</span>
+              <span style={{
+                fontWeight: 800,
+                color: "#1f2937",
+                fontSize: isDesktop ? 18 : 16
+              }}>{user?.email || "N/A"}</span>
             </div>
           </div>
         </div>

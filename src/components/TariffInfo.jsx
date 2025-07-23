@@ -6,7 +6,7 @@ export default function TariffInfo({ usageData }) {
   const data = usageData || {};
 
   // MB'den GB'ye dönüşüm fonksiyonu
-  const mbToGb = (mb) => (mb ? (mb / 1000).toFixed(2) : "0.00");
+  const mbToGb = (mb) => (mb ? parseFloat((mb / 1000).toFixed(2)) : 0);
 
   // API'den gelen veriyi component formatına çevir
   const formattedData = {
@@ -58,7 +58,7 @@ export default function TariffInfo({ usageData }) {
             gaugePrimaryColor="#0ea5e9"
           />
           <div style={{ marginTop: 4, fontSize: "1.1rem", fontWeight: 500, color: "#444" }}>
-            {mbToGb(formattedData.data.remaining)} GB left from {mbToGb(formattedData.data.total)} GB
+            {mbToGb(formattedData.data.remaining).toFixed(2)} GB left from {mbToGb(formattedData.data.total).toFixed(2)} GB
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>

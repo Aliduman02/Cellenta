@@ -81,25 +81,28 @@ export default function Bills() {
       >
         <div style={{ 
           background: "rgba(255,255,255,0.9)", 
-          padding: "32px", 
+          padding: isDesktop ? "32px" : "24px", 
           borderRadius: "16px",
           textAlign: "center",
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          animation: "fadeIn 0.6s ease"
+          animation: "fadeIn 0.6s ease",
+          maxWidth: isDesktop ? "400px" : "320px",
+          margin: "0 16px"
         }}>
           <div style={{ 
-            fontSize: "18px", 
+            fontSize: isDesktop ? "18px" : "16px", 
             fontWeight: 600, 
             color: "#374151",
             display: "flex",
             alignItems: "center",
-            gap: "12px"
+            justifyContent: "center",
+            gap: isDesktop ? "12px" : "10px"
           }}>
             <div style={{
-              width: "20px",
-              height: "20px",
-              border: "2px solid #e5e7eb",
-              borderTop: "2px solid #7c3aed",
+              width: isDesktop ? "20px" : "18px",
+              height: isDesktop ? "20px" : "18px",
+              border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
+              borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
               borderRadius: "50%",
               animation: "spin 1s linear infinite"
             }}></div>

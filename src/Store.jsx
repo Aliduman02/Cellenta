@@ -94,25 +94,28 @@ export default function Store() {
       >
         <div style={{ 
           background: "rgba(255,255,255,0.9)", 
-          padding: "32px", 
+          padding: isDesktop ? "32px" : "24px", 
           borderRadius: "16px",
           textAlign: "center",
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          animation: "fadeIn 0.6s ease"
+          animation: "fadeIn 0.6s ease",
+          maxWidth: isDesktop ? "400px" : "320px",
+          margin: "0 16px"
         }}>
           <div style={{ 
-            fontSize: "18px", 
+            fontSize: isDesktop ? "18px" : "16px", 
             fontWeight: 600, 
             color: "#374151",
             display: "flex",
             alignItems: "center",
-            gap: "12px"
+            justifyContent: "center",
+            gap: isDesktop ? "12px" : "10px"
           }}>
             <div style={{
-              width: "20px",
-              height: "20px",
-              border: "2px solid #e5e7eb",
-              borderTop: "2px solid #7c3aed",
+              width: isDesktop ? "20px" : "18px",
+              height: isDesktop ? "20px" : "18px",
+              border: `${isDesktop ? "2px" : "2px"} solid #e5e7eb`,
+              borderTop: `${isDesktop ? "2px" : "2px"} solid #7c3aed`,
               borderRadius: "50%",
               animation: "spin 1s linear infinite"
             }}></div>
@@ -140,17 +143,27 @@ export default function Store() {
       >
         <div style={{ 
           background: "rgba(255,255,255,0.9)", 
-          padding: "32px", 
+          padding: isDesktop ? "32px" : "24px", 
           borderRadius: "16px",
           textAlign: "center",
-          maxWidth: "400px",
+          maxWidth: isDesktop ? "400px" : "320px",
           boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
-          animation: "fadeIn 0.6s ease"
+          animation: "fadeIn 0.6s ease",
+          margin: "0 16px"
         }}>
-          <div style={{ fontSize: "18px", fontWeight: 600, color: "#ef4444", marginBottom: "16px" }}>
+          <div style={{ 
+            fontSize: isDesktop ? "18px" : "16px", 
+            fontWeight: 600, 
+            color: "#ef4444", 
+            marginBottom: isDesktop ? "16px" : "12px" 
+          }}>
             Error
           </div>
-          <div style={{ color: "#6b7280", marginBottom: "24px" }}>
+          <div style={{ 
+            color: "#6b7280", 
+            marginBottom: isDesktop ? "24px" : "20px",
+            fontSize: isDesktop ? "14px" : "13px"
+          }}>
             {error}
           </div>
           <button
@@ -160,9 +173,10 @@ export default function Store() {
               color: "#fff",
               border: "none",
               borderRadius: "8px",
-              padding: "12px 24px",
+              padding: isDesktop ? "12px 24px" : "10px 20px",
               cursor: "pointer",
               fontWeight: 600,
+              fontSize: isDesktop ? "14px" : "13px",
               transition: "all 0.3s ease"
             }}
             onMouseOver={e => e.target.style.background = "#6d28d9"}
