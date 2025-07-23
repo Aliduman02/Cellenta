@@ -65,11 +65,11 @@ export default function TariffInfo({ usageData }) {
           <AnimatedCircularProgressBar
             value={formattedData.sms.remaining}
             max={formattedData.sms.total}
-            unit="sms"
+            unit="SMS"
             gaugePrimaryColor="#a21caf"
           />
           <div style={{ marginTop: 4, fontSize: "1.1rem", fontWeight: 500, color: "#444" }}>
-            {formattedData.sms.remaining} sms left from {formattedData.sms.total} sms
+            {formattedData.sms.remaining} SMS left from {formattedData.sms.total} SMS
           </div>
         </div>
       </div>
