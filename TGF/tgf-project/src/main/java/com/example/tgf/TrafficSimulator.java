@@ -1,6 +1,7 @@
 package com.example.tgf;
 
 import java.util.Random;
+import java.util.concurrent.locks.LockSupport;
 
 public class TrafficSimulator implements Runnable {
     private final MsisdnManager msisdnManager;
@@ -26,15 +27,15 @@ public class TrafficSimulator implements Runnable {
 
                 switch (usageType) {
                     case "minutes":
-                        amount = 1 + random.nextInt(60);
+                        amount = 1 + random.nextInt(5);
                         calledNumber = msisdnManager.getRandomDifferentMsisdn(msisdn);
                         break;
                     case "sms":
-                        amount = 1 + random.nextInt(10);
+                        amount = 1 + random.nextInt(2);
                         calledNumber = msisdnManager.getRandomDifferentMsisdn(msisdn);
                         break;
                     case "data":
-                        amount = 1+ random.nextInt(500);
+                        amount = 1 + random.nextInt(50);
                         break;
                     default:
                         amount = 1;
@@ -44,12 +45,8 @@ public class TrafficSimulator implements Runnable {
                 chfClient.sendChargingRequest(msisdn, usageType, amount, timestamp, calledNumber);
             }
 
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                System.out.println("Simülasyon durduruldu.");
-                break;
-            }
+            // Daha hassas ve kısa süreli uyku (örneğin 100 mikro saniye = 100_000 nanosaniye)
+            LockSupport.parkNanos(100_000); 
         }
     }
 }
