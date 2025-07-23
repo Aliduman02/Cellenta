@@ -243,7 +243,8 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
         </div>
       )}
 
-      <div className="form-fields-flex">
+      <form onSubmit={handleSubmit}>
+        <div className="form-fields-flex">
         <div className="form-group">
           <label htmlFor="password">Şifre</label>
           <div className="input-with-icon">
@@ -529,33 +530,33 @@ export function SignUpStep2({ onBack, onBackToStep1, userData, passwordData }) {
         )}
       </div>
 
-      {/* Create Account Button */}
-      <button
-        type="submit"
-        className="login-button"
-        onClick={handleSubmit}
-        disabled={isLoading}
-        style={{ 
-          width: "100%",
-          opacity: isLoading ? 0.7 : 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "8px"
-        }}
-      >
-        {isLoading && (
-          <div style={{
-            width: "16px",
-            height: "16px",
-            border: "2px solid rgba(255,255,255,0.3)",
-            borderTop: "2px solid #fff",
-            borderRadius: "50%",
-            animation: "spin 1s linear infinite"
-          }}></div>
-        )}
-        {isLoading ? 'Hesap oluşturuluyor...' : 'Hesap Oluştur'}
-      </button>
+        {/* Create Account Button */}
+        <button
+          type="submit"
+          className="login-button"
+          disabled={isLoading}
+          style={{ 
+            width: "100%",
+            opacity: isLoading ? 0.7 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px"
+          }}
+        >
+          {isLoading && (
+            <div style={{
+              width: "16px",
+              height: "16px",
+              border: "2px solid rgba(255,255,255,0.3)",
+              borderTop: "2px solid #fff",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite"
+            }}></div>
+          )}
+          {isLoading ? 'Hesap oluşturuluyor...' : 'Hesap Oluştur'}
+        </button>
+      </form>
 
       <style jsx>{`
         @keyframes spin {

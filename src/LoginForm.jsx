@@ -118,7 +118,8 @@ export function LoginForm({ onSignUpClick }) {
         </div>
       )}
 
-      <div className="form-fields-flex">
+      <form onSubmit={handleSubmit}>
+        <div className="form-fields-flex">
         <div className="form-group">
           <label htmlFor="phone">Telefon Numarası</label>
           <input
@@ -188,31 +189,31 @@ export function LoginForm({ onSignUpClick }) {
         <a className="forgot-password" href="#" onClick={(e) => { e.preventDefault(); window.location.href = "/forgot-password"; }}>Şifremi Unuttum</a>
       </div>
 
-      <button 
-        type="submit" 
-        className="login-button" 
-        onClick={handleSubmit}
-        disabled={isLoading}
-        style={{ 
-          opacity: isLoading ? 0.7 : 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "8px"
-        }}
-      >
-        {isLoading && (
-          <div style={{
-            width: "16px",
-            height: "16px",
-            border: "2px solid rgba(255,255,255,0.3)",
-            borderTop: "2px solid #fff",
-            borderRadius: "50%",
-            animation: "spin 1s linear infinite"
-          }}></div>
-        )}
-        {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
-      </button>
+        <button 
+          type="submit" 
+          className="login-button" 
+          disabled={isLoading}
+          style={{ 
+            opacity: isLoading ? 0.7 : 1,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px"
+          }}
+        >
+          {isLoading && (
+            <div style={{
+              width: "16px",
+              height: "16px",
+              border: "2px solid rgba(255,255,255,0.3)",
+              borderTop: "2px solid #fff",
+              borderRadius: "50%",
+              animation: "spin 1s linear infinite"
+            }}></div>
+          )}
+          {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
+        </button>
+      </form>
 
       {/* Debug: API Test Button */}
       {/* Bu buton kaldırıldı */}

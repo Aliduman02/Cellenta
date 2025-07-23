@@ -71,7 +71,8 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
       <StepIndicator currentStep={1} />
       <h2 className="form-title">Hesabınızı Oluşturun</h2>
 
-      <div className="form-fields-flex">
+      <form onSubmit={handleSubmit}>
+        <div className="form-fields-flex">
         <div className="form-group icon-input">
           <label htmlFor="firstName">Ad</label>
           <div className="input-with-icon">
@@ -149,13 +150,13 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="login-button"
-        onClick={handleSubmit}
-      >
-        Sonraki Adım
-      </button>
+        <button
+          type="submit"
+          className="login-button"
+        >
+          Sonraki Adım
+        </button>
+      </form>
 
       <div className="signup-prompt">
         Zaten hesabınız var mı?{' '}
