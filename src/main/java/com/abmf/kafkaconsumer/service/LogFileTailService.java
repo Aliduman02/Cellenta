@@ -1,26 +1,26 @@
 package com.abmf.kafkaconsumer.service;
 
 import com.abmf.kafkaconsumer.BalanceService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
 import java.io.RandomAccessFile;
 import java.nio.file.Paths;
-import java.util.concurrent.Executors;
+import java.util.Map;
+import java.util.concurrent.*;
 
 @Service
 public class LogFileTailService {
 
-    private static final String LOG_FILE_PATH = "kafkaconsumer/lib/logs/kafka-app.log";
+    private static final String LOG_FILE_PATH = "logs/kafka.log";
 
     @Autowired
     private BalanceService balanceService;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Map<String, CachedBalance> bufferMap = new ConcurrentHashMap<>();
 
+    // Veriyi oku
     @PostConstruct
     public void startTailingLogFile() {
         Executors.newSingleThreadExecutor().submit(() -> {
@@ -28,12 +28,10 @@ public class LogFileTailService {
                 RandomAccessFile file = new RandomAccessFile(Paths.get(LOG_FILE_PATH).toFile(), "r");
                 file.seek(file.length());
 
-                System.out.println("Log takibi başlatıldı: " + LOG_FILE_PATH);
+                System.out.println("📄 Log takibi başlatıldı: " + LOG_FILE_PATH);
 
                 while (true) {
-
                     String line = file.readLine();
-                   // System.out.println(line);
                     if (line != null) {
                         handleLogLine(line);
                     } else {
@@ -42,12 +40,26 @@ public class LogFileTailService {
                 }
 
             } catch (Exception e) {
-                System.err.println("Log dosyası okunurken hata: " + e.getMessage());
+                System.err.println("❌ Log dosyası okunurken hata: " + e.getMessage());
                 e.printStackTrace();
             }
         });
+
+        // 5 dakikada bir buffer'ı Oracle'a yaz
+        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
+            System.out.println("🕔 5 dakika doldu. Oracle'a batch yazılıyor...");
+
+            bufferMap.forEach((msisdn, balance) -> {
+                balanceService.updateBalance(msisdn, balance.minutes, balance.sms, balance.data);
+                System.out.println("✅ Oracle'a yazıldı (Batch): " + msisdn + " | Dakika: " + balance.minutes + " | SMS: " + balance.sms + " | Data: " + balance.data);
+            });
+
+            bufferMap.clear();
+            System.out.println("🧹 Buffer temizlendi.");
+        }, 5, 5, TimeUnit.MINUTES);
     }
 
+    // Log satırını işle
     private void handleLogLine(String line) {
         if (line.contains("Value: BalanceMessage{")) {
             try {
@@ -57,7 +69,6 @@ public class LogFileTailService {
 
                 if (start != -1 && end != -1) {
                     String balancePart = line.substring(start + prefix.length(), end);
-
                     String[] fields = balancePart.split(",");
 
                     String msisdn = null;
@@ -84,8 +95,8 @@ public class LogFileTailService {
                     }
 
                     if (msisdn != null) {
-                        balanceService.updateBalance(msisdn, minutes, sms, data);
-                        System.out.println("✅ Oracle'a yazıldı: " + msisdn + " | Dakika: " + minutes + " | SMS: " + sms + " | Data: " + data);
+                        bufferMap.put(msisdn, new CachedBalance(minutes, sms, data));
+                        System.out.println("🧠 Buffer'a güncellendi: " + msisdn);
                     }
                 }
 
@@ -97,4 +108,16 @@ public class LogFileTailService {
         }
     }
 
+    // Buffer içeriği için model class
+    static class CachedBalance {
+        public int minutes;
+        public int sms;
+        public int data;
+
+        public CachedBalance(int minutes, int sms, int data) {
+            this.minutes = minutes;
+            this.sms = sms;
+            this.data = data;
+        }
+    }
 }
