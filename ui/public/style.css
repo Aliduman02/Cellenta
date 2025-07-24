@@ -1,0 +1,15 @@
+* {
+  font-family: sans-serif;
+}
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.buttons {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  align-items: end;
+  gap: 1rem;
+}

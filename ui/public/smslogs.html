@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SMS Logları</title>
+    <link
+      href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <h2>Cellenta SMS Logları</h2>
+
+    <div class="panel">
+      <input
+        id="global-search"
+        type="text"
+        placeholder="Ara..."
+        style="margin-bottom: 10px; padding: 5px; width: 200px"
+      />
+      <div class="buttons">
+        <div>
+          <button>Seçili: <span id="select-stats">0</span></button>
+          <button id="select-row">Hepsini Seç</button>
+          <button id="deselect-row">Seçimi Bırak</button>
+        </div>
+        <div class="download">
+          <button id="download-csv">CSV Indir</button>
+          <button id="download-json">JSON Indir</button>
+          <button id="download-pdf">PDF Indir</button>
+          <button id="download-html">HTML Indir</button>
+        </div>
+      </div>
+    </div>
+
+    <br />
+    <div id="log-table"></div>
+
+    <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
