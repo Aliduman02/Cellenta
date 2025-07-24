@@ -1,0 +1,157 @@
+server:
+  port: 8080
+  tomcat:
+    threads:
+      max: 50
+      min-spare: 5
+    connection-timeout: 5000
+    accept-count: 200
+    max-connections: 2048
+
+spring:
+  application:
+    name: cellenta-chf
+    
+  kafka:
+    bootstrap-servers: 34.38.128.100:9092,34.38.128.100:9093,34.38.128.100:9094,34.38.128.100:9095
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      acks: 1
+      retries: 1
+      batch-size: 4096
+      linger-ms: 1
+      buffer-memory: 8388608
+      compression-type: lz4
+      request-timeout-ms: 2000
+      delivery-timeout-ms: 4000
+    consumer:
+      group-id: chf-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: earliest
+      properties:
+        spring.json.trusted.packages: "*"
+    
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      timeout: 1000ms
+      database: 0
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 1000ms
+    
+  cache:
+    type: redis
+    redis:
+      time-to-live: 5s
+      cache-null-values: false
+    
+  jackson:
+    time-zone: Europe/Istanbul
+    serialization:
+      write-dates-as-timestamps: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+    
+  task:
+    execution:
+      pool:
+        core-size: 5
+        max-size: 10
+        queue-capacity: 100
+        keep-alive: 30s
+        thread-name-prefix: "chf-task-"
+    scheduling:
+      pool:
+        size: 2
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      voltdb:
+        failure-rate-threshold: 70
+        wait-duration-in-open-state: 3s
+        sliding-window-size: 20
+        minimum-number-of-calls: 5
+        permitted-number-of-calls-in-half-open-state: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+  retry:
+    instances:
+      voltdb:
+        max-attempts: 1
+        wait-duration: 20ms
+
+chf:
+  server:
+    host: 35.241.210.255
+    
+  external-apis:
+    voltdb:
+      base-url: http://34.10.105.56:8081
+      balance-endpoint: /api/v1/balance/with-package-info
+      update-endpoint: /api/v1/balance/update-by-msisdn
+      timeout: 400
+      retry-count: 0
+      retry-delay: 0
+      connection-pool:
+        max-connections: 5
+        max-idle-time: 3000
+        max-lifetime: 30000
+        acquire-timeout: 50
+    
+  kafka:
+    topics:
+      abmf: chf-to-abmf
+      cgf: chf-to-cgf
+      notification: chf-to-notification
+    
+  usage:
+    thresholds:
+      warning: 80
+      critical: 100
+    
+  cache:
+    balance:
+      enabled: true
+      ttl: 5
+      max-size: 1000
+    
+  async:
+    core-pool-size: 3
+    max-pool-size: 8
+    queue-capacity: 50
+    thread-name-prefix: "chf-async-"
+
+logging:
+  level:
+    com.i2i.intern.cellenta.chf: ERROR
+    org.springframework.kafka: ERROR
+    org.apache.kafka: ERROR
+    org.springframework.web.reactive.function.client: ERROR
+    reactor.netty: ERROR
+    io.netty: ERROR
+    io.github.resilience4j: ERROR
+    root: ERROR
+  pattern:
+    console: "%clr(%d{HH:mm:ss}){blue} %clr(%-5level){highlight} %clr(%-20.20logger{19}){cyan} - %clr(%msg){white}%n"
+  file:
+    name: logs/chf-application.log
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+  metrics:
+    export:
+      prometheus:
+        enabled: false

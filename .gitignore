@@ -1,0 +1,68 @@
+# Maven build output
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs
+*.log
+logs/
+*.log.*
+*.gz
+*.jar
+# PID Files
+*.pid
+
+# GC Logs
+gc.log*
+
+# Heap Dumps
+heapdumps/
+*.hprof
+
+# IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.save
+*.save.*
+*.bak
+*.backup
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Java compiled classes
+*.class
+
+# Spring Boot
+application-*.properties
+application-*.yml
+!application.yml
+
+# Database
+*.db
+*.sqlite
+
+# Test
+test-output/
+.testng*
