@@ -13,6 +13,7 @@ export default function Bills() {
   const [bills, setBills] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [openBillId, setOpenBillId] = useState(null);
 
   // Responsive check for AppleStyleDock
   useEffect(() => {
@@ -31,6 +32,9 @@ export default function Bills() {
         setIsLoading(true);
         const billsData = await apiService.getBills();
         console.log('Bills API response:', billsData);
+        if (Array.isArray(billsData) && billsData.length > 0) {
+          console.log('Örnek fatura nesnesi:', billsData[0]);
+        }
         // API'den gelen faturaları uygun şekilde map'le
         const mappedBills = (billsData || []).map(bill => {
           console.log('Bill payment status:', bill.paymentStatus, 'for bill ID:', bill.id);
@@ -53,7 +57,13 @@ export default function Bills() {
             date: bill.startDate ? bill.startDate.split('T')[0] : '',
             amount: (bill.price !== undefined ? bill.price + ' TL' : ''),
             status: status,
-            left: bill.daysLeft // API'de yok, isterseniz hesaplanabilir
+            left: bill.daysLeft, // API'de yok, isterseniz hesaplanabilir
+            startDate: bill.startDate || bill.sdate || '',
+            endDate: bill.endDate || bill.edate || '',
+            dueDate: bill.dueDate || bill.lastDate || bill.due_date || bill.last_date || '',
+            isActive: bill.isActive === true || bill.isActive === 'true' || bill.isActive === 1 || bill.isActive === '1',
+            price: bill.price,
+            paymentStatus: bill.paymentStatus
           };
         });
         setBills(mappedBills);
@@ -83,6 +93,10 @@ export default function Bills() {
       alert('Ödeme başarısız. Lütfen tekrar deneyin.');
     }
   };
+
+  // Tüm faturalar gösterilecek
+  // Aktif fatura
+  const activeBill = bills.find(bill => bill.isActive);
 
   if (isLoading) {
     return (
@@ -159,6 +173,51 @@ export default function Bills() {
         padding: isDesktop ? "24px 40px 40px 40px" : "50px 16px 32px 16px",
         width: "100%"
       }}>
+        {/* Aktif Fatura Kutusu */}
+        {activeBill && (
+          <div style={{
+            border: "2px solid #6366f1",
+            background: "linear-gradient(90deg, #f0f9ff 60%, #a5b4fc 100%)",
+            borderRadius: 20,
+            boxShadow: "0 6px 24px rgba(99,102,241,0.10)",
+            padding: isDesktop ? "28px 32px" : "20px 16px",
+            marginBottom: 32,
+            display: "flex",
+            flexDirection: isDesktop ? "row" : "column",
+            alignItems: isDesktop ? "center" : "flex-start",
+            gap: isDesktop ? 32 : 12,
+            position: "relative"
+          }}>
+            <div style={{
+              fontSize: 22,
+              fontWeight: 800,
+              color: "#3730a3",
+              marginBottom: isDesktop ? 0 : 8,
+              letterSpacing: "-0.5px"
+            }}>
+              💡 Aktif Fatura
+            </div>
+            <div style={{ display: "flex", flexDirection: isDesktop ? "row" : "column", gap: isDesktop ? 32 : 6, flexWrap: "wrap" }}>
+              {activeBill.startDate && (
+                <div style={{ color: "#3730a3", fontWeight: 600 }}>
+                  Başlangıç: {activeBill.startDate.split('T')[0]}
+                </div>
+              )}
+              {activeBill.endDate && (
+                <div style={{ color: "#3730a3", fontWeight: 600 }}>
+                  Bitiş: {activeBill.endDate.split('T')[0]}
+                </div>
+              )}
+              <div style={{ color: "#059669", fontWeight: 700 }}>
+                Tutar: {activeBill.price} TL
+              </div>
+              <div style={{ color: activeBill.paymentStatus === 'PAID' ? "#059669" : "#dc2626", fontWeight: 700 }}>
+                Durum: {activeBill.paymentStatus === 'PAID' ? 'Ödendi' : activeBill.paymentStatus === 'UNPAID' ? 'Ödenmedi' : activeBill.paymentStatus}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Header Logo */}
         <div style={{ 
           display: "flex", 
@@ -214,235 +273,147 @@ export default function Bills() {
           animation: "slideInUp 0.8s ease 0.4s both",
           maxWidth: "100%"
         }}>
-          {/* Ödenmemiş fatura kutusu (ilk sırada, kartların içinde) */}
-          {bills.length > 0 && bills.find(bill => bill.status === "Ödenmedi") && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="pending-bill-container"
-              style={{
-                border: "2px solid #fbbf24",
-                borderRadius: 20,
-                marginBottom: 24,
-                background: "linear-gradient(135deg, #fffbeb, #fef3c7)",
-                boxShadow: "0 4px 20px rgba(251, 191, 36, 0.15)",
-                transition: "all 0.3s ease",
-                overflow: "hidden",
-                display: "flex",
-                alignItems: "center",
-                padding: "20px 28px",
-                gap: 20,
-                minHeight: 80,
-                maxWidth: "100%",
-                justifyContent: "space-between",
-                position: "relative"
-              }}
-            >
-              {/* Glow effect */}
-              <div 
-                style={{
-                  position: "absolute",
-                  top: -2,
-                  left: -2,
-                  right: -2,
-                  bottom: -2,
-                  background: "linear-gradient(45deg, rgba(251,191,36,0.3), rgba(245,158,11,0.3))",
-                  borderRadius: 22,
-                  zIndex: -1,
-                  animation: "pulse 2s infinite"
-                }}
-              />
-              
-              <div className="pending-bill-info" style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 8,
-                flex: 1
-              }}>
-                <div style={{
-                  fontSize: 18,
-                  fontWeight: 700,
-                  color: "#dc2626",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8
-                }}>
-                  ⚠️ Bekleyen Fatura
-                </div>
-                <div style={{
-                  fontSize: 14,
-                  color: "#6b7280",
-                  fontWeight: 500,
-                  lineHeight: 1.4
-                }}>
-                  Ödenmemiş faturanız bulunmaktadır. Lütfen en kısa sürede ödeme yapınız.
-                </div>
-                <div
-                  style={{ 
-                    background: "linear-gradient(135deg, #9ca3af, #6b7280)", 
-                    color: "#fff", 
-                    border: "none", 
-                    borderRadius: 16, 
-                    padding: "8px 16px", 
-                    fontWeight: 600, 
-                    fontSize: 13, 
-                    cursor: "not-allowed",
-                    boxShadow: "0 2px 8px rgba(107,114,128,0.2)",
-                    transition: "all 0.3s ease",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    opacity: 0.6,
-                    alignSelf: "flex-start"
-                  }}
-                >
-                  💳 Faturayı Öde <ChevronRight size={16} />
-                </div>
-              </div>
-              
-              <div className="pending-bill-amount" style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end",
-                gap: 4
-              }}>
-                <div style={{ 
-                  fontWeight: 800, 
-                  fontSize: 24, 
-                  color: "#dc2626",
-                  textShadow: "0 2px 4px rgba(0,0,0,0.1)"
-                }}>
-                  {bills.find(bill => bill.status === "Ödenmedi")?.amount}
-                </div>
-                <div style={{
-                  fontSize: 14,
-                  color: "#6b7280",
-                  fontWeight: 500
-                }}>
-                  📅 {bills.find(bill => bill.status === "Ödenmedi")?.date}
-                </div>
-              </div>
-            </motion.div>
-          )}
+           {bills.length === 0 ? (
+             <div style={{ 
+               textAlign: "center", 
+               padding: "48px 24px",
+               color: "#6b7280",
+               fontSize: "16px",
+               animation: "fadeIn 1s ease"
+             }}>
+               📄 Fatura bulunamadı
+             </div>
+           ) : (
+             <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+               {bills.map((bill, i) => {
+                 const isOpen = openBillId === bill.id;
+                 return (
+                   <div key={bill.id}>
+                     <motion.div
+                       initial={{ opacity: 0, x: -20 }}
+                       animate={{ opacity: 1, x: 0 }}
+                       transition={{ duration: 0.5, delay: i * 0.1 }}
+                       style={{
+                         border: "2px solid #e5e7eb",
+                         borderRadius: 20,
+                         background: bill.status === "Ödenmedi"
+                           ? "rgba(255,255,255,0.97)"
+                           : "rgba(243,244,246,0.97)",
+                         boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+                         transition: "all 0.3s ease",
+                         overflow: "hidden",
+                         display: "flex",
+                         alignItems: "center",
+                         padding: "20px 28px",
+                         gap: 20,
+                         justifyContent: "space-between",
+                         cursor: "pointer"
+                       }}
+                       onClick={() => setOpenBillId(isOpen ? null : bill.id)}
+                       onMouseEnter={e => {
+                         e.currentTarget.style.transform = "translateY(-2px)";
+                         e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,0.12)";
+                       }}
+                       onMouseLeave={e => {
+                         e.currentTarget.style.transform = "translateY(0)";
+                         e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.08)";
+                       }}
+                     >
+                       <div style={{ 
+                         width: 44, 
+                         height: 44, 
+                         display: "flex", 
+                         alignItems: "center", 
+                         justifyContent: "center", 
+                         borderRadius: "50%", 
+                         background: bill.status === "Ödenmedi"
+                           ? "linear-gradient(135deg, #fee2e2, #fecaca)"
+                           : "linear-gradient(135deg, #d1fae5, #a7f3d0)",
+                         boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+                       }}>
+                         {bill.status === "Ödenmedi" ? (
+                           <FileText size={24} color="#dc2626" />
+                         ) : (
+                           <CheckCircle size={24} color="#059669" />
+                         )}
+                       </div>
+                       <div style={{ flex: 1 }}>
+                         <div style={{ 
+                           fontWeight: 700, 
+                           fontSize: 18, 
+                           color: "#1f2937",
+                           marginBottom: 4
+                         }}>
+                           📅 {bill.date}
+                         </div>
+                         <div style={{ 
+                           fontSize: 15, 
+                           color: "#6b7280", 
+                           fontWeight: 500
+                         }}>
+                           Tutar: {bill.amount}
+                         </div>
+                       </div>
+                       <div style={{ 
+                         minWidth: 100, 
+                         textAlign: "right", 
+                         color: bill.status === "Ödenmedi" ? "#dc2626" : "#059669",
+                         fontWeight: 700, 
+                         fontSize: 16,
+                         padding: "8px 16px",
+                         borderRadius: 12,
+                         background: bill.status === "Ödenmedi"
+                           ? "rgba(220, 38, 38, 0.1)"
+                           : "rgba(5, 150, 105, 0.1)",
+                         border: bill.status === "Ödenmedi"
+                           ? "2px solid rgba(220, 38, 38, 0.2)"
+                           : "2px solid rgba(5, 150, 105, 0.2)"
+                       }}>
+                         {bill.status === "Ödenmedi" ? `❌ ${bill.status}` : `✅ ${bill.status}`}
+                       </div>
+                     </motion.div>
+                     {/* Akordiyon detay */}
+                     {isOpen && (
+                       <div style={{
+                         background: "#f3f4f6",
+                         borderTop: "1px solid #e5e7eb",
+                         padding: "18px 28px",
+                         color: "#1f2937",
+                         fontSize: 15,
+                         borderRadius: "0 0 20px 20px"
+                       }}>
+                         {bill.startDate && (
+                           <div style={{ marginBottom: 4, color: "#3730a3" }}>
+                             Başlangıç Tarihi: {bill.startDate.split('T')[0]}
+                           </div>
+                         )}
+                         {bill.endDate && (
+                           <div style={{ marginBottom: 4, color: "#3730a3" }}>
+                             Bitiş Tarihi: {bill.endDate.split('T')[0]}
+                           </div>
+                         )}
+                         {bill.dueDate && (
+                           <div style={{ marginBottom: 4, color: "#b91c1c" }}>
+                             Son Ödeme Tarihi: {bill.dueDate}
+                           </div>
+                         )}
+                         <div style={{ marginTop: 8, color: bill.status === "Ödenmedi" ? "#dc2626" : "#059669", fontWeight: 700 }}>
+                           Durum: {bill.status}
+                         </div>
+                       </div>
+                     )}
+                   </div>
+                 );
+               })}
+             </div>
+           )}
 
-          {/* Bills List */}
-          {bills.length === 0 ? (
-            <div style={{ 
-              textAlign: "center", 
-              padding: "48px 24px",
-              color: "#6b7280",
-              fontSize: "16px",
-              animation: "fadeIn 1s ease"
-            }}>
-              📄 Fatura bulunamadı
-            </div>
-          ) : (
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-              {bills.map((bill, i) => (
-                <motion.div
-                  key={bill.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: i * 0.1 }}
-                  style={{
-                    border: "2px solid #e5e7eb",
-                    borderRadius: 20,
-                    background: "rgba(255,255,255,0.9)",
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-                    transition: "all 0.3s ease",
-                    overflow: "hidden",
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "20px 28px",
-                    gap: 20,
-                    justifyContent: "space-between"
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                    e.currentTarget.style.boxShadow = "0 6px 24px rgba(0,0,0,0.12)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "0 4px 16px rgba(0,0,0,0.08)";
-                  }}
-                >
-                  <div style={{ 
-                    width: 44, 
-                    height: 44, 
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center", 
-                    borderRadius: "50%", 
-                    background: bill.status === "Ödendi" 
-                      ? "linear-gradient(135deg, #d1fae5, #a7f3d0)" // Yeşil
-                      : bill.status === "Ödenmedi"
-                      ? "linear-gradient(135deg, #fee2e2, #fecaca)" // Kırmızı
-                      : "linear-gradient(135deg, #fef3c7, #fde68a)", // Sarı (Vadesi Geçti)
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-                  }}>
-                    {bill.status === "Ödendi" ? (
-                      <CheckCircle size={24} color="#059669" />
-                    ) : bill.status === "Ödenmedi" ? (
-                      <FileText size={24} color="#dc2626" />
-                    ) : (
-                      <FileText size={24} color="#d97706" />
-                    )}
-                  </div>
-                  
-                  <div style={{ flex: 1 }}>
-                    <div style={{ 
-                      fontWeight: 700, 
-                      fontSize: 18, 
-                      color: "#1f2937",
-                      marginBottom: 4
-                    }}>
-                      📅 {bill.date}
-                    </div>
-                    <div style={{ 
-                      fontSize: 15, 
-                      color: "#6b7280", 
-                      fontWeight: 500
-                    }}>
-                                                Tutar: {bill.amount}
-                    </div>
-                  </div>
-                  
-                  <div style={{ 
-                    minWidth: 100, 
-                    textAlign: "right", 
-                    color: bill.status === "Ödendi" 
-                      ? "#059669" // Yeşil
-                      : bill.status === "Ödenmedi"
-                      ? "#dc2626" // Kırmızı
-                      : "#d97706", // Sarı (Vadesi Geçti)
-                    fontWeight: 700, 
-                    fontSize: 16,
-                    padding: "8px 16px",
-                    borderRadius: 12,
-                    background: bill.status === "Ödendi" 
-                      ? "rgba(5, 150, 105, 0.1)" // Yeşil arkaplan
-                      : bill.status === "Ödenmedi"
-                      ? "rgba(220, 38, 38, 0.1)" // Kırmızı arkaplan
-                      : "rgba(217, 119, 6, 0.1)", // Sarı arkaplan (Vadesi Geçti)
-                    border: `2px solid ${bill.status === "Ödendi" 
-                      ? "rgba(5, 150, 105, 0.2)" 
-                      : bill.status === "Ödenmedi"
-                      ? "rgba(220, 38, 38, 0.2)"
-                      : "rgba(217, 119, 6, 0.2)"}`
-                  }}>
-                    {bill.status === "Ödendi" ? `✅ ${bill.status}` : bill.status === "Ödenmedi" ? `❌ ${bill.status}` : `⏳ ${bill.status}`}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
       
       <ChatWidget />
 
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           0% { 
             transform: rotate(0deg);

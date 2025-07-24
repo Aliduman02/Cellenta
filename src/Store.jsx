@@ -16,6 +16,7 @@ export default function Store() {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [selectedPackageForPurchase, setSelectedPackageForPurchase] = useState(null);
   const [isPurchasing, setIsPurchasing] = useState(false);
+  const [usageData, setUsageData] = useState(null);
 
   // Responsive check for AppleStyleDock
   useEffect(() => {
@@ -28,6 +29,10 @@ export default function Store() {
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // Kullanım verisini çek
+  useEffect(() => {
+    apiService.getUsageData().then(setUsageData).catch(() => setUsageData(null));
+  }, []);
 
 
   useEffect(() => {
@@ -101,6 +106,37 @@ export default function Store() {
     setShowConfirmDialog(false);
     setSelectedPackageForPurchase(null);
   };
+
+  // Kişiselleştirilmiş öneri algoritması
+  function getPersonalizedRecommendations(usage, packages) {
+    if (!usage || !packages.length) return [];
+
+    // Starter önerisi: hiç paketi yoksa
+    if (
+      (!usage.totalData && !usage.totalMinutes && !usage.totalSms) ||
+      (usage.totalData === 0 && usage.totalMinutes === 0 && usage.totalSms === 0)
+    ) {
+      const starterNames = ["Mini Öğrenci", "Mini Konuşma", "Mini İnternet"];
+      return packages.filter(pkg => starterNames.includes(pkg.name)).slice(0, 2);
+    }
+
+    // Kullanım yüzdeleri
+    const dataPercent = usage.totalData ? (usage.totalData - usage.remainingData) / usage.totalData * 100 : 0;
+    const minPercent = usage.totalMinutes ? (usage.totalMinutes - usage.remainingMinutes) / usage.totalMinutes * 100 : 0;
+    const smsPercent = usage.totalSms ? (usage.totalSms - usage.remainingSms) / usage.totalSms * 100 : 0;
+
+    let recs = [];
+    if (dataPercent > 70) {
+      const dataPkgs = ["Süper İnternet", "Full Paket", "Sosyal Medya Paketi"];
+      recs.push(...packages.filter(pkg => dataPkgs.includes(pkg.name)));
+    }
+    if (minPercent > 70) {
+      const minPkgs = ["Mega Konuşma", "Aile Paketi", "Full Paket"];
+      recs.push(...packages.filter(pkg => minPkgs.includes(pkg.name)));
+    }
+    // Duplicates kaldır, en fazla 3 öneri
+    return Array.from(new Set(recs)).slice(0, 3);
+  }
 
   if (isLoading) {
     return (
@@ -286,6 +322,68 @@ export default function Store() {
             🛍️ Mağaza
           </span>
         </div>
+
+        {/* Sana Özel Öneriler */}
+        {usageData && packages.length > 0 && (() => {
+          const recs = getPersonalizedRecommendations(usageData, packages);
+          if (!recs.length) return null;
+          return (
+            <div
+              style={{
+                background: "linear-gradient(90deg, #f9fafc 60%, #a5b4fc 100%)",
+                border: "2px solid #6366f1",
+                borderRadius: 20,
+                boxShadow: "0 6px 24px rgba(99,102,241,0.12)",
+                padding: "28px 24px",
+                marginBottom: 32,
+                animation: "pulse 2s infinite alternate",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center"
+              }}
+            >
+              <div style={{
+                fontSize: 22,
+                fontWeight: 800,
+                color: "#3730a3",
+                marginBottom: 12,
+                letterSpacing: "-0.5px"
+              }}>
+                🎯 Sana Özel Paket Önerileri
+              </div>
+              <div style={{ display: "flex", gap: 18, flexWrap: "wrap", justifyContent: "center" }}>
+                {recs.map(pkg => (
+                  <div
+                    key={pkg.id}
+                    style={{
+                      background: "#fff",
+                      border: "2px solid #a5b4fc",
+                      borderRadius: 14,
+                      padding: "16px 20px",
+                      minWidth: 180,
+                      boxShadow: "0 2px 8px rgba(99,102,241,0.10)",
+                      fontWeight: 700,
+                      color: "#3730a3",
+                      cursor: "pointer",
+                      transition: "transform 0.2s",
+                      textAlign: "center"
+                    }}
+                    onClick={() => {
+                      setSelectedPackageForPurchase(pkg);
+                      setShowConfirmDialog(true);
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.transform = "scale(1.04)"}
+                    onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+                  >
+                    <div style={{ fontSize: 18, marginBottom: 6 }}>{pkg.name}</div>
+                    <div style={{ fontSize: 15, color: "#6366f1", fontWeight: 500 }}>{pkg.summary}</div>
+                    <div style={{ fontSize: 16, color: "#059669", fontWeight: 800, marginTop: 4 }}>{pkg.price} TL</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         {/* Packages Container */}
         <div style={{ 
@@ -775,16 +873,6 @@ export default function Store() {
         @keyframes slideInLeft {
           from { opacity: 0; transform: translateX(-30px); }
           to { opacity: 1; transform: translateX(0); }
-        }
-        
-        @keyframes slideInUp {
-          from { opacity: 0; transform: translateY(50px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes pulse {
-          0%, 100% { opacity: 0.5; }
-          50% { opacity: 1; }
         }
         
         @keyframes slideInUp {

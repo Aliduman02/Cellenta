@@ -15,24 +15,22 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
     // İsim validasyonu
     if (!firstName) {
       newErrors.firstName = 'Ad gerekli';
-    } else if (!/^[a-zA-ZğüşıöçĞÜŞİÖÇ]{2,}$/.test(firstName)) {
-      newErrors.firstName = 'Ad en az 2 karakter olmalı ve yalnızca harf içermeli';
+    } else if (!/^[a-zA-ZğüşıöçĞÜŞİÖÇ]{2,60}$/.test(firstName)) {
+      newErrors.firstName = 'Ad 2-60 karakter arası olmalı ve yalnızca harf içermeli';
     }
 
     // Soyisim validasyonu
     if (!lastName) {
       newErrors.lastName = 'Soyad gerekli';
-    } else if (!/^[a-zA-ZğüşıöçĞÜŞİÖÇ]{2,}$/.test(lastName)) {
-      newErrors.lastName = 'Soyad en az 2 karakter olmalı ve yalnızca harf içermeli';
+    } else if (!/^[a-zA-ZğüşıöçĞÜŞİÖÇ]{2,60}$/.test(lastName)) {
+      newErrors.lastName = 'Soyad 2-60 karakter arası olmalı ve yalnızca harf içermeli';
     }
 
     // Telefon validasyonu
     if (!phone) {
       newErrors.phone = 'Telefon numarası gerekli';
-    } else if (!/^\d{10}$/.test(phone)) {
-      newErrors.phone = 'Telefon numarası 10 haneli olmalı';
-    } else if (phone.startsWith('0')) {
-      newErrors.phone = 'Numaranızı başında sıfır olmadan girin';
+    } else if (!/^5\d{9}$/.test(phone)) {
+      newErrors.phone = 'Telefon numarası 5 ile başlamalı ve 10 haneli olmalı';
     }
 
     // Email validasyonu
@@ -83,6 +81,7 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
               name="firstName" 
               placeholder="Adınızı girin" 
               value={firstName} 
+              maxLength={60}
               onChange={(e) => setFirstName(e.target.value)}
               className={errors.firstName ? "error" : ""}
             />
@@ -100,6 +99,7 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
               name="lastName" 
               placeholder="Soyadınızı girin" 
               value={lastName} 
+              maxLength={60}
               onChange={(e) => setLastName(e.target.value)}
               className={errors.lastName ? "error" : ""}
             />
@@ -115,7 +115,7 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
               type="tel" 
               id="phone" 
               name="phone" 
-              placeholder="Telefon numaranızı girin" 
+              placeholder="5xxxxxxxxx (5 ile başlayın)" 
               value={phone}
               maxLength={10}
               inputMode="numeric"
@@ -124,7 +124,10 @@ export function SignUpStep1({ onNext, onBack, userData, passwordData }) {
                 const inputValue = e.target.value;
                 // Sadece rakamları kabul et
                 const numericValue = inputValue.replace(/[^0-9]/g, '');
-                setPhone(numericValue);
+                // Maksimum 10 karakter sınırı
+                if (numericValue.length <= 10) {
+                  setPhone(numericValue);
+                }
               }}
               className={errors.phone ? "error" : ""}
             />
