@@ -57,7 +57,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
     <script>
       let table;
-      fetch("http://localhost:3000/api/sms-logs")
+      fetch("/api/sms-logs")
         .then((res) => res.json())
         .then((data) => {
           table = new Tabulator("#log-table", {

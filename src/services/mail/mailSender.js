@@ -31,7 +31,7 @@ export async function sendEmail({ to, parsed }) {
       attachments: [
         {
           filename: "logo.png",
-          path: path.join(__dirname, "../../public/cellenta-logo.png"),
+          path: path.join(__dirname, "../../img/cellenta-logo.png"),
           cid: "cellenta-logo",
         },
       ],
