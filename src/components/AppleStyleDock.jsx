@@ -159,7 +159,7 @@ export default function AppleStyleDock() {
         })}
       </div>
       
-      <style jsx>{`
+      <style>{`
         @keyframes pulse {
           0%, 100% {
             opacity: 0.5;

@@ -225,7 +225,7 @@ export function LoginForm({ onSignUpClick }) {
         </a>
       </div>
       
-      <style jsx>{`
+      <style>{`
         @keyframes spin {
           0% { 
             transform: rotate(0deg);

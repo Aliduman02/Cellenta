@@ -57,7 +57,7 @@ export function StepIndicator({ currentStep = 1 }) {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes shimmer {
           0% {
             left: -100%;
