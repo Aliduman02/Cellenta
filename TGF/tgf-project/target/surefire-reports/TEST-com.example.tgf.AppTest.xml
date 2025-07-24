@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.tgf.AppTest" time="0.042" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.example.tgf.AppTest" time="0.035" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="TR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-21\bin"/>
-    <property name="sun.java.command" value="C:\Users\EMREBAYRAKTAR\AppData\Local\Temp\surefire15031298223589667836\surefirebooter-20250723170809911_3.jar C:\Users\EMREBAYRAKTAR\AppData\Local\Temp\surefire15031298223589667836 2025-07-23T17-08-09_748-jvmRun1 surefire-20250723170809911_1tmp surefire_0-20250723170809911_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\EMREBAYRAKTAR\AppData\Local\Temp\surefire12855722920070667808\surefirebooter-20250724110734614_3.jar C:\Users\EMREBAYRAKTAR\AppData\Local\Temp\surefire12855722920070667808 2025-07-24T11-07-34_426-jvmRun1 surefire-20250724110734614_1tmp surefire_0-20250724110734614_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\EMREBAYRAKTAR\Desktop\TGF\tgf-project\target\test-classes;C:\Users\EMREBAYRAKTAR\Desktop\TGF\tgf-project\target\classes;C:\Users\EMREBAYRAKTAR\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\org\apache\httpcomponents\httpclient\4.5.13\httpclient-4.5.13.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\org\apache\httpcomponents\httpcore\4.4.13\httpcore-4.4.13.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\com\hazelcast\hazelcast\5.3.6\hazelcast-5.3.6.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\com\i2i\cellenta\hazelcast\1.0-SNAPSHOT\hazelcast-1.0-SNAPSHOT.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\org\slf4j\slf4j-api\2.1.0-alpha1\slf4j-api-2.1.0-alpha1.jar;C:\Users\EMREBAYRAKTAR\.m2\repository\org\slf4j\slf4j-simple\2.1.0-alpha1\slf4j-simple-2.1.0-alpha1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\EMREBAYRAKTAR\AppData\Local\Temp\surefire15031298223589667836\surefirebooter-20250723170809911_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\EMREBAYRAKTAR\AppData\Local\Temp\surefire12855722920070667808\surefirebooter-20250724110734614_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.7+8-LTS-245"/>
@@ -58,5 +58,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testApp" classname="com.example.tgf.AppTest" time="0.004"/>
+  <testcase name="testApp" classname="com.example.tgf.AppTest" time="0.005"/>
 </testsuite>
