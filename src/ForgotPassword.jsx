@@ -35,7 +35,7 @@ function EmailStep({ onNext, onBack }) {
   return (
     <div className="login-form-container">
       <h3 className="form-subtitle">Şifrenizi mi unuttunuz?</h3>
-      <h2 className="form-title">Endişelenmeyin! Olur böyle şeyler.</h2>
+      <h2 className="form-title">Endişelenmeyin!               Olur böyle şeyler.</h2>
       <p style={{ fontSize: 16, color: "#666", marginBottom: 32, textAlign: "center" }}>
         Lütfen hesabınızla ilişkili e-posta adresini girin.
       </p>
@@ -104,6 +104,8 @@ function CodeStep({ onNext, onBack, email }) {
   }, [timeLeft]);
 
   const handleCodeChange = (index, value) => {
+    // Only allow digits
+    if (!/^\d?$/.test(value)) return;
     if (value.length <= 1) {
       const newCode = [...code];
       newCode[index] = value;
@@ -181,6 +183,15 @@ function CodeStep({ onNext, onBack, email }) {
               }}
               onFocus={(e) => (e.target.style.borderColor = "#7c3aed")}
               onBlur={(e) => (e.target.style.borderColor = "#e1e5e9")}
+              onKeyDown={(e) => {
+                if (e.key === "Backspace" && code[index] === "" && index > 0) {
+                  document.getElementById(`code-${index - 1}`).focus();
+                  const newCode = [...code];
+                  newCode[index - 1] = "";
+                  setCode(newCode);
+                  e.preventDefault();
+                }
+              }}
             />
           ))}
         </div>
