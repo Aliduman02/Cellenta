@@ -1,0 +1,14 @@
+server:
+  port: 8081
+  address: 0.0.0.0  # Tüm network interface'lerden erişim
+
+spring:
+  application:
+    name: voltdb-gateway
+
+logging:
+  level:
+    com.i2i.intern.cellenta: INFO
+    org.springframework: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
