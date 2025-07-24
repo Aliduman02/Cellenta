@@ -533,36 +533,44 @@ class ApiService {
 const apiService = new ApiService();
 
 // Gemini API ayarları
-const GEMINI_API_KEY = "AIzaSyBwPda1dECg3Yt3jRURWdutUqR7sC5u7RM"; 
-const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+const GEMINI_API_KEY = process.env.REACT_APP_GEMINI_API_KEY || "AIzaSyBwPda1dECg3Yt3jRURWdutUqR7sC5u7RM"; // Fallback for development
+const GEMINI_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
 
 const CELLENTA_SYSTEM_PROMPT = `
-You are Cellenta Bot, a virtual assistant exclusively for the Cellenta Online Charging System. You only respond to questions related to the Cellenta app, including:
+You are Cellenta Bot, a multilingual virtual assistant exclusively for the Cellenta Online Charging System. You can communicate in any language and always respond in the same language the user writes to you.
 
-- account access (login, signup, password recovery),
-- billing and balance inquiries,
-- remaining usage (data, minutes, SMS),
-- subscription packages,
-- SMS inquiries (e.g., sending 'KALAN' to 4848),
-- CRM and Order Management-related support.
+IMPORTANT LANGUAGE RULE: Always detect the user's language and respond in that exact same language. If they write in Turkish, respond in Turkish. If they write in English, respond in English. If they write in Arabic, French, German, Spanish, or any other language, respond in that language.
 
-If a user asks a question that is not related to the Cellenta system, politely respond:
-- In English: "This assistant is only able to help with questions related to the Cellenta app."
-- In Turkish: "Bu asistan sadece Cellenta uygulaması ile ilgili sorulara yardımcı olabilir."
+You only respond to questions related to the Cellenta app, including:
+- account access (login, signup, password recovery)
+- billing and balance inquiries  
+- remaining usage (data, minutes, SMS)
+- subscription packages
+- SMS inquiries (e.g., sending 'KALAN' to 4848)
+- CRM and Order Management-related support
 
-Do not provide general knowledge, entertainment, or personal advice. Stay professional, clear, and polite. Answer in the language the user speaks.
+If a user asks a question that is not related to the Cellenta system, politely respond in their language:
+- English: "This assistant is only able to help with questions related to the Cellenta app."
+- Turkish: "Bu asistan sadece Cellenta uygulaması ile ilgili sorulara yardımcı olabilir."
+- Arabic: "يمكن لهذا المساعد المساعدة فقط في الأسئلة المتعلقة بتطبيق Cellenta."
+- French: "Cet assistant ne peut aider qu'avec les questions liées à l'application Cellenta."
+- German: "Dieser Assistent kann nur bei Fragen zur Cellenta-App helfen."
+- Spanish: "Este asistente solo puede ayudar con preguntas relacionadas con la aplicación Cellenta."
+- For other languages: Translate this message appropriately to their language.
+
+Do not provide general knowledge, entertainment, or personal advice. Stay professional, clear, and polite. Always match the user's language and tone.
 
 Here is how the Cellenta app workflow functions:
 
 1. If the user does **not have an account**, guide them to sign up using:
    - First name (must be alphabetical and less than 60 characters)
-   - Last name  (must be alphabetical and less than 60 characters)
+   - Last name (must be alphabetical and less than 60 characters)  
    - Phone number (must start with 5 and be 10 digits total)
-   - Password   (must be more than 8 characters, consisting of at least one uppercase letter, one lowercase letter and one number)
+   - Password (must be more than 8 characters, consisting of at least one uppercase letter, one lowercase letter and one number)
 
 2. If the user **has an account**, prompt them to log in with their:
    - Phone number (must start with 5 and be 10 digits total)
-   - Password   (must be more than 8 characters, consisting of at least one uppercase letter, one lowercase letter and one number)
+   - Password (must be more than 8 characters, consisting of at least one uppercase letter, one lowercase letter and one number)
 
 3. If the user **forgets their password**, ask them to:
    - Click "Forgot your password?" at Login page
@@ -577,13 +585,12 @@ Here is how the Cellenta app workflow functions:
    - **Profile**: View profile details and log out
 
 🏷️ **About Cellenta Packages**:
-
 - All packages are valid for **30 days**.
 - Each package includes specific minutes, SMS, and GBs.
 - Users can select packages from the Store tab.
 
 📦 **Package Selection Guidance**:
-Use the following logic to recommend packages:
+Use the following logic to recommend packages (explain in user's language):
 
 1. **If the user is a student or looking for a cheap package with internet**, recommend:
    - **Mini Öğrenci** (50 mins, 50 SMS, 1 GB, 25 TL)
@@ -605,11 +612,12 @@ Use the following logic to recommend packages:
    - **Mega Konuşma** (1000 mins, 250 SMS, 1 GB, 75 TL)
    - **Standart Konuşma** (250 mins, 100 SMS, 500 GB, 50 TL)
 
-Always guide users based on their priorities: budget, internet need, or call time. Ask clarifying questions like:
-- "Do you use more internet or minutes?"
-- "Are you looking for the cheapest option or something more complete?"
+Always guide users based on their priorities: budget, internet need, or call time. Ask clarifying questions in their language like:
+- English: "Do you use more internet or minutes?" / "Are you looking for the cheapest option or something more complete?"
+- Turkish: "İnterneti mi daha çok kullanıyorsunuz yoksa konuşma dakikasını mı?" / "En uygun fiyatlı seçeneği mi arıyorsunuz yoksa daha kapsamlı bir şey mi?"
+- And similarly for other languages.
 
-Assume the user may be confused or unsure about which step comes next. Help them with patience.
+Be patient and helpful. Always respond in the user's language with cultural sensitivity and appropriate formality level.
 `;
 
 /**
@@ -618,20 +626,23 @@ Assume the user may be confused or unsure about which step comes next. Help them
  * @returns {Promise<string>}
  */
 async function sendGeminiMessage(userPrompt) {
+  // API key kontrolü
+  if (!GEMINI_API_KEY || GEMINI_API_KEY.includes('your-api-key')) {
+    console.error('Gemini API key not configured');
+    throw new Error('AI service is not configured. Please contact support.');
+  }
+
   const url = `${GEMINI_ENDPOINT}?key=${GEMINI_API_KEY}`;
 
-  // Professional format with system instructions
+  // Gemini 2.0 Flash için doğru format
   const requestBody = {
-    system_instruction: [
-      {
-        role: "system",
-        parts: [
-          {
-            text: CELLENTA_SYSTEM_PROMPT
-          }
-        ]
-      }
-    ],
+    systemInstruction: {
+      parts: [
+        {
+          text: CELLENTA_SYSTEM_PROMPT
+        }
+      ]
+    },
     contents: [
       {
         parts: [
@@ -646,6 +657,7 @@ async function sendGeminiMessage(userPrompt) {
       topK: 40,
       topP: 0.95,
       maxOutputTokens: 1024,
+      candidateCount: 1
     },
     safetySettings: [
       {
@@ -668,6 +680,11 @@ async function sendGeminiMessage(userPrompt) {
   };
 
   try {
+    console.log('Sending request to Gemini API...', {
+      url: url.split('?')[0], // URL'yi log'da API key olmadan göster
+      userPrompt: userPrompt.substring(0, 100) + '...' // İlk 100 karakteri göster
+    });
+
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -679,10 +696,26 @@ async function sendGeminiMessage(userPrompt) {
     if (!response.ok) {
       const errorText = await response.text();
       console.error(`Gemini API error: ${response.status} - ${errorText}`);
-      throw new Error(`Gemini API error: ${response.status}`);
+      
+      // Daha user-friendly hata mesajları
+      if (response.status === 400) {
+        throw new Error('İstek formatı hatalı. Lütfen tekrar deneyin.');
+      } else if (response.status === 403) {
+        throw new Error('API erişim izni reddedildi. Lütfen yöneticiye başvurun.');
+      } else if (response.status === 429) {
+        throw new Error('Çok fazla istek gönderildi. Lütfen biraz bekleyip tekrar deneyin.');
+      } else if (response.status >= 500) {
+        throw new Error('Sunucu hatası. Lütfen daha sonra tekrar deneyin.');
+      } else {
+        throw new Error(`AI servisi hatası: ${response.status}`);
+      }
     }
 
     const data = await response.json();
+    console.log('Gemini API response received:', {
+      candidates: data.candidates?.length || 0,
+      hasContent: !!data.candidates?.[0]?.content
+    });
     
     // Extract response text safely
     if (
@@ -693,14 +726,41 @@ async function sendGeminiMessage(userPrompt) {
       data.candidates[0].content.parts[0] &&
       data.candidates[0].content.parts[0].text
     ) {
-      return data.candidates[0].content.parts[0].text.trim();
+      const responseText = data.candidates[0].content.parts[0].text.trim();
+      console.log('Gemini response extracted successfully:', responseText.substring(0, 100) + '...');
+      return responseText;
     } else {
       console.error("Unexpected Gemini API response structure:", data);
-      throw new Error("No response text found from Gemini API");
+      
+      // Eğer finishReason varsa ona göre hata mesajı ver
+      if (data.candidates?.[0]?.finishReason) {
+        const finishReason = data.candidates[0].finishReason;
+        if (finishReason === 'SAFETY') {
+          throw new Error('Güvenlik nedeniyle yanıt verilemiyor. Lütfen sorunuzu farklı bir şekilde sorun.');
+        } else if (finishReason === 'MAX_TOKENS') {
+          throw new Error('Yanıt çok uzun oldu. Lütfen daha kısa bir soru sorun.');
+        } else {
+          throw new Error(`AI yanıt veremedi (${finishReason}). Lütfen tekrar deneyin.`);
+        }
+      }
+      
+      throw new Error("AI'dan yanıt alınamadı. Lütfen tekrar deneyin.");
     }
   } catch (error) {
     console.error("Gemini API request failed:", error);
-    throw new Error(`Failed to get response from Cellenta Bot: ${error.message}`);
+    
+    // Network errors
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error("İnternet bağlantısı sorunu. Lütfen bağlantınızı kontrol edin.");
+    }
+    
+    // Eğer zaten user-friendly bir hata mesajı varsa onu kullan
+    if (error.message.includes('API') || error.message.includes('Lütfen')) {
+      throw error;
+    }
+    
+    // Genel hata
+    throw new Error(`Cellenta Bot'a ulaşılamıyor: ${error.message}`);
   }
 }
 
