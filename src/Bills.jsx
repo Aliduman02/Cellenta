@@ -98,6 +98,18 @@ export default function Bills() {
   // Aktif fatura
   const activeBill = bills.find(bill => bill.isActive);
 
+  // Ödenmemiş faturaların toplam tutarı ve en yakın son ödeme tarihi
+  const unpaidBills = bills.filter(bill => bill.status === "Ödenmedi");
+  const unpaidTotal = unpaidBills.reduce((sum, bill) => {
+    const price = typeof bill.price === 'number' ? bill.price : parseFloat(bill.price);
+    return sum + (isNaN(price) ? 0 : price);
+  }, 0);
+  // En yakın son ödeme tarihi (varsa)
+  const soonestDueDate = unpaidBills
+    .map(bill => bill.dueDate || bill.endDate || bill.date)
+    .filter(Boolean)
+    .sort()[0];
+
   if (isLoading) {
     return (
       <div
@@ -173,51 +185,6 @@ export default function Bills() {
         padding: isDesktop ? "24px 40px 40px 40px" : "50px 16px 32px 16px",
         width: "100%"
       }}>
-        {/* Aktif Fatura Kutusu */}
-        {activeBill && (
-          <div style={{
-            border: "2px solid #6366f1",
-            background: "linear-gradient(90deg, #f0f9ff 60%, #a5b4fc 100%)",
-            borderRadius: 20,
-            boxShadow: "0 6px 24px rgba(99,102,241,0.10)",
-            padding: isDesktop ? "28px 32px" : "20px 16px",
-            marginBottom: 32,
-            display: "flex",
-            flexDirection: isDesktop ? "row" : "column",
-            alignItems: isDesktop ? "center" : "flex-start",
-            gap: isDesktop ? 32 : 12,
-            position: "relative"
-          }}>
-            <div style={{
-              fontSize: 22,
-              fontWeight: 800,
-              color: "#3730a3",
-              marginBottom: isDesktop ? 0 : 8,
-              letterSpacing: "-0.5px"
-            }}>
-              💡 Aktif Fatura
-            </div>
-            <div style={{ display: "flex", flexDirection: isDesktop ? "row" : "column", gap: isDesktop ? 32 : 6, flexWrap: "wrap" }}>
-              {activeBill.startDate && (
-                <div style={{ color: "#3730a3", fontWeight: 600 }}>
-                  Başlangıç: {activeBill.startDate.split('T')[0]}
-                </div>
-              )}
-              {activeBill.endDate && (
-                <div style={{ color: "#3730a3", fontWeight: 600 }}>
-                  Bitiş: {activeBill.endDate.split('T')[0]}
-                </div>
-              )}
-              <div style={{ color: "#059669", fontWeight: 700 }}>
-                Tutar: {activeBill.price} TL
-              </div>
-              <div style={{ color: activeBill.paymentStatus === 'PAID' ? "#059669" : "#dc2626", fontWeight: 700 }}>
-                Durum: {activeBill.paymentStatus === 'PAID' ? 'Ödendi' : activeBill.paymentStatus === 'UNPAID' ? 'Ödenmedi' : activeBill.paymentStatus}
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Header Logo */}
         <div style={{ 
           display: "flex", 
@@ -261,6 +228,69 @@ export default function Bills() {
             💳 Son Ödemeler
           </span>
         </div>
+
+        {/* Bekleyen Fatura Kutusu (Görseldeki gibi) */}
+        {unpaidBills.length > 0 && (
+          <div style={{
+            background: "#fffbe6",
+            border: "2px solid #fde68a",
+            borderRadius: 18,
+            boxShadow: "0 4px 24px rgba(251,191,36,0.10)",
+            padding: isDesktop ? "28px 36px" : "20px 14px",
+            marginBottom: 32,
+            display: "flex",
+            flexDirection: isDesktop ? "row" : "column",
+            alignItems: isDesktop ? "center" : "flex-start",
+            justifyContent: "space-between",
+            gap: isDesktop ? 32 : 12,
+            position: "relative"
+          }}>
+            {/* Sol kısım */}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+                <span style={{ fontSize: 22 }}>⚠️</span>
+                <span style={{ color: "#dc2626", fontWeight: 800, fontSize: 20, letterSpacing: "-0.5px" }}>
+                  Bekleyen Fatura
+                </span>
+              </div>
+              <div style={{ color: "#b45309", fontSize: 15, fontWeight: 500, marginBottom: 18 }}>
+                Ödenmemiş faturanız bulunmaktadır. Lütfen en kısa sürede ödeme yapınız.
+              </div>
+              <button
+                disabled
+                style={{
+                  background: "#e5e7eb",
+                  color: "#6b7280",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "10px 28px",
+                  fontWeight: 700,
+                  fontSize: 16,
+                  opacity: 0.7,
+                  cursor: "not-allowed",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8
+                }}
+              >
+                <span style={{ fontSize: 18 }}>💳</span> Faturayı Öde
+              </button>
+            </div>
+            {/* Sağ kısım */}
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: isDesktop ? "flex-end" : "flex-start",
+              gap: 8,
+              minWidth: 120,
+              marginTop: isDesktop ? 0 : 18
+            }}>
+              <div style={{ color: "#dc2626", fontWeight: 900, fontSize: 28, letterSpacing: "-1px" }}>
+                {unpaidTotal.toFixed(2)} TL
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Bills Container */}
         <div style={{ 
