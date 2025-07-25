@@ -71,6 +71,12 @@
 			<artifactId>lombok</artifactId>
 			<version>1.18.30</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.oshi</groupId>
+			<artifactId>oshi-core</artifactId>
+			<version>6.4.0</version> <!-- En güncel versiyonu kontrol edebilirsiniz -->
+		</dependency>
+
 	</dependencies>
 
 	<build>

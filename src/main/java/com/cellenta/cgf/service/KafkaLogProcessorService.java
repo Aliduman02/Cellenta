@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 @Service
 public class KafkaLogProcessorService {
 
-    private static final String KAFKA_LOG_PATH = "/home/asmeydan0816/kafkaJar/logs/kafka-app.log"; // yolunu özelleştir
+    private static final String KAFKA_LOG_PATH = "/home/asmeydan0816/kafkaJar/kafka.log"; // yolunu özelleştir
     private long lastReadLineCount = 0;
 
     @Autowired
