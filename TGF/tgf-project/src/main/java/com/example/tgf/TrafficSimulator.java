@@ -14,13 +14,13 @@ public class TrafficSimulator implements Runnable {
     public TrafficSimulator(MsisdnManager msisdnManager, ChfClient chfClient) {
         this.msisdnManager = msisdnManager;
         this.chfClient = chfClient;
-        this.executor = Executors.newFixedThreadPool(10);  // 10 paralel thread
+        this.executor = Executors.newFixedThreadPool(10); // 10 paralel thread
     }
 
     @Override
     public void run() {
-        String[] usageTypes = {"minutes", "sms", "data"};
-        final int totalPerSecond = 50;
+        String[] usageTypes = { "minutes", "sms", "data" };
+        final int totalPerSecond = 1000;
 
         while (!Thread.currentThread().isInterrupted()) {
             long start = System.currentTimeMillis();
@@ -33,10 +33,17 @@ public class TrafficSimulator implements Runnable {
 
                     int amount;
                     switch (usageType) {
-                        case "minutes": amount = 1 + random.nextInt(60); break;
-                        case "sms": amount = 1 + random.nextInt(10); break;
-                        case "data": amount = 10 + random.nextInt(500); break;
-                        default: amount = 1;
+                        case "minutes":
+                            amount = 1 + random.nextInt(10);
+                            break;
+                        case "sms":
+                            amount = 1 + random.nextInt(3);
+                            break;
+                        case "data":
+                            amount = 10 + random.nextInt(20);
+                            break;
+                        default:
+                            amount = 1;
                     }
 
                     long timestamp = System.currentTimeMillis();
