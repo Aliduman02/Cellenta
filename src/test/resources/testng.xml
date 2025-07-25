@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Cellenta UI Automation Suite" verbose="1">
+    <test name="Login Controller Tests">
+        <classes>
+            <class name="com.cellenta.automation.LoginControllerUITest"/>
+        </classes>
+    </test>
+    
+    <test name="Main Controller Tests">
+        <classes>
+            <class name="com.cellenta.automation.MainControllerUITest"/>
+        </classes>
+    </test>
+    
+    <test name="Integration Tests">
+        <classes>
+            <class name="com.cellenta.automation.CellentaIntegrationTest"/>
+        </classes>
+    </test>
+</suite>
