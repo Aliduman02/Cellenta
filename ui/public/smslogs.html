@@ -10,20 +10,26 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <h2>Cellenta SMS Logları</h2>
+    <div class="title">
+      <img src="../../src/img/title.png" alt="" />
+      <p>SMS Logları</p>
+    </div>
 
     <div class="panel">
       <input
         id="global-search"
         type="text"
-        placeholder="Ara..."
+        placeholder="SMS Ara..."
         style="margin-bottom: 10px; padding: 5px; width: 200px"
       />
       <div class="buttons">
         <div>
-          <button>Seçili: <span id="select-stats">0</span></button>
+          <span class="selected">
+            Seçili: <span id="select-stats">0</span>
+          </span>
           <button id="select-row">Hepsini Seç</button>
           <button id="deselect-row">Seçimi Bırak</button>
+          <button id="delete-selected" class="delete">Seçimi Sil</button>
         </div>
         <div class="download">
           <button id="download-csv">CSV Indir</button>
@@ -34,8 +40,11 @@
       </div>
     </div>
 
-    <br />
     <div id="log-table"></div>
+    <div class="footer">
+      <p>All Rights Reserved</p>
+      <p>2025 Cellenta</p>
+    </div>
 
     <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>

@@ -107,5 +107,38 @@ fetch("http://34.141.21.67:3000/api/sms-logs")
     document.getElementById("deselect-row").addEventListener("click", () => {
       table.deselectRow();
     });
+
+    document
+      .getElementById("delete-selected")
+      .addEventListener("click", async () => {
+        const selectedRows = table.getSelectedRows();
+        if (selectedRows.length === 0) {
+          alert("Silmek için satır seçin.");
+          return;
+        }
+
+        if (!confirm("Seçili logları silmek istediğine emin misin?")) return;
+
+        for (const row of selectedRows) {
+          const msisdn = row.getData().msisdn;
+          try {
+            const res = await fetch(
+              `http://34.141.21.67:3000/api/sms-logs/${msisdn}`,
+              {
+                method: "DELETE",
+              }
+            );
+
+            if (res.ok) {
+              row.delete();
+            } else {
+              const errData = await res.json();
+              console.error(`Silinemedi (${msisdn}):`, errData.error);
+            }
+          } catch (err) {
+            console.error(`Silme hatası (${msisdn}):`, err.message);
+          }
+        }
+      });
   })
   .catch((err) => console.error("Veri alınamadı:", err));

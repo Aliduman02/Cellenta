@@ -1,7 +1,12 @@
 * {
   font-family: sans-serif;
 }
+body {
+  background-image: url("../../src/img/background.jpg");
+  background-attachment: fixed;
+}
 .panel {
+  margin-top: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9,7 +14,103 @@
 .buttons {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0 1rem 1rem 1rem;
   align-items: end;
   gap: 1rem;
+}
+
+.title {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.title img {
+  width: 320px;
+}
+.title > p {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.buttons button {
+  cursor: pointer;
+  background-color: #222248;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  min-height: 30px;
+  min-width: 90px;
+}
+.buttons button:hover {
+  transition: all 0.1s ease-in;
+  cursor: pointer;
+  background-color: #2424b6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  min-height: 30px;
+  min-width: 90px;
+}
+
+input {
+  cursor: pointer;
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  min-height: 30px;
+  min-width: 90px;
+}
+.buttons .delete {
+  border: 0;
+  line-height: 1.5rem;
+  padding: 5 20px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 1px 1px 1px #000;
+  border-radius: 10px;
+  background-color: rgb(220 0 0);
+  background-image: linear-gradient(
+    to top left,
+    rgb(0 0 0 / 0.2),
+    rgb(0 0 0 / 0.2) 30%,
+    rgb(0 0 0 / 0)
+  );
+  box-shadow: inset 2px 2px 3px rgb(255 255 255 / 0.6),
+    inset -2px -2px 3px rgb(0 0 0 / 0.6);
+}
+
+.buttons .delete:hover {
+  background-color: red;
+}
+
+.buttons .delete:active {
+  box-shadow: inset -2px -2px 3px rgb(255 255 255 / 0.6),
+    inset 2px 2px 3px rgb(0 0 0 / 0.6);
+}
+
+.buttons .selected {
+  background: none;
+  color: black;
+  margin: 0 1rem;
+
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#log-table {
+  margin-top: 2.3rem;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  color: gray;
 }
