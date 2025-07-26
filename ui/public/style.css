@@ -2,7 +2,7 @@
   font-family: sans-serif;
 }
 body {
-  background-image: url("../../src/img/background.jpg");
+  background-image: url("./img/background.jpg");
   background-attachment: fixed;
 }
 .panel {
