@@ -3,7 +3,6 @@ package com.i2i.cellenta.hazelcast.service;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.i2i.cellenta.hazelcast.config.HazelcastConnector;
-import com.i2i.cellenta.hazelcast.util.MsisdnGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ public class MsisdnService {
     private static final HazelcastInstance hz = HazelcastConnector.getInstance();
     private static final String MAP_NAME = "registeredMsisdn";
     private static final Random RANDOM = new Random();
-
 
 
     public static void registerMsisdn(String msisdn) {
@@ -33,38 +31,7 @@ public class MsisdnService {
         registeredUsers.put(msisdn, msisdn);
     }
 
-//    public static String getMsisdn(String msisdn) {
-//        IMap<String, String> registeredUsers = hz.getMap(MAP_NAME);
-//
-//        if (msisdn == null) {
-//            throw new IllegalArgumentException("MSISDN cannot be null.");
-//        }
-//        if (!registeredUsers.containsKey(msisdn)) {
-//            throw new IllegalArgumentException("MSISDN '" + msisdn + "' not found.");
-//        }
-//
-//        return registeredUsers.get(msisdn);
-//    }
-
-//    public static String getRandomMsisdn() {
-//        IMap<String, String> registeredUsers = hz.getMap(MAP_NAME);
-//
-//        if (registeredUsers == null) {
-//            System.out.println("Hazelcast map 'registeredMsisdn' is null.");
-//            System.out.println("Returning a new random generated msisdn:");
-//            return MsisdnGenerator.generateRandomMsisdn();
-//        }
-//
-//        Set<String> keys = registeredUsers.keySet();
-//        int size = keys.size();
-//        int randomIndex = RANDOM.nextInt(size);
-//
-//        // Convert to array for indexed access
-//        String[] keyArray = keys.toArray(new String[0]);
-//        return keyArray[randomIndex];
-//    }
-
-        public static int size() {
+    public static int size() {
         IMap<String, String> registeredUsers = hz.getMap(MAP_NAME);
 
         if (registeredUsers == null) {
@@ -73,7 +40,6 @@ public class MsisdnService {
 
         return registeredUsers.size();
     }
-
 
 
     public static boolean unregisterMsisdn(String msisdn) {
