@@ -1,5 +1,8 @@
 let table;
-fetch("http://34.141.21.67:3000/api/sms-logs")
+import dotenv from "dotenv";
+dotenv.config();
+const api = process.env.FETCH_API;
+fetch(`${api}/api/sms-logs`)
   .then((res) => res.json())
   .then((data) => {
     table = new Tabulator("#log-table", {
@@ -122,12 +125,9 @@ fetch("http://34.141.21.67:3000/api/sms-logs")
         for (const row of selectedRows) {
           const msisdn = row.getData().msisdn;
           try {
-            const res = await fetch(
-              `http://34.141.21.67:3000/api/sms-logs/${msisdn}`,
-              {
-                method: "DELETE",
-              }
-            );
+            const res = await fetch(`${api}/api/sms-logs/${msisdn}`, {
+              method: "DELETE",
+            });
 
             if (res.ok) {
               row.delete();
