@@ -15,12 +15,14 @@
   "description": "",
   "dependencies": {
     "chalk": "^5.4.1",
+    "check-disk-space": "^3.4.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "express": "^5.1.0",
     "kafkajs": "^2.2.4",
     "kafkajs-snappy": "^1.1.0",
     "nodemailer": "^7.0.5",
-    "oracledb": "^6.8.0"
+    "oracledb": "^6.8.0",
+    "pidusage": "^4.0.1"
   }
 }
