@@ -1,7 +1,5 @@
 let table;
-import dotenv from "dotenv";
-dotenv.config();
-const api = process.env.FETCH_API;
+const api = "http://35.198.190.231:3000";
 fetch(`${api}/api/sms-logs`)
   .then((res) => res.json())
   .then((data) => {
