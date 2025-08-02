@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct Cellenta_IOSApp: App {
-    var body: some Scene {
+        var body: some Scene {
         WindowGroup {
             ContentView()
         }
