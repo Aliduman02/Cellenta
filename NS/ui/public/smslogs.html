@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>SMS Logları</title>
+    <link
+      href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="title">
+      <img src="./img/title.png" alt="" />
+      <p>SMS Logları</p>
+    </div>
+
+    <div class="panel">
+      <input
+        id="global-search"
+        type="text"
+        placeholder="SMS Ara..."
+        style="margin-bottom: 10px; padding: 5px; width: 200px"
+      />
+      <div class="buttons">
+        <div>
+          <spa class="selected"> Seçili: <span id="select-stats">0</span> </spa>
+          <button id="select-row">Hepsini Seç</button>
+          <button id="deselect-row">Seçimi Bırak</button>
+          <button id="delete-selected" class="delete">Seçimi Sil</button>
+        </div>
+        <div class="download">
+          <button id="download-csv">CSV Indir</button>
+          <button id="download-json">JSON Indir</button>
+          <button id="download-pdf">PDF Indir</button>
+          <button id="download-html">HTML Indir</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="log-table"></div>
+    <div class="footer">
+      <p>All Rights Reserved</p>
+      <p>2025 Cellenta</p>
+    </div>
+
+    <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.20/jspdf.plugin.autotable.min.js"></script>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
