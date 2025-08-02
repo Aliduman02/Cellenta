@@ -24,7 +24,7 @@ struct SignUpView: View {
     @State private var isLastNameValid = false
     @State private var isPhoneValid = false
     @State private var isEmailValid = false
-
+    
     var body: some View {
         VStack(spacing: 20) {
             Spacer().frame(height: 20)
@@ -41,18 +41,27 @@ struct SignUpView: View {
                     .frame(width: 50, height: 50)
             }
             .padding(.horizontal)
+            
 
             // Input fields with validation tracking
-            inputField(title: "First Name", text: $firstName, isValid: $isFirstNameValid, validator: isValidName)
-            inputField(title: "Last Name", text: $lastName, isValid: $isLastNameValid, validator: isValidName)
+            inputField(title: "Ad", text: $firstName, isValid: $isFirstNameValid, validator: isValidName)//First Name
+            inputField(title: "Soyad", text: $lastName, isValid: $isLastNameValid, validator: isValidName)//Last Name
             
-            inputField(title: "Phone Number", text: $phoneNumber, isValid: $isPhoneValid, validator: isValidPhone, keyboard: .numberPad)
+            inputField(title: "Telefon Numarası", text: $phoneNumber, isValid: $isPhoneValid, validator: isValidPhone, keyboard: .numberPad)//Phone Number
                 .onChange(of: phoneNumber) { newValue in
-                    let filtered = newValue.filter { $0.isNumber }
-                    phoneNumber = String(filtered.prefix(10))
+                    // Allow only digits
+                    let digitsOnly = newValue.filter { $0.isNumber }
+                    
+                    // Ensure first digit is 5
+                    if digitsOnly.first == "5" {
+                        phoneNumber = String(digitsOnly.prefix(10))
+                    } else if !digitsOnly.isEmpty {
+                        // If first digit is not 5, discard the input
+                        phoneNumber = ""
+                    }
                 }
 
-            inputField(title: "E-Mail", text: $email, isValid: $isEmailValid, validator: isValidEmail, keyboard: .emailAddress)
+            inputField(title: "E-posta", text: $email, isValid: $isEmailValid, validator: isValidEmail, keyboard: .emailAddress)//E-Mail
 
             // Continue button - disabled until all fields are valid
             Button(action: {
@@ -60,7 +69,7 @@ struct SignUpView: View {
                     navigateToPasswordSetup = true
                 }
             }) {
-                Text("Continue")
+                Text("Sonraki Adım")//Continue
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
@@ -96,9 +105,9 @@ struct SignUpView: View {
 
             // Log in link
             HStack(spacing: 5) {
-                Text("Already have an account?")
+                Text("Zaten hesabınız var mı?")//Already have an account?
                     .font(.footnote)
-                Button("Log in") {
+                Button("Giriş yap") {//Log in
                     if #available(iOS 15, *) {
                         dismiss()
                     } else {
@@ -112,7 +121,7 @@ struct SignUpView: View {
             Spacer()
         }
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Validation Error"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            Alert(title: Text("Doğrulama Hatası"), message: Text(alertMessage), dismissButton: .default(Text("OK")))//"Validation Error"
         }
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
@@ -136,18 +145,21 @@ struct SignUpView: View {
                 .foregroundColor(.black)
 
             HStack {
-                TextField("Enter your \(title.lowercased())", text: text)
+                TextField("\(title.lowercased()) giriniz", text: text)//Enter your
                     .keyboardType(keyboard)
                     .padding(.leading)
                     .frame(height: 50)
                     .onChange(of: text.wrappedValue) { newValue in
-                        if title.contains("Name") {
+                        if title.contains("Ad") {//Ad
                             let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzçğıöşüABCDEFGHIJKLMNOPQRSTUVWXYZÇĞİÖŞÜ ")
                             let filtered = newValue.prefix(60).filter {
                                 String($0).rangeOfCharacter(from: allowedCharacters) != nil
                             }
                             text.wrappedValue = String(filtered)
+                        } else if title == "E-posta" {//E-Mail
+                            text.wrappedValue = newValue.lowercased()
                         }
+
                         isValid.wrappedValue = validator(text.wrappedValue)
                     }
 
@@ -191,42 +203,42 @@ struct SignUpView: View {
 
     func validateFields() -> Bool {
         guard !firstName.isEmpty else {
-            alertMessage = "Please enter your first name."
+            alertMessage = "Lütfen adınızı girin."//"Please enter your first name."
             showAlert = true
             return false
         }
         guard isValidName(firstName) else {
-            alertMessage = "First name can contain only letters and spaces."
+            alertMessage = "Adınız sadece harf ve boşluk içermelidir."//"First name can contain only letters and spaces."
             showAlert = true
             return false
         }
         guard !lastName.isEmpty else {
-            alertMessage = "Please enter your last name."
+            alertMessage = "Lütfen soyadınızı girin."//"Please enter your last name."
             showAlert = true
             return false
         }
         guard isValidName(lastName) else {
-            alertMessage = "Last name can contain only letters and spaces."
+            alertMessage = "Soyadınız sadece harf ve boşluk içermelidir."//"Last name can contain only letters and spaces."
             showAlert = true
             return false
         }
         guard !phoneNumber.isEmpty else {
-            alertMessage = "Please enter your phone number."
+            alertMessage = "Lütfen telefon numaranızı girin."//"Please enter your phone number."
             showAlert = true
             return false
         }
         guard isValidPhone(phoneNumber) else {
-            alertMessage = "Phone number must be exactly 10 digits."
+            alertMessage = "Telefon numarası 10 haneli olmalıdır."//"Phone number must be exactly 10 digits."
             showAlert = true
             return false
         }
         guard !email.isEmpty else {
-            alertMessage = "Please enter your email."
+            alertMessage = "Lütfen e-posta adresinizi girin."//"Please enter your email."
             showAlert = true
             return false
         }
         guard isValidEmail(email) else {
-            alertMessage = "Email format is incorrect."
+            alertMessage = "E-posta formatı yanlış"//"Email format is incorrect."
             showAlert = true
             return false
         }

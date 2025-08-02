@@ -7,44 +7,54 @@
 import Foundation
 import Security
 
-class KeychainManager {
-    static func save(_ data: Data, service: String, account: String) -> Bool {
-        let query: [String: Any] = [
-            kSecClass as String       : kSecClassGenericPassword,
-            kSecAttrService as String : service,
-            kSecAttrAccount as String : account,
-            kSecValueData as String   : data
-        ]
-        
-        SecItemDelete(query as CFDictionary) // Remove any existing item
-        let status = SecItemAdd(query as CFDictionary, nil)
-        return status == errSecSuccess
+enum KeychainHelper {
+    static func save(_ value: String, forKey key: String) {
+        guard let data = value.data(using: .utf8) else { return }
+
+        // Delete existing item
+        let query = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrAccount: key
+        ] as CFDictionary
+        SecItemDelete(query)
+
+        // Add new item
+        let attributes = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrAccount: key,
+            kSecValueData: data
+        ] as CFDictionary
+
+        let status = SecItemAdd(attributes, nil)
+        if status != errSecSuccess {
+            print("🔐 Keychain save failed with status: \(status)")
+        }
     }
-    
-    static func read(service: String, account: String) -> Data? {
-        let query: [String: Any] = [
-            kSecClass as String       : kSecClassGenericPassword,
-            kSecAttrService as String : service,
-            kSecAttrAccount as String : account,
-            kSecReturnData as String  : kCFBooleanTrue!,
-            kSecMatchLimit as String  : kSecMatchLimitOne
-        ]
-        
-        var result: AnyObject?
-        let status = SecItemCopyMatching(query as CFDictionary, &result)
-        
-        if status == errSecSuccess {
-            return result as? Data
+
+    static func read(forKey key: String) -> String? {
+        let query = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrAccount: key,
+            kSecReturnData: true,
+            kSecMatchLimit: kSecMatchLimitOne
+        ] as CFDictionary
+
+        var dataTypeRef: AnyObject?
+        let status = SecItemCopyMatching(query, &dataTypeRef)
+
+        if status == errSecSuccess,
+           let data = dataTypeRef as? Data,
+           let result = String(data: data, encoding: .utf8) {
+            return result
         }
         return nil
     }
-    
-    static func delete(service: String, account: String) {
-        let query: [String: Any] = [
-            kSecClass as String       : kSecClassGenericPassword,
-            kSecAttrService as String : service,
-            kSecAttrAccount as String : account
-        ]
-        SecItemDelete(query as CFDictionary)
+
+    static func delete(forKey key: String) {
+        let query = [
+            kSecClass: kSecClassGenericPassword,
+            kSecAttrAccount: key
+        ] as CFDictionary
+        SecItemDelete(query)
     }
 }

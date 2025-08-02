@@ -60,8 +60,10 @@ class AuthService {
             let decoded = try JSONDecoder().decode(LoginResponse.self, from: data)
             return decoded
         } else {
-            let rawError = String(data: data, encoding: .utf8) ?? "Unknown error"
-            throw NSError(domain: "", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: rawError])
+            let rawError = String(data: data, encoding: .utf8) ?? "Unknown error"/*
+            throw NSError(domain: "", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: rawError])*/
+            let translated = translateBackendError(rawError)
+                throw NSError(domain: "", code: httpResponse.statusCode, userInfo: [NSLocalizedDescriptionKey: translated])
         }
     }
     
@@ -169,4 +171,22 @@ class AuthService {
             ])
         }
     }
+}
+
+private func translateBackendError(_ rawError: String) -> String {
+    let lower = rawError.lowercased()
+
+    if lower.contains("user already exists") {
+        return "Bu kullanıcı zaten mevcut."
+    } else if lower.contains("invalid credentials") ||
+              lower.contains("wrong password") ||
+              lower.contains("password is incorrect") {
+        return "Şifre yanlış. Lütfen tekrar deneyin."
+    } else if lower.contains("user not found") ||
+              lower.contains("username not found") ||
+              lower.contains("msisdn not found") {
+        return "Kullanıcı bulunamadı. Lütfen telefon numaranızı kontrol edin."
+    }
+
+    return "Bir hata oluştu: \(rawError)"
 }

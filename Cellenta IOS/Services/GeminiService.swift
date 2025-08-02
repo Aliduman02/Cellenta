@@ -13,17 +13,28 @@ class GeminiService {
     private let apiKey = "AIzaSyD8uY_pMgQfI2uPETXXvYNONfpc9N7SWWw" // ← Replace with your actual key
     private let endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
 
-    func sendMessage(prompt: String) async throws -> String {
+    func sendMessage(prompt: String, firstName: String?, sms: Int?, minutes: Int?, data: Int?) async throws -> String {
         guard let url = URL(string: endpoint) else {
             throw URLError(.badURL)
         }
 
+        var contextString = ""
+        if let firstName = firstName {
+            contextString += "User's name is \(firstName).\n"
+        }
+        if let sms = sms, let minutes = minutes, let data = data {
+            contextString += "User currently has \(sms) SMS, \(minutes) minutes, and \(String(format: "%.3f", Double(data) / 1024.0)) GB of data remaining.\n"
+        }
+
+        let fullPrompt = """
+        \(contextString)
+        \(prompt)
+        """
+
         let body: [String: Any] = [
             "system_instruction": [
                 "role": "system",
-                "parts": [
-                    [
-                        "text": """
+                "parts": [[ "text":  """
                         You are Cellenta Bot, a virtual assistant exclusively for the Cellenta Online Charging System. You only respond to questions related to the Cellenta app, including:
 
                         - account access (login, signup, password recovery),
@@ -37,7 +48,7 @@ class GeminiService {
                         - In English: “This assistant is only able to help with questions related to the Cellenta app.”
                         - In Turkish: “Bu asistan sadece Cellenta uygulaması ile ilgili sorulara yardımcı olabilir.”
 
-                        Do not provide general knowledge, entertainment, or personal advice. Stay professional, clear, and polite. Respond in Turkish or English depending on the user’s message.
+                        Do not provide general knowledge, entertainment, or personal advice. Stay professional, clear, and polite. Answer in the language the user speaks.
 
                         Here is how the Cellenta app workflow functions:
 
@@ -92,19 +103,17 @@ class GeminiService {
                            - **Mega Konuşma** (1000 mins, 250 SMS, 1 GB, 75 TL)
                            - **Standart Konuşma** (250 mins, 100 SMS, 500 GB, 50 TL)
 
-                        Always guide users based on their priorities: budget, internet need, or call time. Ask clarifying questions like:
+                        Always guide users based on their usage patterns: budget, internet need, or call time and recommend the best package for them if they ask for recommendation. For clarity, you may ask clarifying questions like:
                         - "Do you use more internet or minutes?"
                         - "Are you looking for the cheapest option or something more complete?"
 
                         Assume the user may be confused or unsure about which step comes next. Help them with patience.
-                        """
-                    ]
-                ]
+                        """]]
             ],
             "contents": [
                 [
                     "parts": [
-                        ["text": prompt]
+                        ["text": fullPrompt]
                     ]
                 ]
             ]
@@ -117,15 +126,10 @@ class GeminiService {
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
 
         let (data, response) = try await URLSession.shared.data(for: request)
-
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw URLError(.badServerResponse)
-        }
-
-        guard httpResponse.statusCode == 200 else {
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
             let bodyString = String(data: data, encoding: .utf8) ?? "No response body"
-            throw NSError(domain: "GeminiAPI", code: httpResponse.statusCode, userInfo: [
-                NSLocalizedDescriptionKey: "Status code: \(httpResponse.statusCode)\nResponse: \(bodyString)"
+            throw NSError(domain: "GeminiAPI", code: (response as? HTTPURLResponse)?.statusCode ?? 0, userInfo: [
+                NSLocalizedDescriptionKey: bodyString
             ])
         }
 

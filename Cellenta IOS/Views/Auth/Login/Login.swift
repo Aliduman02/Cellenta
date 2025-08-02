@@ -4,6 +4,7 @@
 //
 //  Created by Atena Jafari Parsa on 12.07.2025.
 //
+
 import SwiftUI
 
 struct Login: View {
@@ -15,11 +16,23 @@ struct Login: View {
     @State private var alertMessage = ""
     @State private var isLoggedIn = false
     @State private var isLoading = false
+    @State private var autoLogin = false
+
 
     private let gradientColors = [
         Color(red: 102/255, green: 225/255, blue: 192/255),
         Color(red: 0/255, green: 104/255, blue: 174/255)
     ]
+
+    init() {
+        // Load saved credentials if they exist
+        let savedPhone = KeychainHelper.read(forKey: "savedPhoneNumber")
+        let savedPassword = KeychainHelper.read(forKey: "savedPassword")
+        
+        _phoneNumber = State(initialValue: savedPhone ?? "")
+        _password = State(initialValue: savedPassword ?? "")
+        _rememberMe = State(initialValue: savedPhone != nil && savedPassword != nil)
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -39,7 +52,7 @@ struct Login: View {
             .padding(.top, 30)
             .padding(.bottom, 50)
 
-            Text("Log in")
+            Text("Giriş Yap")
                 .font(.title)
                 .bold()
                 .foregroundStyle(LinearGradient(
@@ -53,16 +66,16 @@ struct Login: View {
 
             HStack {
                 Toggle(isOn: $rememberMe) {
-                    Text("Remember Me").font(.subheadline)
+                    Text("Beni Hatırla").font(.subheadline) //Remember me
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .black))
                 .labelsHidden()
 
-                Text("Remember Me").font(.subheadline)
+                Text("Beni Hatırla").font(.subheadline)//Remember me
                 Spacer()
 
                 NavigationLink(destination: ForgotPasswordView()) {
-                    Text("Forgot your password?")
+                    Text("Şifremi Unuttum")//Forgot password
                         .font(.subheadline)
                         .foregroundColor(.black)
                 }
@@ -74,7 +87,7 @@ struct Login: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 } else {
-                    Text("Log in")
+                    Text("Giriş Yap")//Log in
                         .fontWeight(.semibold)
                 }
             }
@@ -91,10 +104,10 @@ struct Login: View {
             .padding(.horizontal)
 
             HStack(spacing: 5) {
-                Text("Don't have an account?")
+                Text("Hesabınız yok mu?")//"Don't have an account?"
                     .font(.footnote)
                 NavigationLink(destination: SignUpView()) {
-                    Text("Sign up")
+                    Text("Hesap Oluştur")//Sign Up
                         .font(.footnote)
                         .bold()
                         .foregroundColor(.black)
@@ -109,13 +122,28 @@ struct Login: View {
         .navigationBarBackButtonHidden(true)
         .alert(isPresented: $showAlert) {
             Alert(
-                title: Text("Login Error"),
+                title: Text("Giriş Hatalı"),//Login Error
                 message: Text(alertMessage),
-                dismissButton: .default(Text("OK"))
+                dismissButton: .default(Text("Tamam"))//OK
             )
         }
         .navigationDestination(isPresented: $isLoggedIn) {
             HomeView()
+        }
+        .onAppear {
+            let savedPhone = KeychainHelper.read(forKey: "savedPhoneNumber")
+            let savedPassword = KeychainHelper.read(forKey: "savedPassword")
+            
+            phoneNumber = savedPhone ?? ""
+            password = savedPassword ?? ""
+            rememberMe = savedPhone != nil && savedPassword != nil
+            
+            // 👇 Auto-login only if both exist and not already logged in
+            if let savedPhone, let savedPassword, !isLoggedIn {
+                Task {
+                    await loginUserAuto(phone: savedPhone, pass: savedPassword)
+                }
+            }
         }
     }
 
@@ -123,7 +151,7 @@ struct Login: View {
 
     private var phoneNumberField: some View {
         HStack {
-            TextField("Phone Number (5XXXXXXXX)", text: $phoneNumber)
+            TextField("Telefon Numarası (5XXXXXXXX)", text: $phoneNumber)//"Phone Number (5XXXXXXXX)"
                 .keyboardType(.numberPad)
                 .padding(.leading)
                 .frame(height: 50)
@@ -145,9 +173,9 @@ struct Login: View {
         HStack {
             Group {
                 if isPasswordVisible {
-                    TextField("Password", text: $password)
+                    TextField("Şifre", text: $password)//Password
                 } else {
-                    SecureField("Password", text: $password)
+                    SecureField("Şifre", text: $password)//Password
                 }
             }
             .textInputAutocapitalization(.never)
@@ -193,11 +221,6 @@ struct Login: View {
         return number.range(of: phoneRegex, options: .regularExpression) != nil
     }
 
-    /*private func isValidPassword(_ password: String) -> Bool {
-        let passwordRegex = "^(?=.*[A-Z])(?=.*[a-z]).{8,}$"
-        return password.range(of: passwordRegex, options: .regularExpression) != nil
-    }*/
-
     // MARK: - Login Logic
 
     private func loginUser() {
@@ -221,15 +244,14 @@ struct Login: View {
                     UserDefaults.standard.set(response.msisdn, forKey: "msisdn")
                     UserDefaults.standard.set(response.cust_id, forKey: "customerId")
 
-                    if rememberMe {
-                        KeychainHelper.save(formattedPhone, forKey: "savedPhoneNumber")
-                    }
+                    // Handle remember me functionality
+                    handleRememberMe(phoneNumber: formattedPhone)
 
                     isLoggedIn = true
                 }
             } catch {
                 await MainActor.run {
-                    alertMessage = "Login failed. Please check your phone number and password and try again." // ← Generic error message
+                    alertMessage = "Giriş hatalı! Lütfen telefon numaranızı ve şifrenizi kontrol ediniz."//"Login failed. Please check your phone number and password and try again."
                     showAlert = true
                 }
             }
@@ -239,30 +261,64 @@ struct Login: View {
             }
         }
     }
+    
+    private func loginUserAuto(phone: String, pass: String) async {
+        await MainActor.run { isLoading = true }
+
+        do {
+            let response = try await AuthService.shared.login(msisdn: phone, password: pass)
+
+            await MainActor.run {
+                UserSession.shared.name = response.name
+                UserSession.shared.surname = response.surname
+                UserSession.shared.msisdn = response.msisdn
+                UserSession.shared.email = response.email
+                UserSession.shared.password = pass
+                UserDefaults.standard.set(response.msisdn, forKey: "msisdn")
+                UserDefaults.standard.set(response.cust_id, forKey: "customerId")
+
+                isLoggedIn = true // 🔁 Navigate to HomeView
+            }
+        } catch {
+            await MainActor.run {
+                alertMessage = "Otomatik giriş hatalı. Lütfen manuel giriş yapınız."//Auto-login failed. Please log in manually.
+                showAlert = true
+            }
+        }
+
+        await MainActor.run { isLoading = false }
+    }
+    
+    private func handleRememberMe(phoneNumber: String) {
+        if rememberMe {
+            // Save both phone number and password to keychain
+            KeychainHelper.save(phoneNumber, forKey: "savedPhoneNumber")
+            KeychainHelper.save(password, forKey: "savedPassword")
+        } else {
+            // Remove both phone number and password from keychain
+            KeychainHelper.delete(forKey: "savedPhoneNumber")
+            KeychainHelper.delete(forKey: "savedPassword")
+        }
+    }
+    
     private func validateInputs() -> Bool {
         guard !phoneNumber.isEmpty else {
-            alertMessage = "Please enter your phone number"
+            alertMessage = "Lütfen telefon numaranızı girin"//"Please enter your phone number"
             showAlert = true
             return false
         }
 
         guard isValidPhoneNumber(phoneNumber) else {
-            alertMessage = "Please enter a valid 10-digit phone number"
+            alertMessage = "Lütfen 10 haneli bir telefon numarası girin"//"Please enter a valid 10-digit phone number"
             showAlert = true
             return false
         }
 
         guard !password.isEmpty else {
-            alertMessage = "Please enter your password"
+            alertMessage = "Lütfen şifrenizi girin"//"Please enter your password"
             showAlert = true
             return false
         }
-
-        /*guard isValidPassword(password) else {
-            alertMessage = "Password must be at least 8 characters with one uppercase and one lowercase letter"
-            showAlert = true
-            return false
-        }*/
 
         return true
     }
@@ -271,11 +327,11 @@ struct Login: View {
         if let urlError = error as? URLError {
             switch urlError.code {
             case .notConnectedToInternet, .networkConnectionLost:
-                return "No internet connection."
+                return "İnternet bağlantınızı kontrol ediniz"//"No internet connection."
             case .timedOut:
-                return "Connection timed out."
+                return "Bağlantı zaman aşımına uğradı"//Connection timed out."
             default:
-                return "Network error. Please try again."
+                return "Ağ hatası, lütfen tekrar deneyin"//"Network error. Please try again."
             }
         }
 

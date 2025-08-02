@@ -30,8 +30,10 @@ struct OpeningView: View {
 
             // Sign In Button (Navigates to LoginView)
             // WRAP THE BUTTON IN NavigationLink
-            NavigationLink(destination: Login()) { // Destination is Login()
-                Text("Sign in")
+            
+            //NavigationLink(destination: Login()) { // Destination is Login()
+            NavigationLink(destination: Login().id(UUID())) {
+                Text("Giriş Yap")//Sign in
                     .foregroundColor(.white)
                     .font(.headline)
                     .frame(maxWidth: .infinity)
@@ -53,7 +55,7 @@ struct OpeningView: View {
             // Create Account Button (Navigates to SignUpView)
             // WRAP THE BUTTON IN NavigationLink
             NavigationLink(destination: SignUpView()) { // Destination is SignupView()
-                Text("Create account")
+                Text("Hesap Oluştur")//Create account
                     .foregroundColor(Color(red: 0/255, green: 104/255, blue: 174/255)) // Set text color to match the gradient end color
                     .font(.headline)
                     .frame(maxWidth: .infinity)

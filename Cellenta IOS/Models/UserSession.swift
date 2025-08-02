@@ -16,4 +16,13 @@ class UserSession: ObservableObject {
     @Published var password: String = ""
 
     private init() {}
+    
+    func reset() {
+            name = ""
+            surname = ""
+            msisdn = ""
+            email = ""
+            password = ""
+            print("🔄 UserSession reset")
+        }
 }

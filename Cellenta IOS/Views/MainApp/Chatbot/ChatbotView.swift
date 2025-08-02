@@ -56,7 +56,7 @@ struct ChatbotView: View {
                             } else {
                                 Spacer()
                                 VStack(alignment: .trailing) {
-                                    Text("You")
+                                    Text("Kullanıcı")//You
                                         .font(.caption)
                                         .foregroundColor(.gray)
                                     Text(message.text)
@@ -79,7 +79,7 @@ struct ChatbotView: View {
 
             // MARK: - Input Bar
             HStack {
-                TextField("Send a message", text: $inputText)
+                TextField("Bir mesaj gönder...", text: $inputText)//"Send a message"
                     .padding(10)
                     .background(Color(.systemGray6))
                     .cornerRadius(20)
@@ -113,13 +113,20 @@ struct ChatbotView: View {
 
         Task {
             do {
-                let botReply = try await GeminiService.shared.sendMessage(prompt: userMessage)
+                let firstName = session.name.components(separatedBy: " ").first
+                let botReply = try await GeminiService.shared.sendMessage(
+                    prompt: userMessage,
+                    firstName: firstName,
+                    sms: smsBalance,
+                    minutes: minuteBalance,
+                    data: dataBalance
+                )
                 await MainActor.run {
                     messages.append(Message(id: UUID(), text: botReply, sender: .bot))
                 }
             } catch {
                 await MainActor.run {
-                    messages.append(Message(id: UUID(), text: "Failed to get response from Gemini: \(error.localizedDescription)", sender: .bot))
+                    messages.append(Message(id: UUID(), text: "Gemini’den yanıt alınamadı: \(error.localizedDescription)", sender: .bot))//"Failed to get response from Gemini:
                 }
             }
         }
@@ -134,20 +141,29 @@ struct ChatbotView: View {
             dataBalance = balance.remainingData
 
             let firstName = session.name.components(separatedBy: " ").first ?? session.name
-            let welcomeMessage = """
+            /*let welcomeMessage = """
             Hi \(firstName)! Welcome to Cellenta. You have:
             - \(smsBalance) SMS
             - \(minuteBalance) minutes
             - \(dataBalance) GB of data
             remaining in your balance.
             How can I help you today?
+            """*/
+            let welcomeMessage = """
+            Merhaba \(firstName)! Cellenta’ya hoş geldiniz. Bakiyenizde:
+            - \(smsBalance) SMS
+            - \(minuteBalance) dakika
+            - \(String(format: "%.3f", Double(dataBalance) / 1024.0)) GB internet
+            kaldı.
+            Size bugün nasıl yardımcı olabilirim?
             """
 
             await MainActor.run {
                 messages = [Message(id: UUID(), text: welcomeMessage, sender: .bot)]
             }
         } catch {
-            let fallbackMessage = "Hi \(session.name)! Welcome to Cellenta. I couldn’t load your balance info, but I’m here to help!"
+            let fallbackMessage = "Merhaba \(session.name)! Cellenta’ya hoş geldin. Bakiye bilgilerin yüklenemedi, ancak sana yardımcı olmak için buradayım!"
+            //"Hi \(session.name)! Welcome to Cellenta. I couldn’t load your balance info, but I’m here to help!"
             await MainActor.run {
                 messages = [Message(id: UUID(), text: fallbackMessage, sender: .bot)]
             }

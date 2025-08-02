@@ -41,9 +41,9 @@ struct PasswordForgotCodeEntryView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .navigationTitle("")
-        .alert("Code Verification", isPresented: $showAlert) {
+        .alert("Kod Doğrulaması", isPresented: $showAlert) {//"Code Verification"
             Button("OK") {
-                if alertMessage == "Code verified successfully!" {
+                if alertMessage == "Kod başarıyla doğrulandı!" {//"Code verified successfully!"
                     navigateToResetPassword = true
                 }
             }
@@ -68,7 +68,7 @@ private extension PasswordForgotCodeEntryView {
                 }
             } label: {
                 Image(systemName: "arrow.left")
-                Text("Back")
+                Text("Geri")//Back
             }
             .font(.headline)
             .foregroundColor(Color(red: 0, green: 104/255, blue: 174/255))
@@ -95,12 +95,12 @@ private extension PasswordForgotCodeEntryView {
 
     var instructionTexts: some View {
         VStack(spacing: 5) {
-            Text("Please check your email")
+            Text("Lütfen e-postanızı kontrol ediniz.")//"Please check your email"
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundStyle(LinearGradient(gradient: Gradient(colors: customGradientColors), startPoint: .topLeading, endPoint: .bottomTrailing))
 
-            Text("We've sent a code to \(email)")
+            Text("\(email) adresine kod gönderdik")//"We've sent a code to
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -147,13 +147,13 @@ private extension PasswordForgotCodeEntryView {
 
     var verifyActions: some View {
         VStack(spacing: 10) {
-            Button("Clear Code") {
+            Button("Temizle") {//Clear Code
                 code = ""
                 isTextFieldFocused = true
             }
             .foregroundColor(.teal)
 
-            Button("Verify") {
+            Button("Kodu Doğrula") {//Verify
                 verifyCode()
             }
             .font(.headline)
@@ -168,7 +168,7 @@ private extension PasswordForgotCodeEntryView {
 
     var resendSection: some View {
         HStack {
-            Button("Send code again") {
+            Button("Tekrar kod gönder") {//"Send code again"
                 sendCodeAgain()
             }
             .disabled(remainingTime > 0)
@@ -191,7 +191,7 @@ private extension PasswordForgotCodeEntryView {
                 remainingTime -= 1
             } else {
                 timer?.invalidate()
-                alertMessage = "Request timed out. Please click send code again."
+                alertMessage = "İstek zaman aşımına uğradı. Lütfen “Kodu tekrar gönder” butonuna tıklayın."//"Request timed out. Please click send code again."
                 showAlert = true
                 didTimeout = true
             }
@@ -202,11 +202,11 @@ private extension PasswordForgotCodeEntryView {
         Task {
             do {
                 try await AuthService.shared.sendRecoveryEmail(email: email)
-                alertMessage = "A new verification code was sent to your email."
+                alertMessage = "Yeni bir doğrulama kodu e-posta adresinize gönderildi."//"A new verification code was sent to your email."
                 showAlert = true
                 startTimer() // Optional: restart the timer
             } catch {
-                alertMessage = "Failed to resend code: \(error.localizedDescription)"
+                alertMessage = "Kod yeniden gönderilemedi: \(error.localizedDescription)"//"Failed to resend code:
                 showAlert = true
             }
         }
@@ -214,15 +214,15 @@ private extension PasswordForgotCodeEntryView {
 
     func verifyCode() {
         guard !didTimeout else {
-            alertMessage = "The request has timed out. Please send a new code."
+            alertMessage = "İstek zaman aşımına uğradı. Lütfen yeni bir kod gönderin."//"The request has timed out. Please send a new code."
             showAlert = true
             navigateToResetPassword = true
-            print("✅ Code verified response: \(code)")
+            print("✅ Kod doğrulandı. \(code)")//"✅ Code verified response:
             return
         }
 
         guard code.count == 6 else {
-            alertMessage = "Please enter a valid 6-digit code."
+            alertMessage = "Lütfen geçerli 6 haneli bir kod girin."//Please enter a valid 6-digit code.
             showAlert = true
             return
         }
@@ -232,15 +232,15 @@ private extension PasswordForgotCodeEntryView {
                 let success = try await AuthService.shared.verifyResetCode(email: email, code: code)
 
                 if success {
-                    alertMessage = "Code verified successfully!"
+                    alertMessage = "Kod başarıyla doğrulandı!"//Code verified successfully!
                     timer?.invalidate()
                     showAlert = true
                 } else {
-                    alertMessage = "Invalid code. Please try again."
+                    alertMessage = "Geçersiz kod. Lütfen tekrar deneyin."//"Invalid code. Please try again."
                     showAlert = true
                 }
             } catch {
-                alertMessage = "Verification failed: \(error.localizedDescription)"
+                alertMessage = "Doğrulama başarısız oldu: \(error.localizedDescription)"//"Verification failed:
                 showAlert = true
             }
         }

@@ -21,17 +21,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "892E1A93-ED17-4D7A-943C-3E16BA842966"
+            uuid = "6FBF2D8C-D48E-4C8A-A5D5-B39C7436E3F6"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Cellenta IOS/Views/MainApp/Store/StoreView.swift"
+            filePath = "Cellenta IOS/Views/MainApp/Home/HomeView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
-            landmarkName = "formatActivationDate(_:)"
-            landmarkType = "7">
+            startingLineNumber = "341"
+            endingLineNumber = "341"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

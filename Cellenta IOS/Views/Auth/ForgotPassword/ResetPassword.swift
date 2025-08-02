@@ -32,22 +32,21 @@ struct ResetPassword: View {
         return NSPredicate(format: "SELF MATCHES %@", pattern).evaluate(with: password)
     }
 
-    
     private func resetPassword() {
         guard isPasswordValid(newPassword) else {
             alertMessage = """
-            Password must be at least 8 characters and include:
-            - 1 uppercase letter
-            - 1 lowercase letter
-            - 1 digit
-            - 1 special character (!@#$...)
+            Şifre en az 8 karakter uzunluğunda olmalı ve şunları içermelidir:
+                -    1 büyük harf
+                -    1 küçük harf
+                -    1 rakam
+                -    1 özel karakter (!@#$…)
             """
             showAlert = true
             return
         }
 
         guard newPassword == confirmNewPassword else {
-            alertMessage = "Passwords do not match."
+            alertMessage = "Şifreler eşleşmiyor."
             showAlert = true
             return
         }
@@ -60,26 +59,28 @@ struct ResetPassword: View {
                     verificationCode: verificationCode
                 )
 
-                if success {
-                    // ✅ Update stored password if needed
-                    UserDefaults.standard.set(newPassword, forKey: "userPassword")
+                await MainActor.run {
+                    if success {
+                        // ✅ Update stored password only when actually changed
+                        UserDefaults.standard.set(newPassword, forKey: "userPassword")
+                        UserSession.shared.password = newPassword
 
-                    // Optional: update global session (if you use it)
-                    UserSession.shared.password = newPassword
+                        alertMessage = "Şifreniz başarıyla sıfırlandı!"
+                        showAlert = true
 
-                    alertMessage = "Your password has been successfully reset!"
-                    showAlert = true
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        navigateToPasswordChanged = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            navigateToPasswordChanged = true
+                        }
+                    } else {
+                        alertMessage = "Şifre sıfırlama başarısız oldu. Lütfen daha sonra tekrar deneyin."
+                        showAlert = true
                     }
-                } else {
-                    alertMessage = "Failed to reset password. Please try again later."
-                    showAlert = true
                 }
             } catch {
-                alertMessage = "Error: \(error.localizedDescription)"
-                showAlert = true
+                await MainActor.run {
+                    alertMessage = "Error: \(error.localizedDescription)"
+                    showAlert = true
+                }
             }
         }
     }
@@ -98,7 +99,7 @@ struct ResetPassword: View {
                     Image(systemName: "arrow.left")
                         .font(.title2)
                         .foregroundColor(customGradientColors[1])
-                    Text("Back")
+                    Text("Geri")//Back
                         .font(.headline)
                         .foregroundColor(customGradientColors[1])
                 }
@@ -122,7 +123,7 @@ struct ResetPassword: View {
             .padding(.top, 30)
             .padding(.bottom, 50)
 
-            Text("Reset password")
+            Text("Şifre Sıfırlama")//Reset Password
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundStyle(LinearGradient(
@@ -132,7 +133,7 @@ struct ResetPassword: View {
                 ))
                 .multilineTextAlignment(.center)
 
-            Text("Please type something you'll remember")
+            Text("Lütfen hatırlayabileceğiniz bir şifre yazın.")//"Please type something you'll remember"
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -143,9 +144,11 @@ struct ResetPassword: View {
                 HStack {
                     Group {
                         if showNewPassword {
-                            TextField("Must be at least 8 characters and include a number, an uppercase letter, a lowercase letter and a symbol.", text: $newPassword)
+                            TextField("En az 8 karakter olmalı ve bir rakam, bir büyük harf, bir küçük harf ve bir sembol içermelidir.", text: $newPassword)
+                            //Must be at least 8 characters and include a number, an uppercase letter, a lowercase letter and a symbol.
                         } else {
-                            SecureField("Must be at least 8 characters and include a number, an uppercase letter, a lowercase letter and a symbol.", text: $newPassword)
+                            SecureField("En az 8 karakter olmalı ve bir sayı, bir büyük harf, bir küçük harf ve bir sembol içermelidir.", text: $newPassword)
+                            //Must be at least 8 characters and include a number, an uppercase letter, a lowercase letter and a symbol.
                         }
                     }
                     .textFieldStyle(CustomTextFieldStyle())
@@ -163,15 +166,20 @@ struct ResetPassword: View {
 
                 if !newPassword.isEmpty && !isPasswordValid(newPassword) {
                     Text("""
-                         Password must be at least 8 characters and include:
-                         - 1 uppercase letter
-                         - 1 lowercase letter
-                         - 1 digit
-                         - 1 special character (!@#$...)
+                         Şifre en az 8 karakter uzunluğunda olmalı ve şunları içermelidir:
+                             -    1 büyük harf
+                             -    1 küçük harf
+                             -    1 rakam
+                             -    1 özel karakter (!@#$…))
                          """)
                         .font(.caption)
                         .foregroundColor(.red)
                         .padding(.horizontal)
+                    /*Password must be at least 8 characters and include:
+                     - 1 uppercase letter
+                     - 1 lowercase letter
+                     - 1 digit
+                     - 1 special character (!@#$...)*/
                 }
             }
 
@@ -180,9 +188,9 @@ struct ResetPassword: View {
                 HStack {
                     Group {
                         if showConfirmNewPassword {
-                            TextField("Repeat password", text: $confirmNewPassword)
+                            TextField("Şifreyi tekrar girin", text: $confirmNewPassword)//Repeat password
                         } else {
-                            SecureField("Repeat password", text: $confirmNewPassword)
+                            SecureField("Şifreyi tekrar girin", text: $confirmNewPassword)//Repeat password
                         }
                     }
                     .textFieldStyle(CustomTextFieldStyle())
@@ -199,7 +207,7 @@ struct ResetPassword: View {
                 .padding(.horizontal)
 
                 if !confirmNewPassword.isEmpty && newPassword != confirmNewPassword {
-                    Text("Passwords do not match.")
+                    Text("Şifreler eşleşmiyor.")//"Passwords do not match."
                         .font(.caption)
                         .foregroundColor(.red)
                         .padding(.horizontal)
@@ -208,7 +216,7 @@ struct ResetPassword: View {
 
             // Submit Button
             Button(action: resetPassword) {
-                Text("Reset password")
+                Text("Şifreyi sıfırla")//"Reset password"
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -229,11 +237,11 @@ struct ResetPassword: View {
 
             // Already have account
             HStack {
-                Text("Already have an account?")
+                Text("Zaten hesabınız var mı?")//"Already have an account?"
                     .font(.subheadline)
                     .foregroundColor(.gray)
 
-                Button("Log in") {
+                Button("Giriş yap") {//Log in
                     navigateToLogin = true
                 }
                 .font(.subheadline)
@@ -245,7 +253,7 @@ struct ResetPassword: View {
         .padding()
         .navigationBarHidden(true)
         .navigationTitle("")
-        .alert("Password Reset", isPresented: $showAlert) {
+        .alert("Şifre Sıfırlama Başarılı!", isPresented: $showAlert) {//Password Reset
             Button("OK") {}
         } message: {
             Text(alertMessage)

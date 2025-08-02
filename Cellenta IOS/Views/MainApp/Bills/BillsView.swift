@@ -14,7 +14,8 @@ struct Invoice: Codable, Identifiable {
     let price: Double
     let paymentStatus: String
     let isActive: String
-    let daysLeft: String
+    let daysLeft: String?
+    let packageName: String?
 }
 
 // MARK: - Invoice Request Body
@@ -22,16 +23,24 @@ struct InvoiceRequest: Codable {
     let msisdn: String
 }
 
-
 import SwiftUI
 
 struct BillsView: View {
-    @State private var selectedMonth: String = "Mar 2021"
     @Binding var selectedTab: Tab
-
     @State private var invoices: [Invoice] = []
     @State private var isLoading = true
     @State private var errorMessage: String?
+    @State private var showingPaymentAlert = false
+
+    // Calculate total unpaid amount
+    private var totalUnpaidAmount: Double {
+        invoices.filter { $0.paymentStatus == "UNPAID" }.reduce(0) { $0 + $1.price }
+    }
+    
+    // Check if there are any unpaid invoices
+    private var hasUnpaidInvoices: Bool {
+        invoices.contains { $0.paymentStatus == "UNPAID" }
+    }
 
     var body: some View {
         NavigationView {
@@ -42,63 +51,70 @@ struct BillsView: View {
                         .font(.title2)
                         .foregroundColor(.black)
 
-                    Text("Bills History")
+                    Text("Fatura Geçmişi")
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
 
                     Spacer()
 
-                    // Month Dropdown
-                    Menu {
-                        Button("Mar 2021") { selectedMonth = "Mar 2021" }
-                        Button("Feb 2021") { selectedMonth = "Feb 2021" }
-                        Button("Jan 2021") { selectedMonth = "Jan 2021" }
-                    } label: {
-                        HStack {
-                            Text(selectedMonth)
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                            Image(systemName: "chevron.down")
-                                .font(.caption)
-                                .foregroundColor(.black)
-                        }
-                        .padding(.vertical, 8)
-                        .padding(.horizontal, 12)
-                        .background(Color.gray.opacity(0.1))
-                        .cornerRadius(8)
-                    }
+                   
                 }
                 .padding(.horizontal)
                 .padding(.top, 10)
 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 20) {
-
-                        // MARK: - Current Payment Placeholder
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("")
-                                    .font(.title2)
-                                    .fontWeight(.bold)
-                                    .foregroundColor(.black)
-                                Text("")
-                                    .font(.caption)
-                                    .foregroundColor(.gray)
+                        // MARK: - Unpaid Summary Section
+                        if hasUnpaidInvoices && !isLoading {
+                            HStack {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text("Ödenmemiş Toplam")
+                                        .font(.headline)
+                                        .foregroundColor(.black)
+                                    Text("\(String(format: "%.2f", totalUnpaidAmount)) TL")
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.red)
+                                }
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    showingPaymentAlert = true
+                                }) {
+                                    Text("Hemen Öde")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .padding(.vertical, 10)
+                                        .padding(.horizontal, 20)
+                                        .background(Color.blue)
+                                        .cornerRadius(10)
+                                }
+                                .alert(isPresented: $showingPaymentAlert) {
+                                    Alert(
+                                        title: Text("Ödeme Yap"),
+                                        message: Text("\(String(format: "%.2f", totalUnpaidAmount)) TL tutarındaki ödenmemiş faturalarınızı ödemek istiyor musunuz?"),
+                                        primaryButton: .default(Text("Öde")) {
+                                            // Handle payment logic here
+                                            print("Payment initiated for \(totalUnpaidAmount) TL")
+                                        },
+                                        secondaryButton: .cancel()
+                                    )
+                                }
                             }
-                            Spacer()
-                            Image(systemName: "arrow.right")
-                                .font(.title2)
-                                .foregroundColor(Color(red: 0.2, green: 0.6, blue: 0.7))
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+                            .padding(.horizontal)
                         }
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
-                        .padding(.horizontal)
+
+                        
+                        
 
                         // MARK: - Header
-                        Text("Last Payments")
+                        Text("Son Ödemeler")
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.black)
@@ -107,7 +123,7 @@ struct BillsView: View {
 
                         // MARK: - Invoice List
                         if isLoading {
-                            ProgressView("Loading invoices...")
+                            ProgressView("Fatura yükleniyor...")
                                 .padding()
                         } else if let errorMessage = errorMessage {
                             Text(errorMessage)
@@ -119,19 +135,21 @@ struct BillsView: View {
                                     let status: (String, Color, String) = {
                                         switch invoice.paymentStatus {
                                         case "PAID":
-                                            return ("Paid", .green, "checkmark.circle.fill")
-                                        case "LATE":
-                                            return ("Late", .red, "xmark.circle.fill")
+                                            return ("Ödenmiş", .green, "checkmark.circle.fill")
+                                        case "UNPAID":
+                                            return ("Ödenmedi", .red, "xmark.circle.fill")
                                         default:
-                                            return (invoice.daysLeft, .orange, "clock.fill")
+                                            return (invoice.daysLeft ?? "Bekliyor", .orange, "clock.fill")
                                         }
                                     }()
+                                    
                                     PaymentHistoryRow(
                                         iconName: status.2,
                                         iconColor: status.1,
                                         dateRange: "\(invoice.startDate) - \(invoice.endDate)",
                                         status: status.0,
-                                        amount: "\(Int(invoice.price)) TL"
+                                        amount: "\(Int(invoice.price)) TL",
+                                        packageName: invoice.packageName ?? ""
                                     )
                                 }
                             }
@@ -147,12 +165,15 @@ struct BillsView: View {
             .onAppear {
                 Task {
                     do {
-                        let msisdn = UserSession.shared.msisdn // no if-let
-                        let result = try await fetchInvoices(msisdn: msisdn)
+                        let msisdn = UserSession.shared.msisdn
+                        let result = try await InvoiceService.fetchInvoices(msisdn: msisdn)
                         invoices = result
                         isLoading = false
+                    } catch let error as InvoiceServiceError {
+                        errorMessage = error.localizedDescription
+                        isLoading = false
                     } catch {
-                        errorMessage = "Failed to load invoices."
+                        errorMessage = "Fatura yüklenirken beklenmeyen bir hata oluştu: \(error.localizedDescription)"
                         isLoading = false
                     }
                 }
@@ -160,6 +181,8 @@ struct BillsView: View {
         }
     }
 }
+
+
 // MARK: - PaymentHistoryRow
 struct PaymentHistoryRow: View {
     let iconName: String
@@ -167,6 +190,7 @@ struct PaymentHistoryRow: View {
     let dateRange: String
     let status: String
     let amount: String
+    let packageName: String
 
     var body: some View {
         HStack(spacing: 15) {
@@ -180,7 +204,7 @@ struct PaymentHistoryRow: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundColor(.black)
-                Text(status)
+                Text("\(packageName) - \(status)")
                     .font(.caption)
                     .foregroundColor(.gray)
             }
@@ -195,4 +219,3 @@ struct PaymentHistoryRow: View {
         .padding(.vertical, 8)
     }
 }
-

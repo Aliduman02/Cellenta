@@ -15,6 +15,8 @@ struct HomeView: View {
     @State var selectedTab: Tab = .home
     @State private var showChatbot = false
     @State private var forceRefresh = false
+    @AppStorage("name") var name: String = ""
+    @AppStorage("msisdn") var msisdn: String = ""
 
     var body: some View {
         NavigationStack {
@@ -53,7 +55,7 @@ struct HomeContentView: View {
                 // User Greeting
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("Hello, \(session.name)")
+                        Text("Merhaba, \(session.name)")//Hello,
                             .font(.title2)
                             .fontWeight(.medium)
                             .foregroundColor(.gray)
@@ -73,7 +75,7 @@ struct HomeContentView: View {
                         .padding(.horizontal)
 
                     HStack {
-                        Text("Tariff Information")
+                        Text("Tarife Bilgisi")//Tariff Information
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(Color(red: 0.2, green: 0.6, blue: 0.7))
@@ -87,27 +89,27 @@ struct HomeContentView: View {
                             UsageCircleView(
                                 currentValue: Double(balance.remainingMinutes),
                                 maxValue: Double(balance.amountMinutes),
-                                unit: "Min left",
-                                totalUnit: "MIN"
+                                unit: "Kalan dakika",//Min left
+                                totalUnit: "DK"//MIN
                             )
                             UsageCircleView(
-                                currentValue: Double(balance.remainingData),
-                                maxValue: Double(balance.amountData),
-                                unit: "GB left",
+                                currentValue: Double(balance.remainingData) / 1000.0,
+                                maxValue: Double(balance.amountData) / 1000.0,
+                                unit: "Kalan GB",
                                 totalUnit: "GB"
                             )
                         }
                         UsageCircleView(
                             currentValue: Double(balance.remainingSms),
                             maxValue: Double(balance.amountSms),
-                            unit: "SMS left",
+                            unit: "Kalan SMS",//SMS left
                             totalUnit: "SMS"
                         )
                         .padding(.horizontal, 80)
                     }
                     .padding(.horizontal)
                 } else {
-                    ProgressView("Loading...")
+                    ProgressView("Yükleniyor...")//Loading...
                 }
 
                 Spacer().frame(height: 100)
@@ -170,7 +172,7 @@ struct CustomTabBar: View {
             Button(action: {
                 selectedTab = .home
             }) {
-                TabBarButton(imageName: "house.fill", title: "Home", isSelected: selectedTab == .home)
+                TabBarButton(imageName: "house.fill", title: "Ana Sayfa", isSelected: selectedTab == .home)
             }
 
             Spacer()
@@ -178,7 +180,7 @@ struct CustomTabBar: View {
             Button(action: {
                 selectedTab = .store
             }) {
-                TabBarButton(imageName: "bag.fill", title: "Store", isSelected: selectedTab == .store)
+                TabBarButton(imageName: "bag.fill", title: "Mağaza", isSelected: selectedTab == .store)
             }
 
             Spacer()
@@ -191,7 +193,7 @@ struct CustomTabBar: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 60, height: 60)
-                    Text("How can I help?")
+                    Text("Nasıl yardımcı olabilirim?")//"How can I help?"
                         .font(.caption)
                         .foregroundColor(selectedTab == .chatbot ? .teal : .gray)
                 }
@@ -203,7 +205,7 @@ struct CustomTabBar: View {
             Button(action: {
                 selectedTab = .bills
             }) {
-                TabBarButton(imageName: "bolt.fill", title: "Bills", isSelected: selectedTab == .bills)
+                TabBarButton(imageName: "bolt.fill", title: "Faturalar", isSelected: selectedTab == .bills)//Bills
             }
 
             Spacer()
@@ -211,7 +213,7 @@ struct CustomTabBar: View {
             Button(action: {
                 selectedTab = .profile
             }) {
-                TabBarButton(imageName: "person.fill", title: "Profile", isSelected: selectedTab == .profile)
+                TabBarButton(imageName: "person.fill", title: "Hesabım", isSelected: selectedTab == .profile)//Profile
             }
 
             Spacer()
@@ -250,7 +252,7 @@ struct TariffCardView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("Aktif Tarife")
+                Text("Aktif Tarife")//Active Package
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.8))
                 Text(packageName)
@@ -264,7 +266,7 @@ struct TariffCardView: View {
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
-                Text("/month")
+                Text("/ay")//month
                     .font(.caption)
                     .foregroundColor(.white.opacity(0.8))
             }
@@ -336,6 +338,7 @@ struct UsageCircleView: View {
 #Preview {
     HomeView()
 }
+
 
 
 

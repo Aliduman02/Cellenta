@@ -4,7 +4,6 @@
 //
 //  Created by Atena Jafari Parsa on 16.07.2025.
 //
-
 struct SignUpResponse: Codable {
     let cust_id: Int
     let msisdn: String
@@ -30,6 +29,10 @@ struct SignUpPasswordView: View {
     @State private var isSigningUp = false
     @State private var navigateToLogin = false
 
+    @State private var packages: [Package] = []
+    @State private var selectedPackage: Package?
+    @State private var isLoadingPackages = true
+
     let customGradientColors = [
         Color(red: 102/255, green: 225/255, blue: 192/255),
         Color(red: 0/255, green: 104/255, blue: 174/255)
@@ -38,7 +41,18 @@ struct SignUpPasswordView: View {
     var body: some View {
         VStack(spacing: 20) {
             HStack {
-                Text("Sign up")
+                Button(action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Geri Git") // "Go Back"
+                        }
+                        .foregroundColor(.blue)
+                        .font(.body)
+                    }
+                    Spacer()
+                Text("Hesap Oluştur")//Sign up
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(Color(red: 46/255, green: 163/255, blue: 155/255))
@@ -54,6 +68,7 @@ struct SignUpPasswordView: View {
             ScrollView {
                 VStack(spacing: 25) {
                     passwordFieldSection
+                    packageSelectionSection
                     signUpButton
                     alreadyHaveAccountSection
                 }
@@ -65,10 +80,19 @@ struct SignUpPasswordView: View {
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
         .alert(isPresented: $showAlert) {
-            Alert(title: Text("Sign Up"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            Alert(title: Text("Hesap Oluştur"), message: Text(alertMessage), dismissButton: .default(Text("OK")))//Sign Up, OK
         }
         .navigationDestination(isPresented: $navigateToLogin) {
             Login()
+        }
+        .task {
+            do {
+                packages = try await PackageService.fetchPackages()
+                selectedPackage = packages.first
+            } catch {
+                print("Paket Yüklenme Hatası: \(error)")//"Failed to load packages:
+            }
+            isLoadingPackages = false
         }
     }
 
@@ -81,9 +105,9 @@ struct SignUpPasswordView: View {
                 HStack {
                     Group {
                         if isPasswordVisible {
-                            TextField("At least 8 characters", text: $password)
+                            TextField("En az 8 karakter", text: $password)//"At least 8 characters"
                         } else {
-                            SecureField("At least 8 characters", text: $password)
+                            SecureField("En az 8 karakter", text: $password)//"At least 8 characters"
                         }
                     }
                     .textContentType(.newPassword)
@@ -100,22 +124,44 @@ struct SignUpPasswordView: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
 
                 if !password.isEmpty && password.count < 8 {
-                    Text("Password must be at least 8 characters")
+                    Text("Şifre en az 8 karakter olmalıdır.")//"Password must be at least 8 characters"
                         .font(.caption)
                         .foregroundColor(.red)
                 }
+                else {
+                        if !password.isEmpty && !password.contains(where: { $0.isUppercase }) {
+                            Text("Şifre en az bir büyük harf içermelidir.") // "Password must contain at least one uppercase letter"
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
+                        if !password.isEmpty && !password.contains(where: { $0.isLowercase }) {
+                            Text("Şifre en az bir küçük harf içermelidir.") // "Password must contain at least one lowercase letter"
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
+                        if !password.isEmpty && password.range(of: "[0-9]", options: .regularExpression) == nil {
+                            Text("Şifre en az bir rakam içermelidir.") // "Password must contain at least one number"
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
+                        if !password.isEmpty && password.range(of: "[^A-Za-z0-9]", options: .regularExpression) == nil {
+                            Text("Şifre en az bir sembol içermelidir.") // "Password must contain at least one symbol"
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
+                    }
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Confirm Password")
+                Text("Şifreyi onayla")//"Confirm Password"
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 HStack {
                     Group {
                         if isConfirmPasswordVisible {
-                            TextField("Repeat your password", text: $confirmPassword)
+                            TextField("Şifreyi tekrar girin", text: $confirmPassword)//"Repeat your password"
                         } else {
-                            SecureField("Repeat your password", text: $confirmPassword)
+                            SecureField("Şifreyi tekrar girin", text: $confirmPassword)//"Repeat your password"
                         }
                     }
                     .textContentType(.newPassword)
@@ -132,14 +178,89 @@ struct SignUpPasswordView: View {
                 .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
 
                 if !confirmPassword.isEmpty && password != confirmPassword {
-                    Text("Passwords don't match")
+                    Text("Şifreler eşleşmiyor")//"Passwords don't match"
                         .font(.caption)
                         .foregroundColor(.red)
                 }
             }
         }
     }
+    
+    private var packageSelectionSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Paket seçiniz")//"Select a Package"
+                .font(.subheadline)
+                .foregroundColor(.secondary)
 
+            if isLoadingPackages {
+                ProgressView("Paketler yükleniyor...")//"Loading packages..."
+                    .padding(.top, 4)
+            } else if packages.isEmpty {
+                Text("Şu anda mevcut paket yok.")//"No packages available at the moment."
+                    .foregroundColor(.gray)
+                    .padding(.top, 4)
+            } else {
+                ForEach(packages.indices, id: \.self) { index in
+                    let pkg = packages[index]
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        // Header
+                        HStack {
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(pkg.packageName)
+                                    .font(.headline)
+                                Text("\(pkg.amountMinutes) dk | \(pkg.amountSms) SMS | \(pkg.amountData / 1000) GB")//min, SMS, MB
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            Spacer()
+                            Image(systemName: selectedPackage?.package_id == pkg.package_id ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(selectedPackage?.package_id == pkg.package_id ? .green : .gray)
+                        }
+
+                        // Details if selected
+                        if selectedPackage?.package_id == pkg.package_id {
+                            VStack(alignment: .leading, spacing: 10) {
+                                HStack(spacing: 16) {
+                                    balanceItem(
+                                        icon: "wifi",
+                                        value: "\(pkg.amountData / 1000)",
+                                        label: "GB",
+                                        color: .blue
+                                    )//Data
+                                    balanceItem(icon: "phone", value: "\(pkg.amountMinutes)", label: "Dk", color: .green)//Min
+                                    balanceItem(icon: "message", value: "\(pkg.amountSms)", label: "SMS", color: .orange)
+                                    balanceItem(icon: "clock", value: "\(pkg.period)", label: "Gün", color: .purple)//Days
+                                }
+
+                                Text("Fiyat: \(String(format: "%.2f TL", pkg.price))")//Price:
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.black)
+                            }
+                            .padding(.top, 4)
+                        }
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(12)
+                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedPackage?.package_id == pkg.package_id ? Color.green : Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+                    .onTapGesture {
+                        withAnimation {
+                            selectedPackage = pkg
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
+        }
+    }
+
+    
     private var signUpButton: some View {
         Button(action: {
             if validatePasswords() {
@@ -152,7 +273,7 @@ struct SignUpPasswordView: View {
                     ProgressView()
                         .progressViewStyle(CircularProgressViewStyle(tint: .white))
                 }
-                Text(isSigningUp ? "Creating Account..." : "Sign Up")
+                Text(isSigningUp ? "Hesap Oluşturuluyor..." : "Kayıt Ol")//"Creating Account..." : "Sign Up"
             }
             .font(.headline)
             .foregroundColor(.white)
@@ -173,14 +294,14 @@ struct SignUpPasswordView: View {
 
     private var alreadyHaveAccountSection: some View {
         HStack {
-            Text("Already have an account?")
+            Text("Hesabınız var mı?")//"Already have an account?"
                 .font(.subheadline)
                 .foregroundColor(.secondary)
 
             Button(action: {
                 navigateToLogin = true
             }) {
-                Text("Log in")
+                Text("Giriş yap")//"Log in"
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(Color(red: 0/255, green: 104/255, blue: 174/255))
@@ -191,31 +312,25 @@ struct SignUpPasswordView: View {
 
     private func validatePasswords() -> Bool {
         if password.isEmpty {
-            alertMessage = "Please create a password"
+            alertMessage = "Lütfen şifrenizi oluşturun"//"Please create a password"
             showAlert = true
             return false
         }
 
         if !isValidPassword(password) {
-            alertMessage = """
-            Password must be at least 8 characters and include:
-            - 1 uppercase letter
-            - 1 lowercase letter
-            - 1 number
-            - 1 special character (!@#$...)
-            """
+            alertMessage = "Şifreniz en az 8 karakterden oluşturulmalıdır ve içerisinde:\n- 1 büyük harf\n- 1 küçük harf\n- 1 rakam\n- 1 özel karakter (!,@#$...)"//"Password must be at least 8 characters and include:\n- 1 uppercase letter\n- 1 lowercase letter\n- 1 number\n- 1 special character (!@#$...)"
             showAlert = true
             return false
         }
 
         if confirmPassword.isEmpty {
-            alertMessage = "Please confirm your password"
+            alertMessage = "Lütfen şifrenizi doğrulayın"//"Please confirm your password"
             showAlert = true
             return false
         }
 
         if password != confirmPassword {
-            alertMessage = "Passwords don't match"
+            alertMessage = "Şifreler eşleşmiyor"//"Passwords don't match"
             showAlert = true
             return false
         }
@@ -225,7 +340,7 @@ struct SignUpPasswordView: View {
 
     private func sendSignUpRequest() {
         guard let url = URL(string: "http://34.123.86.69/api/v1/auth/register") else {
-            alertMessage = "Invalid signup URL"
+            alertMessage = "Geçersiz Kayıt URL'si"//"Invalid signup URL"
             showAlert = true
             isSigningUp = false
             return
@@ -240,7 +355,7 @@ struct SignUpPasswordView: View {
         ]
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: requestBody) else {
-            alertMessage = "Failed to encode signup data"
+            alertMessage = "Kayıt başarısız oldu"//"Failed to encode signup data"
             showAlert = true
             isSigningUp = false
             return
@@ -258,7 +373,7 @@ struct SignUpPasswordView: View {
 
             if let error = error {
                 DispatchQueue.main.async {
-                    alertMessage = "Network error: \(error.localizedDescription)"
+                    alertMessage = "Ağ Hatası: \(error.localizedDescription)"//"Network error:
                     showAlert = true
                 }
                 return
@@ -266,28 +381,36 @@ struct SignUpPasswordView: View {
 
             guard let httpResponse = response as? HTTPURLResponse else {
                 DispatchQueue.main.async {
-                    alertMessage = "Invalid server response"
+                    alertMessage = "Geçersiz Sunucu Cevabı"//"Invalid server response"
                     showAlert = true
                 }
                 return
             }
 
-            if (200...299).contains(httpResponse.statusCode) {
-                DispatchQueue.main.async {
-                    alertMessage = "Account created successfully!"
-                    showAlert = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        completeSignUp()
+            if (200...299).contains(httpResponse.statusCode), let data = data {
+                do {
+                    let signUpResponse = try JSONDecoder().decode(SignUpResponse.self, from: data)
+
+                    DispatchQueue.main.async {
+                        alertMessage = "Hesap Başarıyla Oluşturuldu!"//"Account created successfully!"
+                        showAlert = true
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            completeSignUp(from: signUpResponse)
+                        }
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        alertMessage = "⚠️ Hesap Oluşturuldu, Ancak Yanıt Kodu Başarısız Oldu"//"⚠️ Account created, but failed to decode response"
+                        showAlert = true
+                        //completeSignUp(from: signUpResponse)
                     }
                 }
             } else {
-                var errorMessage = "Sign-up failed"
-                if let data = data,
-                   let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                   let message = json["message"] as? String {
-                    errorMessage = message
-                } else if let raw = data.flatMap({ String(data: $0, encoding: .utf8) }) {
-                    errorMessage = "Server error: \(raw)"
+                var errorMessage = "Başarısız Kayıt"
+                if let data = data {
+                    let raw = String(data: data, encoding: .utf8) ?? ""
+                    errorMessage = translateBackendError(raw)
                 }
 
                 DispatchQueue.main.async {
@@ -298,22 +421,36 @@ struct SignUpPasswordView: View {
         }.resume()
     }
 
-    private func completeSignUp() {
-        // Set the shared session values
-        UserSession.shared.name = "\(signUpData.firstName)"
-        UserSession.shared.surname = signUpData.lastName
-        UserSession.shared.msisdn = signUpData.phoneNumber
-        UserSession.shared.email = signUpData.email
+    private func completeSignUp(from response: SignUpResponse) {
+        // Store in memory
+        UserSession.shared.name = response.name
+        UserSession.shared.surname = response.surname
+        UserSession.shared.msisdn = response.msisdn
+        UserSession.shared.email = response.email
         UserSession.shared.password = password
-        
-        //Newly added
-        UserDefaults.standard.set(signUpData.phoneNumber, forKey: "msisdn")
-        // If your register API returns cust_id, parse it and save it below
-        UserDefaults.standard.set(0, forKey: "customerId") // ← TEMP fallback if not returned
 
-        alertMessage = "Account created successfully!"
-        showAlert = true
+        // Store persistently
+        UserDefaults.standard.set(response.msisdn, forKey: "msisdn")
+        UserDefaults.standard.set(response.cust_id, forKey: "customerId")
 
+        // Activate selected package if any
+        if let selectedPackage = selectedPackage {
+            Task {
+                do {
+                    let balance = try await PackageService.selectPackage(
+                        customerId: response.cust_id,
+                        packageId: selectedPackage.package_id,
+                        msisdn: response.msisdn
+                    )
+                    print("✅ Paket \(selectedPackage.packageName) başarıyla aktifleştirildi!")//"✅ Package \(selectedPackage.packageName) activated successfully!"
+                    print("📦 Balance: \(balance.remainingData)MB, \(balance.remainingMinutes)dk, \(balance.remainingSms)SMS")//min
+                } catch {
+                    print("❌ Paket etkinleştirilemedi: \(error.localizedDescription)")//"❌ Package activation failed:
+                }
+            }
+        }
+
+        // Go to HomeView
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                let window = windowScene.windows.first {
@@ -332,16 +469,45 @@ struct SignUpPasswordView: View {
             }
         }
     }
+
+    
+    
 }
 
-struct SignUpPasswordView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            SignUpPasswordView(signUpData: SignUpData(firstName: "", lastName: "", phoneNumber: "", email: ""))
-        }
-    }
-}
 func isValidPassword(_ password: String) -> Bool {
     let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+=\\[\\]{};':\"\\\\|,.<>/?-]).{8,}$"
     return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: password)
+}
+
+private func balanceItem(icon: String, value: String, label: String, color: Color) -> some View {
+    VStack(spacing: 4) {
+        Image(systemName: icon)
+            .foregroundColor(color)
+            .font(.caption)
+        Text(value)
+            .font(.caption)
+            .fontWeight(.bold)
+        Text(label)
+            .font(.system(size: 10))
+            .foregroundColor(.gray)
+    }
+    .frame(maxWidth: .infinity)
+}
+
+private func translateBackendError(_ rawError: String) -> String {
+    let lower = rawError.lowercased()
+
+    if lower.contains("user already exists") {
+        return "Bu kullanıcı zaten mevcut."
+    } else if lower.contains("invalid email") {
+        return "Geçersiz e-posta adresi."
+    } else if lower.contains("msisdn already exists") {
+        return "Bu telefon numarası zaten kullanılıyor."
+    } else if lower.contains("email already exists") {
+        return "Bu e-posta adresi zaten kayıtlı."
+    } else if lower.contains("missing") || lower.contains("required") {
+        return "Lütfen tüm gerekli alanları doldurun."
+    }
+
+    return "Bir hata oluştu: \(rawError)"
 }

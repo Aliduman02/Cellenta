@@ -27,7 +27,7 @@ struct ForgotPasswordView: View {
     @State private var email = ""
     @State private var emailValidationMessage: String? = nil
     @State private var showingAlert = false
-    @State private var alertTitle = "Validation Error"
+    @State private var alertTitle = "Doğrulama Hatası"//"Validation Error"
     @State private var navigateToCodeEntry = false
 
     let customGradientColors: [Color] = [
@@ -53,7 +53,7 @@ struct ForgotPasswordView: View {
 
     private func sendRecoveryEmail() async {
         guard let url = URL(string: "http://34.123.86.69/api/v1/auth/forgot-password") else {
-            emailValidationMessage = "Invalid server URL."
+            emailValidationMessage = "Geçersiz sunucu adresi."//"Invalid server URL."
             showingAlert = true
             return
         }
@@ -77,11 +77,11 @@ struct ForgotPasswordView: View {
             if httpResponse?.statusCode == 200 {
                 navigateToCodeEntry = true
             } else {
-                emailValidationMessage = "We couldn’t send the recovery email. Please check your email or try again later."
+                emailValidationMessage = "Kurtarma e-postası gönderilemedi. Lütfen e-posta adresinizi kontrol edin veya daha sonra tekrar deneyin."//"We couldn’t send the recovery email. Please check your email or try again later."
                 showingAlert = true
             }
         } catch {
-            emailValidationMessage = "Network error: \(error.localizedDescription)"
+            emailValidationMessage = "Ağ Hatası: \(error.localizedDescription)"//"Network error:
             showingAlert = true
         }
     }
@@ -100,7 +100,7 @@ struct ForgotPasswordView: View {
                     Image(systemName: "arrow.left")
                         .font(.title2)
                         .foregroundColor(customGradientColors[1])
-                    Text("Back to Login")
+                    Text("Giriş Sayfasına Geri Dön")//"Back to Login"
                         .foregroundColor(customGradientColors[1])
                 }
                 Spacer()
@@ -122,12 +122,12 @@ struct ForgotPasswordView: View {
             }
             .padding(.bottom, 50)
 
-            Text("Forgot password?")
+            Text("Şifremi Unuttum")//"Forgot password?"
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundStyle(LinearGradient(gradient: Gradient(colors: customGradientColors), startPoint: .topLeading, endPoint: .bottomTrailing))
 
-            Text("Enter your registered email address below to receive a password reset link.")
+            Text("Şifre sıfırlama bağlantısı almak için, aşağıya kayıtlı e-posta adresinizi girin.")//"Enter your registered email address below to receive a password reset link."
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -135,7 +135,7 @@ struct ForgotPasswordView: View {
 
             // Email field with icon
             HStack {
-                TextField("Email Address", text: $email)
+                TextField("E-posta Adresi", text: $email)//"Email Address"
                     .textFieldStyle(CustomTextFieldStyle())
                     .keyboardType(.emailAddress)
                     .textInputAutocapitalization(.never)
@@ -169,10 +169,10 @@ struct ForgotPasswordView: View {
 
             Button(action: {
                 if email.isEmpty {
-                    emailValidationMessage = "Email field cannot be empty."
+                    emailValidationMessage = "E-posta alanı boş bırakılamaz."//"Email field cannot be empty."
                     showingAlert = true
                 } else if !isValidEmail(email) {
-                    emailValidationMessage = "Email format is incorrect."
+                    emailValidationMessage = "E-posta formatı yanlış."//"Email format is incorrect."
                     showingAlert = true
                 } else {
                     Task {
@@ -180,7 +180,7 @@ struct ForgotPasswordView: View {
                     }
                 }
             }) {
-                Text("Send Recovery Email")
+                Text("Kurtarma E-postası Gönder")//"Send Recovery Email"
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
@@ -193,9 +193,9 @@ struct ForgotPasswordView: View {
             }
             .padding(.horizontal)
             .alert(alertTitle, isPresented: $showingAlert) {
-                Button("OK") {}
+                Button("Tamam") {}//Tamam
             } message: {
-                Text(emailValidationMessage ?? "Something went wrong.")
+                Text(emailValidationMessage ?? "Bir şeyler ters gitti.")//"Something went wrong."
             }
 
             Spacer()

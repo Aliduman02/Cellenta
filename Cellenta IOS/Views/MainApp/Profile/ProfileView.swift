@@ -5,11 +5,13 @@
 //  Created by Atena Jafari Parsa on 17.07.2025.
 //
 import SwiftUI
+import AuthenticationServices
 
 struct ProfileView: View {
     @State private var showLogoutAlert = false
     @State private var navigateToOpening = false
     @Binding var selectedTab: Tab
+    @AppStorage("isLoggedIn") var isLoggedIn = false
 
     @ObservedObject var session = UserSession.shared
 
@@ -19,7 +21,7 @@ struct ProfileView: View {
                 // MARK: - Navigation Bar
                 HStack {
                     Spacer()
-                    Text("Profile")
+                    Text("Hesabım")//Profile
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
@@ -44,16 +46,16 @@ struct ProfileView: View {
                         .padding(.leading, 30)
 
                         // MARK: - Profile Information Fields
-                        ProfileInfoRow(label: "Name", value: session.name)
-                        ProfileInfoRow(label: "Surname", value: session.surname)
-                        ProfileInfoRow(label: "Phone Number", value: session.msisdn)
-                        ProfileInfoRow(label: "Email", value: session.email)
+                        ProfileInfoRow(label: "Ad", value: session.name)//Name
+                        ProfileInfoRow(label: "Soyad", value: session.surname)//Surname
+                        ProfileInfoRow(label: "Telefon Numarası", value: session.msisdn)//Phone Number
+                        ProfileInfoRow(label: "E-posta", value: session.email)//Email
 
                         // MARK: - Logout Button
                         Button(action: {
                             showLogoutAlert = true
                         }) {
-                            Text("Log Out")
+                            Text("Çıkış Yap")//Log Out
                                 .font(.subheadline)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
@@ -66,8 +68,8 @@ struct ProfileView: View {
                         .padding(.leading, 120)
                         .alert(isPresented: $showLogoutAlert) {
                             Alert(
-                                title: Text("Are you sure you want to log out?"),
-                                primaryButton: .destructive(Text("Log Out")) {
+                                title: Text("Çıkış yapmak istediğinizden emin misiniz?"),//"Are you sure you want to log out?"
+                                primaryButton: .destructive(Text("Çıkış Yap")) {//Log Out
                                     navigateToOpening = true
                                     clearSession()
                                 },
@@ -92,10 +94,12 @@ struct ProfileView: View {
     }
 
     private func clearSession() {
-        session.name = ""
-        session.surname = ""
-        session.msisdn = ""
-        session.email = ""
+        print("🧹 Clearing session...")
+        KeychainHelper.delete(forKey: "savedPhoneNumber")
+        KeychainHelper.delete(forKey: "savedPassword")
+        UserSession.shared.reset()
+        UserDefaults.standard.removeObject(forKey: "msisdn")
+        UserDefaults.standard.removeObject(forKey: "customerId")
     }
 }
 

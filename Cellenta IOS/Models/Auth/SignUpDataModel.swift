@@ -4,6 +4,7 @@
 //
 //  Created by Atena Jafari Parsa on 19.07.2025.
 //
+
 import Foundation
 
 struct SignUpData {

@@ -39,13 +39,13 @@ struct PasswordChangedView: View {
             }
             .padding(.bottom, 50)
 
-            Text("Password changed successfully!")
+            Text("Şifre başarıyla değiştirildi!")//"Password changed successfully!"
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundStyle(LinearGradient(gradient: Gradient(colors: customGradientColors), startPoint: .topLeading, endPoint: .bottomTrailing))
                 .multilineTextAlignment(.center)
 
-            Text("Your password has been changed successfully")
+            Text("Şifreniz başarıyla değiştirildi.")//"Your password has been changed successfully"
                 .font(.subheadline)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -55,7 +55,7 @@ struct PasswordChangedView: View {
                 // Trigger navigation back to LoginView
                 self.navigateToLogin = true
             }) {
-                Text("Back to login")
+                Text("Giriş Yap")//"Back to login"
                     .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)

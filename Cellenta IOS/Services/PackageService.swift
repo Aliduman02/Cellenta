@@ -6,7 +6,7 @@
 //
 import Foundation
 
-struct Package: Codable, Identifiable {
+struct Package: Codable, Identifiable, Hashable {
     var id: Int { package_id }
 
     let package_id: Int
