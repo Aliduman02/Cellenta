@@ -1,0 +1,6 @@
+com\example\tgf\MsisdnManager.class
+com\example\tgf\TrafficSimulator.class
+com\example\tgf\controller\StandardHealthController.class
+com\example\tgf\ChfClient.class
+com\example\tgf\Main.class
+com\example\tgf\CommandProcessor.class
